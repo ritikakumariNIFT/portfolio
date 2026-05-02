@@ -1,126 +1,983 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | M.Des NIFT</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Space Grotesk', sans-serif; scroll-behavior: smooth; }
-        .skill-pill { transition: all 0.3s ease; }
-        .skill-pill:hover { background: #000; color: #fff; transform: translateY(-2px); }
-    </style>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --lime: #d4ff00;
+    --lime-glow: rgba(212,255,0,0.25);
+    --bg: #0a0b0c;
+    --surface: #111315;
+    --surface2: #16181a;
+    --text: #f0f0ec;
+    --muted: #888;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  #cursor {
+    width: 12px; height: 12px;
+    background: var(--lime);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: difference;
+  }
+  #cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid rgba(212,255,0,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), width 0.3s, height 0.3s;
+  }
+
+  /* Sparkle canvas */
+  #sparkle-canvas {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(10,11,12,0.9), transparent);
+    backdrop-filter: blur(0px);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    color: var(--lime);
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--lime); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #1a2200 0%, #0a0b0c 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(212,255,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,255,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 60% at center, black 20%, transparent 80%);
+  }
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--lime);
+    position: relative; z-index: 2;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(6rem, 18vw, 14rem);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    position: relative; z-index: 2;
+    background: linear-gradient(175deg, #ffffff 30%, #555 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.1s cubic-bezier(0.16,1,0.3,1) forwards;
+    margin: 0.2em 0 0.1em;
+  }
+  .hero-signature {
+    position: absolute;
+    bottom: 8%; right: 5%;
+    font-family: 'Caveat', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--lime);
+    transform: rotate(-6deg);
+    opacity: 0;
+    animation: signaturePop 1.5s 1s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    filter: drop-shadow(0 0 20px rgba(212,255,0,0.4));
+    z-index: 2;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); z-index: 2;
+    animation: fadeIn 2s 2s forwards; opacity: 0;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, transparent, var(--lime));
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  /* floating orbs */
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none; z-index: 1;
+  }
+  .orb1 { width: 400px; height: 400px; background: rgba(212,255,0,0.06); top: -100px; left: -100px; animation: orbFloat 8s ease-in-out infinite; }
+  .orb2 { width: 300px; height: 300px; background: rgba(80,200,120,0.05); bottom: 0; right: -80px; animation: orbFloat 10s 2s ease-in-out infinite reverse; }
+
+  /* CONTAINER */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
+
+  /* SECTION SHARED */
+  section { padding: 8rem 0; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--lime); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 2rem; height: 1px; background: var(--lime);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.9; letter-spacing: 0.01em;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 4rem; align-items: center;
+    background: var(--surface);
+    border-radius: 2rem; padding: 4rem;
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .about-grid::before {
+    content: ''; position: absolute;
+    top: -1px; left: 4rem; right: 4rem; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lime), transparent);
+  }
+  .about-heading { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--lime); margin-bottom: 0.5rem; }
+  .about-name { font-size: 1.6rem; font-weight: 600; margin-bottom: 1.5rem; }
+  .about-bio { color: var(--muted); line-height: 1.8; font-size: 1rem; }
+  .about-stats {
+    display: flex; gap: 2.5rem; margin-top: 2rem;
+    border-top: 1px solid var(--border); padding-top: 2rem;
+  }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--lime); line-height: 1; }
+  .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.25rem; }
+  .profile-frame {
+    aspect-ratio: 4/5;
+    background: var(--surface2);
+    border-radius: 1.5rem;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+  }
+  .profile-frame::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(212,255,0,0.08) 0%, transparent 60%);
+    transition: opacity 0.4s;
+  }
+  .profile-frame:hover::after { opacity: 0; }
+  .profile-placeholder {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem; color: rgba(255,255,255,0.2);
+    text-align: center; padding: 1rem;
+    transform: rotate(-5deg);
+  }
+  .profile-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--lime);
+    border-style: solid;
+    border-width: 0;
+    transition: all 0.3s;
+  }
+  .profile-corner.tl { top: 12px; left: 12px; border-top-width: 2px; border-left-width: 2px; border-radius: 2px 0 0 0; }
+  .profile-corner.tr { top: 12px; right: 12px; border-top-width: 2px; border-right-width: 2px; border-radius: 0 2px 0 0; }
+  .profile-corner.bl { bottom: 12px; left: 12px; border-bottom-width: 2px; border-left-width: 2px; border-radius: 0 0 0 2px; }
+  .profile-corner.br { bottom: 12px; right: 12px; border-bottom-width: 2px; border-right-width: 2px; border-radius: 0 0 2px 0; }
+  .profile-frame:hover .profile-corner { width: 35px; height: 35px; }
+
+  /* LOGO FOLIO */
+  .logo-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1rem; margin-top: 3rem;
+  }
+  .logo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .logo-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at center, rgba(212,255,0,0.08) 0%, transparent 70%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .logo-card:hover { border-color: rgba(212,255,0,0.4); transform: translateY(-8px) scale(1.02); }
+  .logo-card:hover::before { opacity: 1; }
+  .logo-card-inner {
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+    z-index: 1;
+  }
+  .logo-icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.05em;
+  }
+  .logo-card-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  /* Individual logo styles */
+  .lc1 .logo-icon { background: linear-gradient(135deg, #1a1a2e, #16213e); color: #4a9eff; border: 1px solid rgba(74,158,255,0.2); }
+  .lc2 .logo-icon { background: linear-gradient(135deg, #1a0a0a, #2d1515); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.2); }
+  .lc3 .logo-icon { background: linear-gradient(135deg, #0a1a0a, #0d2d0d); color: var(--lime); border: 1px solid rgba(212,255,0,0.2); }
+  .lc4 .logo-icon { background: linear-gradient(135deg, #1a1000, #2d1e00); color: #ffaa00; border: 1px solid rgba(255,170,0,0.2); }
+  .logo-num {
+    position: absolute; top: 1rem; right: 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; line-height: 1;
+    color: rgba(255,255,255,0.04);
+    user-select: none;
+  }
+
+  /* BRANDING */
+  .brand-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2rem; padding: 3.5rem;
+    position: relative; overflow: hidden;
+    margin-top: 3rem;
+  }
+  .brand-card::before {
+    content: ''; position: absolute;
+    top: -1px; left: 3rem; right: 3rem; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lime), transparent);
+  }
+  .brand-tag {
+    display: inline-flex; gap: 0.5rem; align-items: center;
+    background: rgba(212,255,0,0.08);
+    border: 1px solid rgba(212,255,0,0.2);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.75rem; letter-spacing: 0.1em;
+    color: var(--lime); text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .brand-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem,5vw,4rem); color: var(--lime); margin-bottom: 0.25rem; }
+  .brand-industry { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+  .brand-desc { color: rgba(255,255,255,0.6); line-height: 1.75; max-width: 600px; margin-bottom: 2.5rem; }
+  .mockup-grid { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
+  .mockup-box {
+    background: var(--surface2);
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .mockup-box:hover { transform: scale(1.02); }
+  .mockup-box:first-child { grid-column: 1 / -1; }
+  .mockup-inner {
+    aspect-ratio: 16/7;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    background: var(--surface2);
+  }
+  .mockup-box:first-child .mockup-inner { aspect-ratio: 16/6; }
+  .mockup-label {
+    position: absolute; bottom: 1rem; left: 1rem;
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    color: var(--muted); text-transform: uppercase;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+    padding: 0.3rem 0.75rem; border-radius: 100px;
+    border: 1px solid var(--border);
+  }
+  /* Ourvita mockup art */
+  .ourvita-hero {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #0d1a08 0%, #1a2d0f 50%, #0a1205 100%);
+    position: relative; overflow: hidden;
+  }
+  .ourvita-hero::before {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,255,0,0.12), transparent);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+  }
+  .ourvita-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; letter-spacing: 0.3em;
+    color: var(--lime);
+    position: relative; z-index: 1;
+    text-shadow: 0 0 60px rgba(212,255,0,0.3);
+  }
+  .ourvita-sub {
+    position: absolute; bottom: 1.5rem;
+    font-size: 0.65rem; letter-spacing: 0.4em;
+    color: rgba(212,255,0,0.4); text-transform: uppercase;
+  }
+  .ourvita-packaging {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+    background: linear-gradient(160deg, #f5f0e8, #e8e0d0);
+    overflow: hidden;
+  }
+  .pkg-bottle {
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  }
+  .pkg-bottle-shape {
+    width: 50px; height: 90px;
+    border-radius: 8px 8px 12px 12px;
+    position: relative;
+    transition: transform 0.3s;
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.15);
+  }
+  .mockup-box:hover .pkg-bottle-shape { transform: translateY(-4px); }
+  .pkg-b1 { background: linear-gradient(160deg, #2d3a1a, #1a2510); }
+  .pkg-b2 { background: linear-gradient(160deg, #f5f0e8, #e0d5c5); border: 1px solid rgba(0,0,0,0.1); height: 70px; width: 38px; }
+  .pkg-b3 { background: linear-gradient(160deg, #3a2d1a, #251a0f); }
+  .pkg-label-strip {
+    position: absolute; left: 6px; right: 6px; top: 20px;
+    height: 40px; border-radius: 4px;
+    background: rgba(212,255,0,0.85);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.55rem; letter-spacing: 0.15em;
+    color: #1a2510; overflow: hidden;
+  }
+  .pkg-name { font-size: 0.5rem; color: rgba(0,0,0,0.3); text-transform: uppercase; letter-spacing: 0.15em; }
+
+  /* UI UX */
+  .uiux-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem,12vw,10rem); color: var(--lime); line-height: 0.85; letter-spacing: -0.01em; }
+  .uiux-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    padding: 3.5rem;
+    margin-top: 3rem;
+    position: relative; overflow: hidden;
+  }
+  .app-frame {
+    background: #0e0e10;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .app-bar {
+    background: #0a0a0c;
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .app-bar-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.1em; color: var(--lime); }
+  .app-bar-nav { display: flex; gap: 1.5rem; }
+  .app-nav-item { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+  .app-nav-item.active { color: var(--text); }
+  .app-hero-banner {
+    background: linear-gradient(135deg, #1a0a2e, #0a1a2e);
+    padding: 2.5rem 1.5rem;
+    position: relative; overflow: hidden;
+  }
+  .app-banner-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(100,60,200,0.25), transparent 60%);
+  }
+  .app-movie-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--text); position: relative; z-index: 1; }
+  .app-movie-meta { font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem; position: relative; z-index: 1; letter-spacing: 0.05em; }
+  .app-cta {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--lime); color: #000;
+    font-weight: 700; font-size: 0.8rem;
+    padding: 0.6rem 1.5rem; border-radius: 100px;
+    margin-top: 1rem; position: relative; z-index: 1;
+    letter-spacing: 0.05em;
+  }
+  .app-row {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .app-row-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+  .app-cards-row { display: flex; gap: 0.75rem; overflow: hidden; }
+  .app-mini-card {
+    flex-shrink: 0; width: 100px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .app-mini-thumb {
+    height: 65px;
+    display: flex; align-items: flex-end;
+    padding: 0.4rem;
+  }
+  .app-mini-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.03em; color: var(--text); line-height: 1.2; text-shadow: 0 1px 4px rgba(0,0,0,0.8); position: relative; z-index: 1; }
+  .mc1 { background: linear-gradient(160deg, #1a0a2e, #3d1a4a); }
+  .mc2 { background: linear-gradient(160deg, #0a1a2e, #1a3a4a); }
+  .mc3 { background: linear-gradient(160deg, #2e1a0a, #4a2a1a); }
+  .mc4 { background: linear-gradient(160deg, #0a2e1a, #1a4a2a); }
+  .mc5 { background: linear-gradient(160deg, #2e0a1a, #4a1a2a); }
+
+  /* FOOTER */
+  .footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 8rem 0 5rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .footer::before {
+    content: ''; position: absolute;
+    top: -1px; left: 20%; right: 20%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--lime), transparent);
+  }
+  .footer-big { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem,12vw,10rem); color: var(--lime); line-height: 0.9; }
+  .footer-sub { font-size: 1.5rem; font-weight: 300; margin: 1rem 0 0.5rem; }
+  .footer-desc { color: var(--muted); font-size: 0.95rem; max-width: 400px; margin: 0 auto 3rem; line-height: 1.7; }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    background: var(--lime); color: #000;
+    font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    padding: 1rem 2.5rem; border-radius: 100px;
+    border: none; cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+  }
+  .cta-btn:hover { transform: scale(1.06); box-shadow: 0 0 40px rgba(212,255,0,0.3); }
+  .footer-socials {
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .social-link {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem; letter-spacing: 0.05em;
+    transition: border-color 0.3s, color 0.3s, transform 0.3s;
+  }
+  .social-link:hover { border-color: var(--lime); color: var(--lime); transform: translateY(-4px); }
+  .footer-copy { color: rgba(255,255,255,0.2); font-size: 0.75rem; letter-spacing: 0.1em; margin-top: 4rem; }
+
+  /* Divider accent */
+  .divider-accent {
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--lime), transparent);
+    margin: 0 auto;
+  }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* Skills bar */
+  .skills-row { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+  .skill-item { display: flex; align-items: center; gap: 1rem; }
+  .skill-name { font-size: 0.78rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; min-width: 120px; }
+  .skill-track { flex: 1; height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .skill-fill { height: 100%; background: var(--lime); border-radius: 2px; width: 0%; transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
+
+  /* Floating badge */
+  .floating-badge {
+    position: absolute;
+    background: var(--lime); color: #000;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.35rem 0.85rem; border-radius: 100px;
+    animation: badgeFloat 4s ease-in-out infinite;
+  }
+  .badge1 { top: 1.5rem; right: 1.5rem; }
+  .badge2 { bottom: 1.5rem; left: 1.5rem; background: transparent; color: var(--lime); border: 1px solid rgba(212,255,0,0.3); }
+
+  /* KEYFRAMES */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes signaturePop { from { opacity: 0; transform: rotate(-15deg) scale(0.8); } to { opacity: 1; transform: rotate(-6deg) scale(1); } }
+  @keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; } 50% { opacity: 1; transform: scaleY(1); } }
+  @keyframes orbFloat { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-30px) rotate(10deg); } }
+  @keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .star-spin { animation: spin 20s linear infinite; }
+</style>
 </head>
-<body class="bg-neutral-50 text-neutral-900">
+<body>
 
-    <nav class="fixed w-full p-6 flex justify-between items-center bg-white/80 backdrop-blur-md z-50 border-b border-neutral-200">
-        <span class="font-bold tracking-tighter text-xl">PORTFOLIO</span>
-        <div class="space-x-6 text-sm font-medium uppercase">
-            <a href="https://drive.google.com/file/d/1ykJxPTdmUAq54i1p9btPuFm6PxnDnR-E/view?usp=drivesdk" class="hover:opacity-50">Resume</a>
-            <a href="https://www.linkedin.com/in/ritika-kumari-328b973a9/" class="hover:opacity-50">Connect</a>
+<canvas id="sparkle-canvas"></canvas>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">RK</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#logos">Logos</a></li>
+    <li><a href="#branding">Branding</a></li>
+    <li><a href="#uiux">UI/UX</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <p class="hero-eyebrow">Graphic Design · Brand Identity · UI/UX</p>
+  <h1 class="hero-title">Portfolio</h1>
+
+  <div class="hero-signature">Ritika Kumari</div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="padding: 8rem 0;">
+  <div class="container">
+    <div class="about-grid reveal">
+      <div>
+        <div class="section-label">About Me</div>
+        <h2 class="about-heading">Hello!</h2>
+        <div class="about-name">I am Ritika Kumari.</div>
+        <p class="about-bio">
+          I'm a creative and motivated graphic designer with a strong passion for visual storytelling and brand design. I thrive on exploring new challenges that push the boundaries of creativity. Known for my creative flair and ability to deliver impactful designs, I'm always exploring new trends and techniques.
+        </p>
+        <div class="skills-row" id="skills-row">
+          <div class="skill-item">
+            <span class="skill-name">Brand Design</span>
+            <div class="skill-track"><div class="skill-fill" data-width="92"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Logo Design</span>
+            <div class="skill-track"><div class="skill-fill" data-width="88"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">UI / UX</span>
+            <div class="skill-track"><div class="skill-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-item">
+            <span class="skill-name">Typography</span>
+            <div class="skill-track"><div class="skill-fill" data-width="95"></div></div>
+          </div>
         </div>
-    </nav>
-
-    <header class="pt-32 pb-20 px-6 md:px-20">
-        <h1 class="text-6xl md:text-8xl font-bold tracking-tighter mb-6">Ritika Kumari <br><span class="text-neutral-400 italic">Design </span></h1>
-        <p class="max-w-2xl text-lg text-neutral-600">Creative and research-driven Design student at NIFT Panchkula,  Skilled in Circular
-Design, system mapping, and brand strategy. Experienced in developing AI-driven design solutions
-and user-centric prototypes that balance aesthetics, sustainability, and innovation.</p>
-    </header>
-
-  <section id="projects" class="px-6 md:px-20 py-10">
-    <h2 class="text-xs uppercase tracking-widest text-neutral-400 mb-10">Selected Works</h2>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        
-        <div class="group">
-            <div class="aspect-video bg-neutral-200 overflow-hidden mb-4">
-                <img src="https://images.unsplash.com/photo-1635875797356-7d29aa0dfa32?q=80&w=1176&auto=format&fit=crop" 
-                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            </div>
-            <h3 class="text-xl font-bold">
-                <a href="https://1drv.ms/p/c/f79227017255ca8b/IQDvnDDlwYQWQocY4qmoc6vUAQRke5XeFVAvZpHwHY7TsDU?e=AKaeb3" target="_blank" class="hover:underline">
-                   Market Strategy: Nescafé vs. Bru
-                </a>
-            </h3>
-            <p class="text-neutral-500 text-sm mt-2">A comprehensive brand audit comparing global leader Nescafé with local favorite Bru. 
-    The report analyzes market positioning, consumer touchpoints, and the 'Glocal' 
-    strategy used to balance international brand identity with Indian regional preferences.</p>
+        <div class="about-stats">
+          <div>
+            <div class="stat-num">50+</div>
+            <div class="stat-label">Projects Done</div>
+          </div>
+          <div>
+            <div class="stat-num">30+</div>
+            <div class="stat-label">Happy Clients</div>
+          </div>
+          <div>
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Years Active</div>
+          </div>
         </div>
+      </div>
+      <div class="profile-frame" id="profile-frame">
+        <div class="profile-placeholder">Your Photo<br>Goes Here ✦</div>
+        <div class="profile-corner tl"></div>
+        <div class="profile-corner tr"></div>
+        <div class="profile-corner bl"></div>
+        <div class="profile-corner br"></div>
+        <div class="floating-badge badge1">Available ✦</div>
+        <div class="floating-badge badge2">Open to work</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <div class="group">
-            <div class="aspect-video bg-neutral-200 overflow-hidden mb-4">
-                <img src="https://raw.githubusercontent.com/ritikakumariNIFT/portfolio/refs/heads/main/image.png" 
-                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            </div>
-            <h3 class="text-xl font-bold">
-                <a href="https://1drv.ms/p/c/f79227017255ca8b/IQDvnDDlwYQWQocY4qmoc6vUAQRke5XeFVAvZpHwHY7TsDU?e=AKaeb3" target="_blank" class="hover:underline">
-                    CarryCool
-                </a>
-            </h3>
-            <p class="text-neutral-500 text-sm mt-2">Carry Cool is a lifestyle backpack brand that bridges the gap between high-performance utility and modern, youth-centric aesthetics. It targets urban explorers who refuse to compromise on tech features or style.</p>
+<!-- LOGO FOLIO -->
+<section id="logos" style="padding: 6rem 0;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Selected Works</div>
+      <h2 class="section-title">Logo <span style="color:var(--lime)">Folio</span></h2>
+      <p style="color:var(--muted); margin-top:1rem; max-width:500px; line-height:1.7;">Custom logos designed to align with clients' visions and brand stories.</p>
+    </div>
+    <div class="logo-grid reveal reveal-delay-1">
+      <div class="logo-card lc1">
+        <div class="logo-num">01</div>
+        <div class="logo-card-inner">
+          <div class="logo-icon">NOVA</div>
+          <div class="logo-card-label">Tech Startup</div>
         </div>
-
-    </div> </section>
-
-    <section id="resume" class="bg-white border-y border-neutral-200 px-6 md:px-20 py-24">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
-            
-            <div>
-                <h2 class="text-2xl font-bold mb-8 italic">Education</h2>
-                <div class="space-y-8">
-                    <div>
-                        <p class="text-sm font-bold">2025 — Present</p>
-                        <h4 class="text-lg">Master of Design (M.Des)</h4>
-                        <p class="text-neutral-500">NIFT Panchkula</p>
-                    </div>
-                    <div>
-                        <p class="text-sm font-bold">Previous</p>
-                        <h4 class="text-lg">Science & Mathematics</h4>
-                        <p class="text-neutral-500">Bachelor of Science (B.Sc)</p>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <h2 class="text-2xl font-bold mb-8 italic">Skills</h2>
-                <div class="flex flex-wrap gap-2">
-                    <span class="skill-pill px-4 py-2 border border-neutral-200 rounded-full text-xs">Design</span>
-                    <span class="skill-pill px-4 py-2 border border-neutral-200 rounded-full text-xs">Figma</span>
-                    <span class="skill-pill px-4 py-2 border border-neutral-200 rounded-full text-xs">Technical Illustration</span>
-                    <span class="skill-pill px-4 py-2 border border-neutral-200 rounded-full text-xs">Brand Strategy</span>
-                    <span class="skill-pill px-4 py-2 border border-neutral-200 rounded-full text-xs">Sustainable Design</span>
-                </div>
-            </div>
-
-            <div>
-                <h2 class="text-2xl font-bold mb-8 italic">Strategic Mindset</h2>
-                <p class="text-sm text-neutral-600 mb-4">Beyond design, I Learn some ART </p>
-                <div class="p-4 bg-neutral-100 rounded-lg">
-                    <p class="text-xs font-bold uppercase">Current Focus:</p>
-                    <p class="text-xs text-neutral-500 italic">Sustainable Design</p>
-                </div>
-            </div>
-
+      </div>
+      <div class="logo-card lc2">
+        <div class="logo-num">02</div>
+        <div class="logo-card-inner">
+          <div class="logo-icon">AURA</div>
+          <div class="logo-card-label">Fashion Brand</div>
         </div>
-    </section>
-
-    <footer id="contact" class="px-6 md:px-20 py-20 bg-neutral-900 text-white">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-10">
-            <div>
-                <h2 class="text-4xl font-bold tracking-tighter">Let's build the <br>future of design.</h2>
-            </div>
-            <div class="text-right">
-                <a href="mailto:yourname@nift.ac.in" class="text-xl underline decoration-neutral-500 hover:text-neutral-400">Get In Touch</a>
-                <div class="mt-4 flex gap-6 justify-end text-sm text-neutral-400">
-                    <a href="https://www.linkedin.com/in/ritika-kumari-328b973a9/">LinkedIn</a>
-                    <a href="#">Behance</a>
-                    <a href="#">Instagram</a>
-                </div>
-            </div>
+      </div>
+      <div class="logo-card lc3">
+        <div class="logo-num">03</div>
+        <div class="logo-card-inner">
+          <div class="logo-icon">FLUX</div>
+          <div class="logo-card-label">Creative Agency</div>
         </div>
-    </footer>
+      </div>
+      <div class="logo-card lc4">
+        <div class="logo-num">04</div>
+        <div class="logo-card-inner">
+          <div class="logo-icon">ECHO</div>
+          <div class="logo-card-label">Music Platform</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- BRANDING -->
+<section id="branding" style="padding: 6rem 0;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Case Study</div>
+      <h2 class="section-title">Branding</h2>
+      <p style="color:var(--muted); margin-top:1rem; max-width:500px; line-height:1.7;">Brand identity projects creating impactful visual marks aligned with mission and goals.</p>
+    </div>
+    <div class="brand-card reveal reveal-delay-1">
+      <span class="brand-tag">✦ Featured Project</span>
+      <div class="brand-title">Ourvita</div>
+      <div class="brand-industry">Industry: Premium Natural Cosmetics</div>
+      <p class="brand-desc">Ourvita is a premium natural cosmetics brand committed to delivering high-performance skincare and beauty products powered by nature. The brand identity reflects purity, elegance, and sustainability.</p>
+      <div class="mockup-grid">
+        <div class="mockup-box">
+          <div class="mockup-inner ourvita-hero">
+            <div class="ourvita-logo-text">OURVITA</div>
+            <div class="ourvita-sub">Pure · Natural · Luxe</div>
+          </div>
+          <div class="mockup-label">Brand Guidelines</div>
+        </div>
+        <div class="mockup-box">
+          <div class="mockup-inner ourvita-packaging">
+            <div class="pkg-bottle">
+              <div class="pkg-bottle-shape pkg-b1">
+                <div class="pkg-label-strip">OV</div>
+              </div>
+              <div class="pkg-name">Serum</div>
+            </div>
+            <div class="pkg-bottle">
+              <div class="pkg-bottle-shape pkg-b2">
+                <div class="pkg-label-strip" style="font-size:0.5rem;">OV</div>
+              </div>
+              <div class="pkg-name">Mist</div>
+            </div>
+            <div class="pkg-bottle">
+              <div class="pkg-bottle-shape pkg-b3">
+                <div class="pkg-label-strip">OV</div>
+              </div>
+              <div class="pkg-name">Cream</div>
+            </div>
+          </div>
+          <div class="mockup-label">Packaging</div>
+        </div>
+        <div class="mockup-box">
+          <div class="mockup-inner" style="background: linear-gradient(135deg, #0a1205, #1a2d0f); justify-content:center; gap:2rem; display:flex; align-items:center;">
+            <div style="text-align:center;">
+              <div style="font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:0.3em; color:var(--lime);">OURVITA</div>
+              <div style="width:80px; height:1px; background:rgba(212,255,0,0.3); margin:0.5rem auto;"></div>
+              <div style="font-size:0.5rem; letter-spacing:0.3em; color:rgba(212,255,0,0.4);">EST. 2024</div>
+            </div>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <div style="width:24px; height:24px; border-radius:50%; background:#d4ff00;"></div>
+              <div style="width:24px; height:24px; border-radius:50%; background:#2d3a1a;"></div>
+              <div style="width:24px; height:24px; border-radius:50%; background:#f5f0e8;"></div>
+            </div>
+          </div>
+          <div class="mockup-label">Color Palette</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UI UX -->
+<section id="uiux" style="padding: 6rem 0;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">UI / UX Design</div>
+      <div class="uiux-title">UI UX</div>
+      <p style="color:var(--muted); margin-top:1.5rem; max-width:500px; line-height:1.7;">Seamless interfaces for apps and websites that combine clarity, usability, and visual appeal.</p>
+    </div>
+    <div class="uiux-card reveal reveal-delay-1">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <div class="section-label" style="margin:0 0 0.5rem;">Client Project</div>
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:2.5rem;">Poppy</div>
+          <div style="font-size:0.8rem; letter-spacing:0.1em; color:var(--lime); text-transform:uppercase;">Premium Movie & TV Streaming App</div>
+        </div>
+        <div style="display:flex; gap:0.5rem;">
+          <span style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:100px; font-size:0.65rem; letter-spacing:0.1em; color:var(--muted); padding:0.3rem 0.75rem; text-transform:uppercase;">Figma</span>
+          <span style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:100px; font-size:0.65rem; letter-spacing:0.1em; color:var(--muted); padding:0.3rem 0.75rem; text-transform:uppercase;">Mobile</span>
+          <span style="background:rgba(212,255,0,0.08); border:1px solid rgba(212,255,0,0.2); border-radius:100px; font-size:0.65rem; letter-spacing:0.1em; color:var(--lime); padding:0.3rem 0.75rem; text-transform:uppercase;">2024</span>
+        </div>
+      </div>
+      <div class="app-frame">
+        <div class="app-bar">
+          <div class="app-bar-logo">POPPY</div>
+          <div class="app-bar-nav">
+            <span class="app-nav-item active">Home</span>
+            <span class="app-nav-item">Movies</span>
+            <span class="app-nav-item">Series</span>
+            <span class="app-nav-item">My List</span>
+          </div>
+        </div>
+        <div class="app-hero-banner">
+          <div class="app-banner-bg"></div>
+          <div class="app-movie-title">Interstellar</div>
+          <div class="app-movie-meta">2014 · 2h 49m · ★ 8.7 · Sci-Fi · Adventure</div>
+          <div class="app-cta">▶ Watch Now</div>
+        </div>
+        <div class="app-row">
+          <div class="app-row-label">Trending Now</div>
+          <div class="app-cards-row">
+            <div class="app-mini-card mc1"><div class="app-mini-thumb"><span class="app-mini-label">Blade Runner 2049</span></div></div>
+            <div class="app-mini-card mc2"><div class="app-mini-thumb"><span class="app-mini-label">Dune</span></div></div>
+            <div class="app-mini-card mc3"><div class="app-mini-thumb"><span class="app-mini-label">Oppenheimer</span></div></div>
+            <div class="app-mini-card mc4"><div class="app-mini-thumb"><span class="app-mini-label">The Matrix</span></div></div>
+            <div class="app-mini-card mc5"><div class="app-mini-thumb"><span class="app-mini-label">Mad Max</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div style="padding: 4rem 0; text-align:center;" class="reveal">
+  <div class="divider-accent"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="reveal">
+      <div class="footer-big">Let's Work</div>
+      <p class="footer-sub">Thanks For Scrolling!</p>
+      <p class="footer-desc">Don't forget to reach out if you love my work. Let's create something beautiful together.</p>
+      <button class="cta-btn">✦ Get In Touch</button>
+      <div class="footer-socials">
+        <a class="social-link">Be</a>
+        <a class="social-link">Dbl</a>
+        <a class="social-link">In</a>
+        <a class="social-link">Ig</a>
+      </div>
+      <div class="footer-copy">© 2024 Ritika Kumari · All Rights Reserved</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Sparkle canvas
+const canvas = document.getElementById('sparkle-canvas');
+const ctx = canvas.getContext('2d');
+let W = window.innerWidth, H = window.innerHeight;
+canvas.width = W; canvas.height = H;
+window.addEventListener('resize', () => { W = window.innerWidth; H = window.innerHeight; canvas.width = W; canvas.height = H; });
+
+const sparkles = [];
+const SPARKLE_COUNT = 80;
+
+function randomRange(a, b) { return a + Math.random() * (b - a); }
+
+for (let i = 0; i < SPARKLE_COUNT; i++) {
+  sparkles.push({
+    x: Math.random() * W, y: Math.random() * H,
+    size: randomRange(0.5, 2.5),
+    alpha: Math.random(),
+    alphaDir: Math.random() > 0.5 ? 1 : -1,
+    alphaSpeed: randomRange(0.003, 0.01),
+    vx: randomRange(-0.1, 0.1), vy: randomRange(-0.15, -0.05)
+  });
+}
+
+// Mouse sparkles
+let mouseTrail = [];
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  for (let i = 0; i < 2; i++) {
+    mouseTrail.push({
+      x: mx + randomRange(-10, 10),
+      y: my + randomRange(-10, 10),
+      size: randomRange(1, 4),
+      alpha: 0.8,
+      vx: randomRange(-1.5, 1.5),
+      vy: randomRange(-2, -0.5),
+      life: 1
+    });
+  }
+  if (mouseTrail.length > 60) mouseTrail.splice(0, mouseTrail.length - 60);
+});
+
+function drawStar(x, y, size, alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = '#d4ff00';
+  ctx.beginPath();
+  for (let i = 0; i < 4; i++) {
+    const angle = (i / 4) * Math.PI * 2;
+    const x1 = x + Math.cos(angle) * size;
+    const y1 = y + Math.sin(angle) * size;
+    const x2 = x + Math.cos(angle + Math.PI/4) * size * 0.3;
+    const y2 = y + Math.sin(angle + Math.PI/4) * size * 0.3;
+    if (i === 0) ctx.moveTo(x1, y1);
+    else ctx.lineTo(x2, y2);
+    ctx.lineTo(x1, y1);
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function animateSparkles() {
+  ctx.clearRect(0, 0, W, H);
+  // Background sparkles
+  for (const s of sparkles) {
+    s.alpha += s.alphaDir * s.alphaSpeed;
+    if (s.alpha >= 1) { s.alpha = 1; s.alphaDir = -1; }
+    if (s.alpha <= 0) { s.alpha = 0; s.alphaDir = 1; }
+    s.x += s.vx; s.y += s.vy;
+    if (s.y < -10) { s.y = H + 10; s.x = Math.random() * W; }
+    drawStar(s.x, s.y, s.size, s.alpha * 0.5);
+  }
+  // Mouse trail sparkles
+  for (let i = mouseTrail.length - 1; i >= 0; i--) {
+    const t = mouseTrail[i];
+    t.x += t.vx; t.y += t.vy;
+    t.alpha -= 0.04; t.life -= 0.04;
+    if (t.alpha <= 0) { mouseTrail.splice(i, 1); continue; }
+    drawStar(t.x, t.y, t.size, t.alpha);
+  }
+  requestAnimationFrame(animateSparkles);
+}
+animateSparkles();
+
+// Custom cursor
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let cx = 0, cy = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; });
+(function animCursor() {
+  rx += (cx - rx) * 0.12; ry += (cy - ry) * 0.12;
+  cur.style.transform = `translate(${cx - 6}px, ${cy - 6}px)`;
+  ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+  requestAnimationFrame(animCursor);
+})();
+
+// Hover effects
+document.querySelectorAll('a, button, .logo-card, .mockup-box, .profile-frame, .app-mini-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cur.style.transform += ' scale(2)'; ring.style.width = '60px'; ring.style.height = '60px'; ring.style.transform += ' translate(-12px, -12px)'; });
+  el.addEventListener('mouseleave', () => { cur.style.width = '12px'; cur.style.height = '12px'; ring.style.width = '36px'; ring.style.height = '36px'; });
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Trigger skill bars
+      if (e.target.contains(document.getElementById('skills-row'))) {
+        setTimeout(() => {
+          document.querySelectorAll('.skill-fill').forEach(b => {
+            b.style.width = b.dataset.width + '%';
+          });
+        }, 300);
+      }
+    }
+  });
+}, { threshold: 0.15 });
+reveals.forEach(r => io.observe(r));
+
+// Logo card tilt
+document.querySelectorAll('.logo-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `translateY(-8px) scale(1.02) rotateX(${-y*12}deg) rotateY(${x*12}deg)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 80) {
+    nav.style.background = 'rgba(10,11,12,0.92)';
+    nav.style.backdropFilter = 'blur(20px)';
+    nav.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+  } else {
+    nav.style.background = '';
+    nav.style.backdropFilter = '';
+    nav.style.borderBottom = '';
+  }
+});
+</script>
 </body>
 </html>
