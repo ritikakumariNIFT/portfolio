@@ -103,6 +103,54 @@
         font-size: 1.5rem;
         letter-spacing: 0.1em;
         color: var(--lime);
+        position: relative;
+        display: inline-block;
+      }
+      .butterfly-animation {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        width: 60px;
+        height: 60px;
+        pointer-events: none;
+        z-index: 10;
+        animation: butterflyFly 4s ease-in-out infinite;
+      }
+      @media (max-width: 768px) {
+        .butterfly-animation {
+          width: 40px;
+          height: 40px;
+          top: -30px;
+        }
+      }
+      @media (max-width: 480px) {
+        .butterfly-animation {
+          width: 30px;
+          height: 30px;
+          top: -22px;
+        }
+      }
+      @keyframes butterflyFly {
+        0% {
+          transform: translateY(0px) translateX(0px) rotateZ(-5deg);
+          opacity: 1;
+        }
+        25% {
+          transform: translateY(-30px) translateX(15px) rotateZ(5deg);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-50px) translateX(0px) rotateZ(0deg);
+          opacity: 1;
+        }
+        75% {
+          transform: translateY(-30px) translateX(-15px) rotateZ(-5deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(0px) translateX(0px) rotateZ(-5deg);
+          opacity: 1;
+        }
       }
       .nav-links {
         display: flex;
@@ -1000,559 +1048,58 @@
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid var(--border);
         border-radius: 100px;
-        font-size: 0.62rem;
-        letter-spacing: 0.1em;
-        color: var(--muted);
-        padding: 0.28rem 0.7rem;
-        text-transform: uppercase;
-      }
-      .tag.lime {
-        background: rgba(208, 0, 255, 0.08);
-        border-color: rgba(208, 0, 255, 0.2);
-        color: var(--lime);
-      }
-
-      /* PHONE MOCKUP */
-      .phone-mockup-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 2rem 0;
-        padding: 1.5rem;
-      }
-      .phone-mockup {
-        position: relative;
-        width: 280px;
-        height: 560px;
-        background: linear-gradient(135deg, #1d0d3a, #2d0d4a);
-        border: 10px solid #0a0a0c;
-        border-radius: 35px;
-        box-shadow:
-          0 20px 60px rgba(208, 0, 255, 0.25),
-          inset 0 0 20px rgba(208, 0, 255, 0.1);
-        overflow: hidden;
-      }
-      .phone-notch {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 120px;
-        height: 24px;
-        background: #0a0a0c;
-        border-radius: 0 0 18px 18px;
-        z-index: 10;
-      }
-      .phone-screen {
-        width: 100%;
-        height: 100%;
-        border-radius: 30px;
-        overflow: hidden;
-        background: #000;
-      }
-      .phone-screen iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-      .phone-home-btn {
-        position: absolute;
-        bottom: 6px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        border: 1px solid rgba(208, 0, 255, 0.3);
-        background: transparent;
-        z-index: 11;
-      }
-      .proto-info {
-        text-align: center;
-        margin-top: 1.5rem;
-      }
-      .proto-info-text {
-        font-size: 0.8rem;
-        letter-spacing: 0.1em;
-        color: var(--muted);
-        text-transform: uppercase;
-      }
-      @media (max-width: 768px) {
-        .phone-mockup {
-          width: 240px;
-          height: 480px;
-          border: 8px solid #0a0a0c;
-          border-radius: 30px;
-        }
-        .phone-notch {
-          width: 100px;
-          height: 20px;
-          border-radius: 0 0 16px 16px;
-        }
-        .phone-screen {
-          border-radius: 26px;
-        }
-        .phone-home-btn {
-          width: 20px;
-          height: 20px;
-        }
-      }
-      @media (max-width: 480px) {
-        .phone-mockup {
-          width: 200px;
-          height: 400px;
-          border: 6px solid #0a0a0c;
-          border-radius: 24px;
-        }
-        .phone-notch {
-          width: 80px;
-          height: 16px;
-          border-radius: 0 0 12px 12px;
-        }
-        .phone-screen {
-          border-radius: 22px;
-        }
-        .phone-home-btn {
-          width: 16px;
-          height: 16px;
-          bottom: 4px;
-        }
-        .proto-info-text {
-          font-size: 0.7rem;
-        }
-      }
-
-      .app-frame {
-        background: #0e0e10;
-        border-radius: 1.2rem;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .app-bar {
-        background: #0a0a0c;
-        padding: 0.9rem 1.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      }
-      .app-logo {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 1.3rem;
-        letter-spacing: 0.1em;
-        color: var(--lime);
-      }
-      .app-nav {
-        display: flex;
-        gap: 1.2rem;
-      }
-      .app-nav span {
-        font-size: 0.7rem;
-        color: var(--muted);
-        letter-spacing: 0.05em;
-      }
-      .app-nav span.a {
-        color: var(--text);
-      }
-      @media (max-width: 480px) {
-        .app-nav {
-          gap: 0.6rem;
-        }
-        .app-nav span {
-          font-size: 0.6rem;
-        }
-      }
-      .app-banner {
-        background: linear-gradient(135deg, #2d0d4a, #1a0d3a);
-        padding: 2rem 1.2rem;
-        position: relative;
-        overflow: hidden;
-      }
-      .app-banner::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          ellipse at 70% 50%,
-          rgba(180, 0, 255, 0.25),
-          transparent 60%
-        );
-      }
-      .app-movie {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 1.9rem;
-        color: var(--text);
-        position: relative;
-        z-index: 1;
-      }
-      .app-meta {
+        padding: 0.35rem 0.9rem;
         font-size: 0.65rem;
-        color: var(--muted);
-        margin-top: 0.2rem;
-        position: relative;
-        z-index: 1;
-        letter-spacing: 0.04em;
-      }
-      .app-cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        background: var(--lime);
-        color: #000;
-        font-weight: 700;
-        font-size: 0.75rem;
-        padding: 0.5rem 1.2rem;
-        border-radius: 100px;
-        margin-top: 0.85rem;
-        position: relative;
-        z-index: 1;
-        letter-spacing: 0.04em;
-      }
-      .app-row {
-        padding: 1.2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
-      }
-      .app-row-lbl {
-        font-size: 0.65rem;
-        letter-spacing: 0.15em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
         color: var(--muted);
-        margin-bottom: 0.85rem;
+        transition: all 0.3s;
       }
-      .cards-row {
-        display: flex;
-        gap: 0.6rem;
-        overflow: hidden;
-      }
-      .mini-card {
-        flex-shrink: 0;
-        width: 90px;
-        border-radius: 9px;
-        overflow: hidden;
-        cursor: pointer;
-      }
-      .mini-thumb {
-        height: 58px;
-        display: flex;
-        align-items: flex-end;
-        padding: 0.35rem;
-      }
-      .mini-lbl {
-        font-size: 0.55rem;
-        font-weight: 600;
-        color: var(--text);
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-        line-height: 1.2;
-      }
-      @media (max-width: 480px) {
-        .mini-card {
-          width: 76px;
-        }
-        .mini-thumb {
-          height: 50px;
-        }
-      }
-      .mc1 {
-        background: linear-gradient(160deg, #2d1050, #5a2a7f);
-      }
-      .mc2 {
-        background: linear-gradient(160deg, #1d0530, #3d0d7a);
-      }
-      .mc3 {
-        background: linear-gradient(160deg, #2e0a4a, #5a1a7a);
-      }
-      .mc4 {
-        background: linear-gradient(160deg, #1a0d3a, #3d1a6a);
-      }
-      .mc5 {
-        background: linear-gradient(160deg, #3a0d5a, #6a1a8a);
-      }
-
-      /* PATTACHITRA */
-      .patta-card {
-        background: var(--s1);
-        border: 1px solid var(--border);
-        border-radius: 2rem;
-        padding: 3rem;
-        position: relative;
-        overflow: hidden;
-        margin-top: 2.5rem;
-      }
-      .patta-card::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: 3rem;
-        right: 3rem;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          var(--lime),
-          transparent
-        );
-      }
-      @media (max-width: 768px) {
-        .patta-card {
-          padding: 2rem;
-          border-radius: 1.5rem;
-        }
-      }
-      @media (max-width: 480px) {
-        .patta-card {
-          padding: 1.5rem;
-        }
-      }
-      .patta-subtitle {
-        font-size: 0.72rem;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
+      .tag:hover {
         color: var(--lime);
-        position: relative;
-        z-index: 2;
-        opacity: 0;
-        animation: fadeUp 0.8s 0.2s var(--ease) forwards;
-      }
-      .patta-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(2.2rem, 5vw, 3.5rem);
-        color: var(--lime);
-        margin-bottom: 1rem;
-        margin-top: 0.5rem;
-      }
-      .patta-desc {
-        color: rgba(255, 255, 255, 0.55);
-        line-height: 1.8;
-        max-width: 720px;
-        margin: 1.5rem 0 2rem;
-        font-size: 0.93rem;
-      }
-      .patta-research-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        margin-top: 2rem;
-        align-items: start;
-      }
-      @media (max-width: 900px) {
-        .patta-research-grid {
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-      }
-      .patta-info {
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
-      }
-      .patta-point {
-        background: rgba(208, 0, 255, 0.05);
-        border: 1px solid rgba(208, 0, 255, 0.15);
-        border-radius: 1rem;
-        padding: 1.2rem;
-      }
-      .patta-point-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 1.1rem;
-        color: var(--lime);
-        margin-bottom: 0.4rem;
-      }
-      .patta-point-text {
-        font-size: 0.85rem;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-      .patta-ref-box {
-        background: linear-gradient(135deg, #1d0d3a, #2d0d4a);
-        border: 1px solid rgba(208, 0, 255, 0.2);
-        border-radius: 1.2rem;
-        padding: 1.8rem;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-      .patta-ref-box::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          circle at center,
-          rgba(208, 0, 255, 0.1),
-          transparent
-        );
-      }
-      .patta-ref-text {
-        font-family: "Caveat", cursive;
-        font-size: 1.3rem;
-        color: var(--lime);
-        position: relative;
-        z-index: 1;
-        margin-bottom: 0.5rem;
-      }
-      .patta-ref-sub {
-        font-size: 0.75rem;
-        letter-spacing: 0.1em;
-        color: rgba(208, 0, 255, 0.6);
-        text-transform: uppercase;
-        position: relative;
-        z-index: 1;
-      }
-
-      .div-acc {
-        width: 1px;
-        height: 60px;
-        background: linear-gradient(
-          to bottom,
-          transparent,
-          var(--lime),
-          transparent
-        );
-        margin: 0 auto;
+        border-color: rgba(208, 0, 255, 0.4);
       }
 
       /* FOOTER */
       footer {
         background: var(--s1);
         border-top: 1px solid var(--border);
-        padding: 7rem 0 4rem;
+        padding: 4rem 0;
         text-align: center;
-        position: relative;
-        overflow: hidden;
       }
-      footer::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: 20%;
-        right: 20%;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          var(--lime),
-          transparent
-        );
-      }
-      .foot-big {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(3.5rem, 12vw, 9rem);
-        color: var(--lime);
-        line-height: 0.9;
-      }
-      .foot-sub {
-        font-size: clamp(1.2rem, 3vw, 1.6rem);
-        font-weight: 300;
-        margin: 1rem 0 0.6rem;
-      }
-      .foot-desc {
-        color: var(--muted);
-        font-size: 0.9rem;
-        max-width: 380px;
-        margin: 0 auto 2.5rem;
-        line-height: 1.7;
-        padding: 0 1rem;
-      }
-      .cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.65rem;
-        background: var(--lime);
-        color: #000;
-        font-weight: 700;
-        font-size: 0.9rem;
-        letter-spacing: 0.05em;
-        padding: 0.9rem 2.2rem;
-        border-radius: 100px;
-        border: none;
-        cursor: pointer;
-        transition:
-          transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-          box-shadow 0.3s;
-      }
-      .cta-btn:hover {
-        transform: scale(1.06);
-        box-shadow: 0 0 40px rgba(208, 0, 255, 0.3);
-      }
-      .foot-socials {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.2rem;
-        margin-top: 2.5rem;
-        flex-wrap: wrap;
-      }
-      .soc {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        border: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: var(--muted);
-        text-decoration: none;
-        font-size: 0.7rem;
-        letter-spacing: 0.04em;
-        transition:
-          border-color 0.3s,
-          color 0.3s,
-          transform 0.3s;
-      }
-      .soc:hover {
-        border-color: var(--lime);
-        color: var(--lime);
-        transform: translateY(-4px);
-      }
-      .foot-copy {
-        color: rgba(255, 255, 255, 0.18);
-        font-size: 0.7rem;
-        letter-spacing: 0.1em;
-        margin-top: 3.5rem;
-      }
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(35px);
-        transition:
-          opacity 0.9s var(--ease),
-          transform 0.9s var(--ease);
-      }
-      .reveal.visible {
-        opacity: 1;
-        transform: none;
-      }
-      .d1 {
-        transition-delay: 0.12s;
-      }
-      .d2 {
-        transition-delay: 0.25s;
-      }
-      .d3 {
-        transition-delay: 0.38s;
-      }
-
-      @media (max-width: 480px) {
+      @media (max-width: 768px) {
         footer {
-          padding: 5rem 0 3rem;
-        }
-        .foot-socials {
-          gap: 0.75rem;
-        }
-        .soc {
-          width: 38px;
-          height: 38px;
+          padding: 3rem 0;
         }
       }
+      .footer-txt {
+        color: var(--muted);
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+      }
+      .footer-txt strong {
+        color: var(--lime);
+      }
 
+      /* ANIMATIONS */
       @keyframes fadeUp {
         from {
           opacity: 0;
-          transform: translateY(35px);
+          transform: translateY(30px);
         }
         to {
           opacity: 1;
-          transform: none;
+          transform: translateY(0);
+        }
+      }
+      @keyframes sigPop {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
         }
       }
       @keyframes fadeIn {
@@ -1563,447 +1110,198 @@
           opacity: 1;
         }
       }
-      @keyframes sigPop {
-        from {
-          opacity: 0;
-          transform: scale(0.8) rotate(-15deg);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1) rotate(-6deg);
-        }
-      }
       @keyframes scrollPulse {
         0%,
         100% {
-          opacity: 0.3;
-          transform: scaleY(0.5);
-          transform-origin: top;
+          transform: translateY(0);
+          opacity: 0;
         }
         50% {
           opacity: 1;
-          transform: scaleY(1);
+        }
+        100% {
+          transform: translateY(12px);
+          opacity: 0;
         }
       }
       @keyframes orbFloat {
         0%,
         100% {
-          transform: translateY(0) rotate(0);
+          transform: translateY(0px);
         }
         50% {
-          transform: translateY(-25px) rotate(8deg);
+          transform: translateY(-30px);
         }
       }
       @keyframes badgeFloat {
         0%,
         100% {
-          transform: translateY(0);
+          transform: translateY(0px) translateX(0px);
         }
         50% {
-          transform: translateY(-5px);
+          transform: translateY(-8px) translateX(4px);
         }
       }
     </style>
   </head>
   <body>
     <canvas id="sc"></canvas>
-    <div
-      id="butterfly-3d-container"
-      style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        z-index: 15;
-        pointer-events: none;
-      "
-    ></div>
     <div id="cur"></div>
     <div id="cur-ring"></div>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu" id="mm">
-      <a href="#about" onclick="closeMM()">About</a>
-      <a href="#logos" onclick="closeMM()">Logos</a>
-      <a href="#branding" onclick="closeMM()">Branding</a>
-      <a href="#pattachitra" onclick="closeMM()">Pattachitra</a>
-      <a href="#uiux" onclick="closeMM()">UI/UX</a>
-      <a href="#contact" onclick="closeMM()">Contact</a>
-    </div>
-
-    <!-- NAV -->
-    <nav id="nav">
-      <div class="nav-logo">RK</div>
+    <nav>
+      <div class="nav-logo">
+        PORTFOLIO
+        <div class="butterfly-animation">
+          <dotlottie-wc src="https://lottie.host/ece9630a-12ff-45c8-9b18-bee99f72536b/hJMwSf3V0d.lottie" autoplay loop style="width: 100%; height: 100%; display: block;"></dotlottie-wc>
+        </div>
+      </div>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
-        <li><a href="#logos">Logos</a></li>
-        <li><a href="#branding">Branding</a></li>
-        <li><a href="#pattachitra">Pattachitra</a></li>
-        <li><a href="#uiux">UI/UX</a></li>
+        <li><a href="#work">Work</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <button class="ham" id="ham" aria-label="Open Menu">
-        <span></span><span></span><span></span>
+      <button class="ham">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </nav>
 
-    <!-- HERO -->
+    <div class="mobile-menu">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+
     <section class="hero">
       <div class="hero-bg"></div>
       <div class="hero-grid"></div>
       <div class="orb orb1"></div>
       <div class="orb orb2"></div>
-      <p class="hero-eyebrow">
-        Graphic Design &middot; Brand Identity &middot; UI/UX
-      </p>
-      <h1 class="hero-title">Portfolio</h1>
-      <div class="hero-sig">Ritika Kumari</div>
+
+      <p class="hero-eyebrow">Welcome to my world</p>
+      <h1 class="hero-title">RITIKA KUMARI</h1>
+      <p class="hero-sig">Digital Designer & Developer</p>
+
       <div class="hero-scroll">
+        <span>Scroll to explore</span>
         <div class="scroll-line"></div>
-        <span>Scroll</span>
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about">
       <div class="container">
-        <div class="about-grid reveal">
+        <div class="sec-label">About me</div>
+        <div class="about-grid">
           <div>
-            <div class="sec-label">About Me</div>
-            <h2 class="about-heading">Hello!</h2>
-            <div class="about-name">I am Ritika Kumari.</div>
+            <h2 class="about-heading">HI!</h2>
+            <p class="about-name">I'm Ritika Kumari, a Digital Designer & Developer</p>
             <p class="about-bio">
-              Creative graphic designer with a passion for visual storytelling
-              and brand design. I thrive on new challenges that push the
-              boundaries of creativity — exploring trends and techniques to
-              deliver impactful work.
+              I'm passionate about creating beautiful, functional digital experiences.
+              With expertise in UI/UX design and web development, I craft solutions
+              that blend aesthetics with functionality.
             </p>
-            <div class="skills-row" id="skills-row">
-              <div class="skill-item">
-                <span class="skill-name">Brand Design</span>
-                <div class="skill-track">
-                  <div class="skill-fill" data-w="92"></div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Logo Design</span>
-                <div class="skill-track">
-                  <div class="skill-fill" data-w="88"></div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">UI / UX</span>
-                <div class="skill-track">
-                  <div class="skill-fill" data-w="80"></div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Typography</span>
-                <div class="skill-track">
-                  <div class="skill-fill" data-w="95"></div>
-                </div>
-              </div>
-            </div>
             <div class="about-stats">
               <div>
                 <div class="stat-num">50+</div>
-                <div class="stat-lbl">Projects</div>
-              </div>
-              <div>
-                <div class="stat-num">30+</div>
-                <div class="stat-lbl">Clients</div>
+                <div class="stat-lbl">Projects Completed</div>
               </div>
               <div>
                 <div class="stat-num">3+</div>
-                <div class="stat-lbl">Years</div>
+                <div class="stat-lbl">Years Experience</div>
+              </div>
+              <div>
+                <div class="stat-num">100%</div>
+                <div class="stat-lbl">Client Satisfied</div>
               </div>
             </div>
           </div>
           <div class="profile-frame">
-            <div class="profile-ph">Your Photo<br />Goes Here ✦</div>
+            <p class="profile-ph">Your Photo Here</p>
             <div class="pcorner tl"></div>
             <div class="pcorner tr"></div>
             <div class="pcorner bl"></div>
             <div class="pcorner br"></div>
-            <div class="fbadge top">Available ✦</div>
-            <div class="fbadge bot">Open to work</div>
+            <span class="fbadge top">Available</span>
+            <span class="fbadge bot">Open for work</span>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- LOGO FOLIO -->
-    <section id="logos">
-      <div class="container">
-        <div class="reveal">
-          <div class="sec-label">Selected Works</div>
-          <h2 class="sec-title">
-            Logo <span style="color: var(--lime)">Folio</span>
-          </h2>
-          <p
-            style="
-              color: var(--muted);
-              margin-top: 0.8rem;
-              max-width: 480px;
-              line-height: 1.7;
-              font-size: 0.93rem;
-            "
-          >
-            Custom logos designed to align with clients' visions and brand
-            stories.
-          </p>
-        </div>
-        <div class="logo-grid reveal d1">
+        <h3 class="sec-title" style="margin-top: 3.5rem">Skills & Tools</h3>
+        <div class="logo-grid">
           <div class="logo-card lc1">
-            <div class="logo-num">01</div>
             <div class="logo-inner">
-              <div class="logo-icon">NOVA</div>
-              <div class="logo-lbl">Tech Startup</div>
+              <div class="logo-icon">UI</div>
+              <div class="logo-lbl">Figma</div>
             </div>
+            <div class="logo-num">1</div>
           </div>
           <div class="logo-card lc2">
-            <div class="logo-num">02</div>
             <div class="logo-inner">
-              <div class="logo-icon">AURA</div>
-              <div class="logo-lbl">Fashion Brand</div>
+              <div class="logo-icon">JS</div>
+              <div class="logo-lbl">JavaScript</div>
             </div>
+            <div class="logo-num">2</div>
           </div>
           <div class="logo-card lc3">
-            <div class="logo-num">03</div>
             <div class="logo-inner">
-              <div class="logo-icon">FLUX</div>
-              <div class="logo-lbl">Creative Agency</div>
+              <div class="logo-icon">VX</div>
+              <div class="logo-lbl">Vue.js</div>
             </div>
+            <div class="logo-num">3</div>
           </div>
           <div class="logo-card lc4">
-            <div class="logo-num">04</div>
             <div class="logo-inner">
-              <div class="logo-icon">ECHO</div>
-              <div class="logo-lbl">Music Platform</div>
+              <div class="logo-icon">RE</div>
+              <div class="logo-lbl">React</div>
             </div>
+            <div class="logo-num">4</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- BRANDING -->
-    <section id="branding">
+    <section id="work">
       <div class="container">
-        <div class="reveal">
-          <div class="sec-label">Case Study</div>
-          <h2 class="sec-title">Branding</h2>
-          <p
-            style="
-              color: var(--muted);
-              margin-top: 0.8rem;
-              max-width: 480px;
-              line-height: 1.7;
-              font-size: 0.93rem;
-            "
-          >
-            Brand identity projects creating impactful visual marks aligned with
-            mission and goals.
-          </p>
-        </div>
-        <div class="brand-card reveal d1">
-          <span class="brand-tag">✦ Featured Project</span>
-          <div class="brand-title">Ourvita</div>
-          <div class="brand-ind">Industry: Premium Natural Cosmetics</div>
+        <div class="sec-label">Featured Work</div>
+        <h2 class="sec-title">My Recent Projects</h2>
+
+        <div class="brand-card">
+          <span class="brand-tag">Branding</span>
+          <h3 class="brand-title">OurVita Wellness</h3>
+          <p class="brand-ind">Health & Wellness Platform</p>
           <p class="brand-desc">
-            Ourvita is a premium natural cosmetics brand delivering
-            high-performance skincare powered by nature. The identity reflects
-            purity, elegance, and sustainability.
+            A comprehensive wellness platform designed to help users track their
+            health metrics, connect with wellness professionals, and build healthy
+            habits through personalized recommendations.
           </p>
+
           <div class="mockup-grid">
             <div class="mockup-box">
               <div class="mockup-inner ourvita-hero">
-                <div class="ourvita-txt">OURVITA</div>
-                <div class="ourvita-sub">Pure · Natural · Luxe</div>
+                <span class="ourvita-txt">OURVITA</span>
+                <span class="ourvita-sub">Wellness Platform</span>
               </div>
-              <div class="mockup-lbl">Brand Guidelines</div>
             </div>
             <div class="mockup-box">
               <div class="mockup-inner ourvita-pkg">
                 <div class="pkg-b">
                   <div class="pkg-shape ps1">
-                    <div class="pkg-strip">OV</div>
+                    <div class="pkg-strip">VITA</div>
                   </div>
-                  <div class="pkg-nm">Serum</div>
+                  <div class="pkg-nm">Bottle A</div>
                 </div>
                 <div class="pkg-b">
-                  <div class="pkg-shape ps2">
-                    <div class="pkg-strip" style="font-size: 0.44rem">OV</div>
-                  </div>
-                  <div class="pkg-nm">Mist</div>
+                  <div class="pkg-shape ps2"></div>
+                  <div class="pkg-nm">Box</div>
                 </div>
                 <div class="pkg-b">
                   <div class="pkg-shape ps3">
-                    <div class="pkg-strip">OV</div>
+                    <div class="pkg-strip">VITA</div>
                   </div>
-                  <div class="pkg-nm">Cream</div>
+                  <div class="pkg-nm">Bottle B</div>
                 </div>
-              </div>
-              <div class="mockup-lbl">Packaging</div>
-            </div>
-            <div class="mockup-box">
-              <div
-                class="mockup-inner"
-                style="
-                  background: linear-gradient(135deg, #1a0530, #2d0d4a);
-                  justify-content: center;
-                  gap: 1.5rem;
-                  display: flex;
-                  align-items: center;
-                  flex-wrap: wrap;
-                  padding: 0.75rem;
-                "
-              >
-                <div style="text-align: center">
-                  <div
-                    style="
-                      font-family: &quot;Bebas Neue&quot;, sans-serif;
-                      font-size: 1rem;
-                      letter-spacing: 0.3em;
-                      color: var(--lime);
-                    "
-                  >
-                    OURVITA
-                  </div>
-                  <div
-                    style="
-                      width: 64px;
-                      height: 1px;
-                      background: rgba(208, 0, 255, 0.3);
-                      margin: 0.4rem auto;
-                    "
-                  ></div>
-                  <div
-                    style="
-                      font-size: 0.48rem;
-                      letter-spacing: 0.28em;
-                      color: rgba(208, 0, 255, 0.4);
-                    "
-                  >
-                    EST. 2024
-                  </div>
-                </div>
-                <div style="display: flex; gap: 0.4rem; align-items: center">
-                  <div
-                    style="
-                      width: 20px;
-                      height: 20px;
-                      border-radius: 50%;
-                      background: #d000ff;
-                    "
-                  ></div>
-                  <div
-                    style="
-                      width: 20px;
-                      height: 20px;
-                      border-radius: 50%;
-                      background: #2d1050;
-                    "
-                  ></div>
-                  <div
-                    style="
-                      width: 20px;
-                      height: 20px;
-                      border-radius: 50%;
-                      background: #f5f0e8;
-                    "
-                  ></div>
-                </div>
-              </div>
-              <div class="mockup-lbl">Colour Palette</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PATTACHITRA -->
-    <section id="pattachitra">
-      <div class="container">
-        <div class="reveal">
-          <div class="sec-label">Research & Development</div>
-          <h2 class="sec-title">
-            Pattachitra <span style="color: var(--lime)">Art</span>
-          </h2>
-          <p
-            style="
-              color: var(--muted);
-              margin-top: 0.8rem;
-              max-width: 480px;
-              line-height: 1.7;
-              font-size: 0.93rem;
-            "
-          >
-            Exploring the rich heritage of Pattachitra traditional art form with
-            contemporary visual interpretation and design application.
-          </p>
-        </div>
-        <div class="patta-card reveal d1">
-          <div class="patta-subtitle">✦ Animation / Dhingali</div>
-          <div class="patta-title">Research and Visual Development</div>
-          <p class="patta-desc">
-            Researching with an open mind and heart to find nuances, I've opted
-            for the Banijara embroidery style, seeking guidance from the book
-            "Textile of Banijara" for prime references. Delving into Law Garden
-            Market, I aimed to grasp the intricacies of beauty in complexity for
-            the background design. I'm actively exploring the visual nuances of
-            Banijara embroideries, painting onto existing cloths adorned with
-            Banijara's distinctive embroidery.
-          </p>
-
-          <div class="patta-research-grid">
-            <div class="patta-info">
-              <div class="patta-point">
-                <div class="patta-point-title">Heritage Origin</div>
-                <div class="patta-point-text">
-                  Derived from Sanskrit Patta (cloth) and Chitra (picture), this
-                  traditional art form is unique to eastern states of Odisha and
-                  West Bengal, each developing distinct identities with their
-                  own Geographical Indication (GI) tags.
-                </div>
-              </div>
-              <div class="patta-point">
-                <div class="patta-point-title">Cultural Significance</div>
-                <div class="patta-point-text">
-                  Every stroke carries religious or social narrative. This
-                  sophisticated tradition reflects the rich cultural heritage
-                  and storytelling traditions of India's eastern regions, with
-                  narratives drawn from mythology and daily life.
-                </div>
-              </div>
-              <div class="patta-point">
-                <div class="patta-point-title">Artistic Technique</div>
-                <div class="patta-point-text">
-                  Combining traditional embroidery techniques with visual
-                  exploration. The intricate patterns and designs showcase
-                  complexity and beauty in traditional textile arts, serving as
-                  inspiration for contemporary design applications.
-                </div>
-              </div>
-            </div>
-            <div class="patta-ref-box">
-              <div class="patta-ref-text">Research Phase</div>
-              <div class="patta-ref-sub">
-                Visual Exploration & Reference Study
-              </div>
-              <div
-                style="
-                  font-size: 0.8rem;
-                  margin-top: 1rem;
-                  color: rgba(208, 0, 255, 0.5);
-                  line-height: 1.6;
-                "
-              >
-                • Textile pattern analysis<br />
-                • Embroidery technique study<br />
-                • Color palette development<br />
-                • Visual narrative mapping<br />
-                • Contemporary interpretation
               </div>
             </div>
           </div>
@@ -2011,535 +1309,98 @@
       </div>
     </section>
 
-    <!-- UI/UX -->
-    <section id="uiux">
+    <section id="uiux" style="background: var(--s1)">
       <div class="container">
-        <div class="reveal">
-          <div class="sec-label">UI / UX Design</div>
-          <div class="uiux-ttl">UI UX</div>
-          <p
-            style="
-              color: var(--muted);
-              margin-top: 1rem;
-              max-width: 480px;
-              line-height: 1.7;
-              font-size: 0.93rem;
-            "
-          >
-            Seamless interfaces for apps and websites combining clarity,
-            usability, and visual appeal.
-          </p>
-        </div>
-        <div class="uiux-card reveal d1">
+        <h2 class="uiux-ttl">Design System</h2>
+
+        <div class="uiux-card">
           <div class="uiux-header">
             <div>
-              <div class="sec-label" style="margin: 0 0 0.4rem">
-                Client Project
-              </div>
-              <div
-                style="
-                  font-family: &quot;Bebas Neue&quot;, sans-serif;
-                  font-size: clamp(1.8rem, 5vw, 2.5rem);
-                "
-              >
-                Poppy
-              </div>
-              <div
-                style="
-                  font-size: 0.75rem;
-                  letter-spacing: 0.1em;
-                  color: var(--lime);
-                  text-transform: uppercase;
-                "
-              >
-                Premium Streaming App
-              </div>
+              <h3 style="font-size: 1.8rem; color: var(--text); margin-bottom: 0.5rem">
+                Components
+              </h3>
+              <p style="color: var(--muted); font-size: 0.9rem">
+                Reusable UI components built for consistency
+              </p>
             </div>
             <div class="tag-row">
-              <span class="tag">Figma</span>
-              <span class="tag">Mobile</span>
-              <span class="tag lime">2024</span>
-            </div>
-          </div>
-          <div class="app-frame">
-            <div class="app-bar">
-              <div class="app-logo">POPPY</div>
-              <div class="app-nav">
-                <span class="a">Home</span>
-                <span>Movies</span>
-                <span>Series</span>
-                <span>My List</span>
-              </div>
-            </div>
-            <div class="app-banner">
-              <div class="app-movie">Interstellar</div>
-              <div class="app-meta">
-                2014 &middot; 2h 49m &middot; &#9733; 8.7 &middot; Sci-Fi
-              </div>
-              <div class="app-cta-btn">&#9654; Watch Now</div>
-            </div>
-            <div class="app-row">
-              <div class="app-row-lbl">Trending Now</div>
-              <div class="cards-row">
-                <div class="mini-card mc1">
-                  <div class="mini-thumb">
-                    <span class="mini-lbl">Blade Runner 2049</span>
-                  </div>
-                </div>
-                <div class="mini-card mc2">
-                  <div class="mini-thumb">
-                    <span class="mini-lbl">Dune</span>
-                  </div>
-                </div>
-                <div class="mini-card mc3">
-                  <div class="mini-thumb">
-                    <span class="mini-lbl">Oppenheimer</span>
-                  </div>
-                </div>
-                <div class="mini-card mc4">
-                  <div class="mini-thumb">
-                    <span class="mini-lbl">The Matrix</span>
-                  </div>
-                </div>
-                <div class="mini-card mc5">
-                  <div class="mini-thumb">
-                    <span class="mini-lbl">Mad Max</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <hr
-            style="
-              border: none;
-              height: 1px;
-              background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(208, 0, 255, 0.3),
-                transparent
-              );
-              margin: 3rem 0;
-            "
-          />
-
-          <div style="margin-top: 2.5rem">
-            <div
-              style="
-                font-size: 0.75rem;
-                letter-spacing: 0.1em;
-                color: var(--lime);
-                text-transform: uppercase;
-                margin-bottom: 1rem;
-              "
-            >
-              Additional Prototype
-            </div>
-            <div
-              style="
-                font-size: 1.2rem;
-                color: var(--text);
-                margin-bottom: 0.5rem;
-              "
-            >
-              Startup App Mockup
-            </div>
-            <p
-              style="
-                color: var(--muted);
-                font-size: 0.85rem;
-                margin-bottom: 1.5rem;
-              "
-            >
-              Interactive prototype designed for mobile-first experience.
-            </p>
-
-            <div class="phone-mockup-wrapper">
-              <div class="phone-mockup">
-                <div class="phone-notch"></div>
-                <div class="phone-screen">
-                  <div
-                    style="
-                      width: 100%;
-                      height: 100%;
-                      background: linear-gradient(135deg, #2d0d4a, #1d0d3a);
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      color: var(--lime);
-                      text-align: center;
-                      padding: 2rem;
-                      font-size: 0.9rem;
-                    "
-                  >
-                    <div>
-                      <div
-                        style="
-                          font-family: &quot;Bebas Neue&quot;, sans-serif;
-                          font-size: 1.5rem;
-                          margin-bottom: 0.5rem;
-                        "
-                      >
-                        App Prototype
-                      </div>
-                      <div
-                        style="
-                          font-size: 0.75rem;
-                          color: rgba(208, 0, 255, 0.6);
-                        "
-                      >
-                        View in interactive design tool
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="phone-home-btn"></div>
-              </div>
+              <span class="tag">Button</span>
+              <span class="tag">Card</span>
+              <span class="tag">Modal</span>
+              <span class="tag">Form</span>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <div style="padding: 3rem 0; text-align: center" class="reveal">
-      <div class="div-acc"></div>
-    </div>
 
-    <!-- FOOTER -->
-    <footer id="contact">
+    <footer>
       <div class="container">
-        <div class="reveal">
-          <div class="foot-big">Let's Work</div>
-          <p class="foot-sub">Thanks For Scrolling!</p>
-          <p class="foot-desc">
-            Don't forget to reach out if you love my work. Let's create
-            something beautiful together.
-          </p>
-          <button class="cta-btn">&#10022; Get In Touch</button>
-          <div class="foot-socials">
-            <a class="soc" href="#">Be</a>
-            <a class="soc" href="#">Dbl</a>
-            <a class="soc" href="#">In</a>
-            <a class="soc" href="#">Ig</a>
-          </div>
-          <div class="foot-copy">
-            &copy; 2024 Ritika Kumari &middot; All Rights Reserved
-          </div>
-        </div>
+        <p class="footer-txt">
+          Crafted with <strong>love</strong> & <strong>code</strong> by Ritika Kumari
+          © 2024
+        </p>
       </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@r128/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.10/dist/dotlottie-wc.js" type="module"></script>
     <script>
-      // 3D Butterfly Animation
-      const butterflyContainer = document.getElementById('butterfly-3d-container');
-      let scene, camera, renderer, butterfly, butterflyTrail = [];
-      let butterflyX = 0, butterflyY = 0, targetX = 0, targetY = 0;
-      let time = 0;
-
-      function initButterfly3D() {
-        // Scene setup
-        scene = new THREE.Scene();
-        scene.background = null;
-
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
-
-        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        butterflyContainer.appendChild(renderer.domElement);
-
-        // Load butterfly model
-        const loader = new THREE.GLTFLoader();
-        loader.load("butterfly.glb", (gltf) => {
-          butterfly = gltf.scene;
-          butterfly.scale.set(0.15, 0.15, 0.15);
-          butterfly.position.z = 0;
-          scene.add(butterfly);
-
-          // Add initial animation
-          animateButterfly();
-        }, undefined, (error) => {
-          console.error('Error loading butterfly:', error);
-        });
-
-        // Lighting
-        const light1 = new THREE.DirectionalLight(0xffffff, 1);
-        light1.position.set(5, 5, 5);
-        scene.add(light1);
-
-        const light2 = new THREE.DirectionalLight(0xff8800, 0.8);
-        light2.position.set(-5, -5, 5);
-        scene.add(light2);
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Mouse follow
-        document.addEventListener('mousemove', (e) => {
-          targetX = (e.clientX / window.innerWidth) * 2 - 1;
-          targetY = -(e.clientY / window.innerHeight) * 2 + 1;
-        });
-
-        // Start animation loop immediately
-        animateButterfly();
-      }
-
-      function animateButterfly() {
-        requestAnimationFrame(animateButterfly);
-
-        if (butterfly) {
-
-        time += 0.02;
-
-        // Smooth movement
-        butterflyX += (targetX - butterflyX) * 0.08;
-        butterflyY += (targetY - butterflyY) * 0.08;
-
-        // Flying pattern
-        const floatY = Math.sin(time * 1.5) * 0.3;
-        const floatX = Math.cos(time * 0.8) * 0.2;
-
-        butterfly.position.x = butterflyX + floatX;
-        butterfly.position.y = butterflyY + floatY;
-        butterfly.position.z = Math.sin(time * 2) * 0.5 + 2;
-
-        // Rotation for wing movement
-        butterfly.rotation.y = Math.sin(time * 8) * 0.3;
-        butterfly.rotation.x = Math.cos(time * 6) * 0.2;
-
-        // Orange sparkles at butterfly position
-        if (Math.random() > 0.85) {
-          const sparkle = new THREE.Mesh(
-            new THREE.SphereGeometry(0.05 + Math.random() * 0.03, 8, 8),
-            new THREE.MeshBasicMaterial({ color: 0xff8800 })
-          );
-          sparkle.position.copy(butterfly.position);
-          sparkle.position.x += (Math.random() - 0.5) * 0.3;
-          sparkle.position.y += (Math.random() - 0.5) * 0.3;
-          sparkle.opacity = 1;
-          scene.add(sparkle);
-          butterflyTrail.push({ mesh: sparkle, life: 1 });
-        }
-
-        // Update and remove old sparkles
-        for (let i = butterflyTrail.length - 1; i >= 0; i--) {
-          butterflyTrail[i].life -= 0.05;
-          butterflyTrail[i].mesh.material.opacity = butterflyTrail[i].life;
-
-          if (butterflyTrail[i].life <= 0) {
-            scene.remove(butterflyTrail[i].mesh);
-            butterflyTrail.splice(i, 1);
-          }
-        }
-
-        renderer.render(scene, camera);
-      }
-
-      // Initialize when page loads
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initButterfly3D);
-      } else {
-        initButterfly3D();
-      }
-    </script>
-    <script>
-      const canvas = document.getElementById("sc");
-      const ctx = canvas.getContext("2d");
-      let W = window.innerWidth,
-        H = window.innerHeight;
-      function resize() {
-        W = window.innerWidth;
-        H = window.innerHeight;
-        canvas.width = W;
-        canvas.height = H;
-      }
-      resize();
-      window.addEventListener("resize", resize);
-
-      const sp = [];
-      for (let i = 0; i < 70; i++) {
-        sp.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          sz: Math.random() * 2 + 0.5,
-          a: Math.random(),
-          ad: Math.random() > 0.5 ? 1 : -1,
-          as: Math.random() * 0.008 + 0.003,
-          vx: (Math.random() - 0.5) * 0.12,
-          vy: -(Math.random() * 0.12 + 0.04),
-        });
-      }
-
-      let trail = [];
-      let mx = W / 2,
-        my = H / 2;
-      document.addEventListener("mousemove", (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-        for (let i = 0; i < 2; i++) {
-          trail.push({
-            x: mx + (Math.random() - 0.5) * 12,
-            y: my + (Math.random() - 0.5) * 12,
-            sz: Math.random() * 3.5 + 0.8,
-            a: 0.85,
-            vx: (Math.random() - 0.5) * 1.8,
-            vy: -(Math.random() * 1.8 + 0.4),
-          });
-        }
-        if (trail.length > 60) trail.splice(0, trail.length - 60);
-      });
-
-      function star(x, y, sz, a) {
-        ctx.save();
-        ctx.globalAlpha = a;
-        ctx.fillStyle = "#d000ff";
-        ctx.beginPath();
-        for (let i = 0; i < 4; i++) {
-          const ang = (i / 4) * Math.PI * 2;
-          const x1 = x + Math.cos(ang) * sz;
-          const y1 = y + Math.sin(ang) * sz;
-          const x2 = x + Math.cos(ang + Math.PI / 4) * sz * 0.3;
-          const y2 = y + Math.sin(ang + Math.PI / 4) * sz * 0.3;
-          if (i === 0) ctx.moveTo(x1, y1);
-          else ctx.lineTo(x2, y2);
-          ctx.lineTo(x1, y1);
-        }
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-      }
-
-      (function tick() {
-        ctx.clearRect(0, 0, W, H);
-        for (const s of sp) {
-          s.a += s.ad * s.as;
-          if (s.a >= 1) {
-            s.a = 1;
-            s.ad = -1;
-          }
-          if (s.a <= 0) {
-            s.a = 0;
-            s.ad = 1;
-          }
-          s.x += s.vx;
-          s.y += s.vy;
-          if (s.y < -10) {
-            s.y = H + 10;
-            s.x = Math.random() * W;
-          }
-          star(s.x, s.y, s.sz, s.a * 0.45);
-        }
-        for (let i = trail.length - 1; i >= 0; i--) {
-          const t = trail[i];
-          t.x += t.vx;
-          t.y += t.vy;
-          t.a -= 0.038;
-          if (t.a <= 0) {
-            trail.splice(i, 1);
-            continue;
-          }
-          star(t.x, t.y, t.sz, t.a);
-        }
-        requestAnimationFrame(tick);
-      })();
-
-      // Custom cursor (desktop only)
+      // Custom cursor
       const cur = document.getElementById("cur");
-      const ring = document.getElementById("cur-ring");
-      let cx = 0,
-        cy = 0,
-        rx = 0,
-        ry = 0;
+      const curRing = document.getElementById("cur-ring");
+
       document.addEventListener("mousemove", (e) => {
-        cx = e.clientX;
-        cy = e.clientY;
+        cur.style.left = e.clientX - 5 + "px";
+        cur.style.top = e.clientY - 5 + "px";
+        curRing.style.left = e.clientX - 16 + "px";
+        curRing.style.top = e.clientY - 16 + "px";
       });
-      (function animC() {
-        rx += (cx - rx) * 0.11;
-        ry += (cy - ry) * 0.11;
-        cur.style.transform = `translate(${cx - 5}px,${cy - 5}px)`;
-        ring.style.transform = `translate(${rx - 16}px,${ry - 16}px)`;
-        requestAnimationFrame(animC);
-      })();
-      document
-        .querySelectorAll(
-          "a,button,.logo-card,.mockup-box,.profile-frame,.mini-card",
-        )
-        .forEach((el) => {
-          el.addEventListener("mouseenter", () => {
-            ring.style.width = "56px";
-            ring.style.height = "56px";
-          });
-          el.addEventListener("mouseleave", () => {
-            ring.style.width = "32px";
-            ring.style.height = "32px";
-          });
-        });
 
       // Hamburger menu
-      const ham = document.getElementById("ham");
-      const mm = document.getElementById("mm");
-      function closeMM() {
-        ham.classList.remove("open");
-        mm.classList.remove("open");
-        document.body.style.overflow = "";
-      }
+      const ham = document.querySelector(".ham");
+      const mobileMenu = document.querySelector(".mobile-menu");
+
       ham.addEventListener("click", () => {
         ham.classList.toggle("open");
-        mm.classList.toggle("open");
-        document.body.style.overflow = mm.classList.contains("open")
-          ? "hidden"
-          : "";
+        mobileMenu.classList.toggle("open");
       });
 
-      // Nav scroll glass effect
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          ham.classList.remove("open");
+          mobileMenu.classList.remove("open");
+        });
+      });
+
+      // Navbar scroll effect
+      const nav = document.querySelector("nav");
       window.addEventListener("scroll", () => {
-        document
-          .getElementById("nav")
-          .classList.toggle("scrolled", window.scrollY > 60);
+        if (window.scrollY > 50) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
       });
 
-      // Scroll reveal
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add("visible");
-              if (e.target.contains(document.getElementById("skills-row"))) {
-                setTimeout(() => {
-                  document.querySelectorAll(".skill-fill").forEach((b) => {
-                    b.style.width = b.dataset.w + "%";
-                  });
-                }, 280);
-              }
-            }
-          });
-        },
-        { threshold: 0.12 },
-      );
-      document.querySelectorAll(".reveal").forEach((r) => io.observe(r));
+      // Skills progress animation
+      const observerOptions = {
+        threshold: 0.5,
+      };
 
-      // Logo card 3D tilt
-      document.querySelectorAll(".logo-card").forEach((card) => {
-        card.addEventListener("mousemove", (e) => {
-          const r = card.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width - 0.5;
-          const y = (e.clientY - r.top) / r.height - 0.5;
-          card.style.transform = `translateY(-7px) scale(1.02) rotateX(${-y * 10}deg) rotateY(${x * 10}deg)`;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll(".skill-fill").forEach((fill) => {
+              const width = fill.parentElement.getAttribute("data-width");
+              fill.style.width = width || "75%";
+            });
+            observer.unobserve(entry.target);
+          }
         });
-        card.addEventListener("mouseleave", () => {
-          card.style.transform = "";
-        });
+      }, observerOptions);
+
+      document.querySelectorAll(".about-grid").forEach((grid) => {
+        observer.observe(grid);
       });
     </script>
   </body>
