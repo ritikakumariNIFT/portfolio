@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>GreenMark - Business Sustainability</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#9deeed",
+                        "surface-container-highest": "#d9e5e5",
+                        "primary": "#006a6a",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f0fcfc",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#0a6e6e",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#50dea9",
+                        "secondary-fixed-dim": "#84d4d3",
+                        "inverse-surface": "#273233",
+                        "primary-fixed-dim": "#6ad7d7",
+                        "tertiary": "#006c4d",
+                        "surface-container-high": "#dfeaeb",
+                        "outline": "#6d7979",
+                        "outline-variant": "#bcc9c8",
+                        "secondary-fixed": "#a0f0f0",
+                        "primary-container": "#2ba3a3",
+                        "tertiary-container": "#00a879",
+                        "on-surface-variant": "#3d4949",
+                        "primary-fixed": "#88f4f3",
+                        "secondary": "#006a6a",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#131d1e",
+                        "on-secondary-fixed": "#002020",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#e7f3f3",
+                        "surface": "#f0fcfc",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#002115",
+                        "surface-dim": "#d0dcdc",
+                        "on-tertiary-fixed-variant": "#005139",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#003423",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#004f50",
+                        "on-secondary-fixed-variant": "#004f50",
+                        "surface-container-low": "#eaf6f6",
+                        "surface-tint": "#006a6a",
+                        "on-surface": "#131d1e",
+                        "surface-variant": "#d9e5e5",
+                        "on-primary-fixed": "#002020",
+                        "surface-container": "#e4f0f0",
+                        "tertiary-fixed": "#70fbc4",
+                        "inverse-primary": "#6ad7d7",
+                        "on-primary-container": "#003232",
+                        "surface-bright": "#f0fcfc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f0fcfc;
+            min-height: 100dvh;
+            /* Hide scrollbar for body */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        // --- Shared Components ---
+
+        const TopAppBar = ({ title, showBack = true, transactional = false }) => {
+            const navigate = useNavigate();
+            return (
+                <header className="fixed top-0 left-0 w-full z-50 bg-[#F7FAFA] h-16 flex items-center justify-between px-5 max-w-md mx-auto left-1/2 -translate-x-1/2 border-b border-surface-container-high/20">
+                    <div className="flex items-center gap-3">
+                        {showBack && (
+                            <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center hover:bg-slate-100 rounded-full transition-colors">
+                                <span className="material-symbols-outlined text-[#2BA3A3]">arrow_back</span>
+                            </button>
+                        )}
+                        <h1 className="font-['Plus_Jakarta_Sans'] text-lg font-semibold tracking-tight text-slate-600">{title}</h1>
+                    </div>
+                    <div className="text-xl font-bold text-[#2BA3A3] tracking-tighter">GreenMark</div>
+                </header>
+            );
+        };
+
+        const BottomNavBar = () => {
+            const location = useLocation();
+            const navigate = useNavigate();
+            
+            const navItems = [
+                { id: 'home', icon: 'home', label: 'Home', path: '/dashboard' },
+                { id: 'offset', icon: 'eco', label: 'Offset', path: '/marketplace' },
+                { id: 'impact', icon: 'monitoring', label: 'Impact', path: '/result' },
+                { id: 'proof', icon: 'workspace_premium', label: 'Proof', path: '/certificate' },
+                { id: 'account', icon: 'person', label: 'Account', path: '/profile' }
+            ];
+
+            return (
+                <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 flex justify-around items-center px-4 pt-3 pb-6 bg-white border-t border-slate-100 shadow-[0_-4px_20px_0_rgba(43,163,163,0.04)] rounded-t-3xl">
+                    {navItems.map((item) => (
+                        <button 
+                            key={item.id}
+                            onClick={() => navigate(item.path)}
+                            className={`flex flex-col items-center justify-center transition-all ${location.pathname === item.path ? 'text-[#2BA3A3] font-bold' : 'text-slate-400'}`}
+                        >
+                            <span className="material-symbols-outlined" style={{ fontVariationSettings: `'FILL' ${location.pathname === item.path ? 1 : 0}` }}>{item.icon}</span>
+                            <span className="font-['Plus_Jakarta_Sans'] text-[10px] font-medium mt-1">{item.label}</span>
+                        </button>
+                    ))}
+                </nav>
+            );
+        };
+
+        // --- Screen Components ---
+
+        const Splash = () => {
+            const navigate = useNavigate();
+            return (
+                <main className="relative flex flex-col min-h-screen w-full max-w-md mx-auto overflow-hidden">
+                    <section className="relative w-full h-[486px] flex flex-col items-center justify-end">
+                        <div className="absolute inset-0 w-full h-full overflow-hidden">
+                            <img alt="Sustainable Cafe" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKu6gYzesYZotJuTcgyAY4hpD_CqTG-KCGHmVZFKRFxZ8JRb6grvjWdHgE8dUCWGF3UmB16oXcuQMm7eN40A_41cX2b9C0BOVf_Y1HFeFSMS09_xYHPtH5RAgsg38H7iNm5Cj36T_4m3WMIj7D_k1lwU4yQR3XnvEsiqOKIYV0H4IJ2bQnVHSP9SvS8Mknj9yZ_jlOsiEAy9txkUaod_DCdEy7XzLHMjwkSMB1be4aZ2g4GNU7lPG9e6ljLkPbFonnlM4Pypzwzrc"/>
+                            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+                        </div>
+                        <div className="relative z-10 flex items-center gap-2 mb-8">
+                            <div className="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-white">
+                                <span className="material-symbols-outlined">eco</span>
+                            </div>
+                            <span className="text-xl font-bold text-primary tracking-tighter">GreenMark</span>
+                        </div>
+                    </section>
+                    <section className="flex-1 flex flex-col px-5 pb-8 text-center bg-background">
+                        <div className="space-y-2 mb-auto pt-4">
+                            <h1 className="text-[29px] font-bold text-on-background leading-tight">Make Your Business Carbon Neutral</h1>
+                            <p className="text-on-surface-variant text-sm px-2">
+                                Empowering Indian small businesses to measure, offset, and profit from sustainable growth. GreenMark is your partner in the new green economy.
+                            </p>
+                        </div>
+                        <div className="flex flex-col gap-4 mt-8">
+                            <button onClick={() => navigate('/signup')} className="h-[56px] w-full bg-primary-container text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all">
+                                Get Started
+                            </button>
+                            <button onClick={() => navigate('/login')} className="h-[56px] w-full border-2 border-primary-container/20 text-primary font-semibold rounded-xl hover:bg-surface-container-low active:scale-95 transition-all">
+                                I already have an account
+                            </button>
+                        </div>
+                    </section>
+                </main>
+            );
+        };
+
+        const Login = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Login" />
+                    <main className="pt-24 pb-12 px-5 max-w-md mx-auto flex flex-col">
+                        <section className="mb-8">
+                            <div className="inline-flex items-center px-3 py-1 bg-secondary-container/30 text-on-secondary-container rounded-full mb-2">
+                                <span className="text-[12px] font-semibold tracking-widest uppercase">WELCOME BACK</span>
+                            </div>
+                            <h2 className="text-[29px] font-bold text-on-background mb-2">Empower your growth</h2>
+                            <p className="text-outline">Continue your journey toward sustainable prosperity.</p>
+                        </section>
+                        <div className="bg-white p-6 rounded-xl shadow-sm border border-surface-container-high/50 flex flex-col gap-6">
+                            <div className="flex flex-col gap-1">
+                                <label className="text-[12px] font-semibold text-outline px-1">EMAIL ADDRESS</label>
+                                <input className="w-full h-14 px-4 bg-background border border-outline-variant rounded-xl focus:border-primary outline-none" placeholder="name@business.com" type="email"/>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                                <div className="flex justify-between items-center px-1">
+                                    <label className="text-[12px] font-semibold text-outline">PASSWORD</label>
+                                    <a className="text-[12px] font-semibold text-primary hover:underline" href="#">Forgot?</a>
+                                </div>
+                                <input className="w-full h-14 px-4 bg-background border border-outline-variant rounded-xl focus:border-primary outline-none" placeholder="••••••••" type="password"/>
+                            </div>
+                            <button onClick={() => navigate('/dashboard')} className="h-14 bg-primary text-white font-semibold rounded-xl flex items-center justify-center gap-2">
+                                Login <span className="material-symbols-outlined">arrow_forward</span>
+                            </button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const SignUp = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Sign Up" />
+                    <main className="pt-20 px-5 max-w-md mx-auto">
+                        <h2 className="text-2xl font-bold mb-1">Join the movement</h2>
+                        <p className="text-on-surface-variant text-sm mb-8">Start your journey towards a greener business today.</p>
+                        
+                        <button className="w-full h-14 bg-white border border-outline-variant rounded-xl flex items-center justify-center gap-3 font-semibold mb-6">
+                            <img alt="Google" className="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAtkcNejtXByV1be8OFJ6SQ2FbAaPjpla7WkwKeVGALMkRX9MpRpTu2X99jEa7Ob1p7a1S-l7KqrM7QcsDkX_8p8Nl-HmuB2CNZgh9X3pf1Ki6O1_RP_yPZRGsvfUhD3-nUeam2PsPf76i4RmJre3RQ1atA4LtIJb0oCpf9qKGrlA7GjU8a8wMIO-Domq8KCMzUHHslV-loe9ZKCER5-oFpRX8vea_s3VGL_NJPUPfFs6gyyNexj37H_wQZmhLO6RFZgyiuPJe78U"/>
+                            Sign up with Google
+                        </button>
+
+                        <form className="space-y-4">
+                            <div>
+                                <label className="text-xs font-bold text-outline block mb-1">BUSINESS NAME</label>
+                                <input className="w-full h-14 bg-white border border-outline-variant rounded-xl px-4" placeholder="Enter business name"/>
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-outline block mb-1">EMAIL ADDRESS</label>
+                                <input className="w-full h-14 bg-white border border-outline-variant rounded-xl px-4" placeholder="name@company.com" type="email"/>
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-outline block mb-1">PASSWORD</label>
+                                <input className="w-full h-14 bg-white border border-outline-variant rounded-xl px-4" placeholder="Min. 8 characters" type="password"/>
+                            </div>
+                            <button type="button" onClick={() => navigate('/onboarding-1')} className="w-full h-[56px] bg-primary-container text-white font-bold rounded-xl mt-4">
+                                Create Account
+                            </button>
+                        </form>
+                    </main>
+                </div>
+            );
+        };
+
+        const Onboarding1 = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Industry Type" />
+                    <main className="pt-20 px-5 max-w-md mx-auto">
+                        <div className="mb-8">
+                            <div className="h-2 w-full bg-surface-container rounded-full mb-2">
+                                <div className="h-full bg-primary-container w-1/3 rounded-full"></div>
+                            </div>
+                            <span className="text-[10px] text-outline font-bold">STEP 1 OF 3: INDUSTRY</span>
+                        </div>
+                        <h2 className="text-2xl font-bold mb-2">What type of business do you run?</h2>
+                        <div className="grid grid-cols-2 gap-4 mt-6">
+                            {[
+                                { name: 'Café', icon: 'coffee', desc: 'Artisanal brews' },
+                                { name: 'Restaurant', icon: 'restaurant', desc: 'Full dining' },
+                                { name: 'Bakery', icon: 'bakery_dining', desc: 'Freshly baked' },
+                                { name: 'Cloud Kitchen', icon: 'delivery_dining', desc: 'Delivery-only' }
+                            ].map(item => (
+                                <button key={item.name} onClick={() => navigate('/onboarding-2')} className="flex flex-col items-start p-4 bg-white rounded-xl border-2 border-transparent hover:border-primary-container shadow-sm text-left transition-all">
+                                    <div className="bg-surface-container p-2 rounded-lg mb-2 text-primary-container">
+                                        <span className="material-symbols-outlined">{item.icon}</span>
+                                    </div>
+                                    <span className="font-bold">{item.name}</span>
+                                    <p className="text-[11px] text-outline">{item.desc}</p>
+                                </button>
+                            ))}
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const Onboarding2 = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Business Details" />
+                    <main className="pt-20 px-5 max-w-md mx-auto">
+                        <div className="mb-8">
+                            <div className="h-2 w-full bg-surface-container rounded-full mb-2">
+                                <div className="h-full bg-primary-container w-2/3 rounded-full"></div>
+                            </div>
+                            <span className="text-[10px] text-outline font-bold">STEP 2 OF 3: SCALE</span>
+                        </div>
+                        <h2 className="text-2xl font-bold mb-6">Tell us about your venture</h2>
+                        <div className="space-y-6">
+                            <div>
+                                <label className="text-xs font-bold text-outline block mb-1 uppercase">City</label>
+                                <select className="w-full h-14 bg-white border border-outline-variant rounded-xl px-4">
+                                    <option>Mumbai</option>
+                                    <option>Bangalore</option>
+                                    <option>Delhi</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-outline block mb-1 uppercase">Employees</label>
+                                <div className="flex items-center justify-between bg-white border border-outline-variant rounded-xl p-2 h-14">
+                                    <button className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100"><span className="material-symbols-outlined">remove</span></button>
+                                    <span className="font-bold">12</span>
+                                    <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-secondary-container text-primary-container"><span className="material-symbols-outlined">add</span></button>
+                                </div>
+                            </div>
+                            <button onClick={() => navigate('/step-electricity')} className="w-full h-14 bg-primary text-white font-bold rounded-xl mt-4">
+                                Continue
+                            </button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const StepElectricity = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Footprint" />
+                    <main className="pt-20 px-5 max-w-md mx-auto">
+                        <div className="relative h-48 bg-surface-container rounded-xl mb-8 overflow-hidden flex flex-col justify-center items-center text-center p-6">
+                            <img className="absolute inset-0 w-full h-full object-cover opacity-20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm1tNcqh-0EbnuNHuyjWsKdrL__GySq7CnwqeerZmBo7pLsNj8IgeztroZzAJkw0Wmm_zgSLOJSEHY-3BUB0imQ0GKTtCkLnKav-8fvPyBJiYswGQi7OMH0P40wU59fcExhJwDQO2vaX_ErZd0D89S4FiP3rZRRKS35lQYIlud1OBNQyOYYXu54cgksz31SiSFAyF0Ji6AwNHu3XuJc0OiLhW8FqbdoFJGryornGICku9akJ7RCW5hPFbzALlR0pBH9MoG_rQmBTY"/>
+                            <div className="relative">
+                                <span className="material-symbols-outlined text-4xl text-primary mb-2">bolt</span>
+                                <h2 className="text-xl font-bold">Electricity Usage</h2>
+                                <p className="text-xs text-outline">Calculate your monthly power footprint.</p>
+                            </div>
+                        </div>
+                        <div className="space-y-6">
+                            <div>
+                                <label className="text-xs font-bold text-outline block mb-1">MONTHLY CONSUMPTION (kWh)</label>
+                                <div className="relative">
+                                    <input className="w-full h-14 bg-white border-2 border-outline-variant rounded-xl px-4 text-xl font-bold" defaultValue="650"/>
+                                    <span className="absolute right-4 top-4 font-bold text-primary">kWh</span>
+                                </div>
+                            </div>
+                            <button onClick={() => navigate('/step-gas')} className="w-full h-14 bg-primary text-white font-bold rounded-xl">Next Step</button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const StepGas = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Footprint" />
+                    <main className="pt-20 px-5 max-w-md mx-auto">
+                        <div className="bg-white p-6 rounded-xl shadow-sm border border-outline-variant/30 mb-6">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-12 h-12 bg-secondary-container/30 rounded-xl flex items-center justify-center text-primary">
+                                    <span className="material-symbols-outlined">propane_tank</span>
+                                </div>
+                                <div>
+                                    <h2 className="text-xl font-bold">Cooking Gas</h2>
+                                    <p className="text-xs text-outline">LPG or PNG usage.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bg-white p-6 rounded-xl border border-outline-variant/30 text-center">
+                            <h3 className="text-lg font-bold mb-6">LPG Cylinders per Month</h3>
+                            <div className="flex items-center justify-between bg-background rounded-xl p-2 h-16">
+                                <button className="w-12 h-12 bg-white rounded-lg border border-outline-variant flex items-center justify-center"><span className="material-symbols-outlined">remove</span></button>
+                                <div className="text-center">
+                                    <span className="text-2xl font-bold block text-primary">4</span>
+                                    <span className="text-[10px] text-outline uppercase font-bold">Cylinders</span>
+                                </div>
+                                <button className="w-12 h-12 bg-primary-container text-white rounded-lg flex items-center justify-center"><span className="material-symbols-outlined">add</span></button>
+                            </div>
+                        </div>
+                        <button onClick={() => navigate('/step-logistics')} className="w-full h-14 bg-primary text-white font-bold rounded-xl mt-8">Continue</button>
+                    </main>
+                </div>
+            );
+        };
+
+        const StepLogistics = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Final Step" />
+                    <main className="pt-20 px-5 max-w-md mx-auto pb-24">
+                        <h2 className="text-xl font-bold mb-2">Logistics & Waste</h2>
+                        <div className="space-y-6">
+                            <div className="bg-white p-6 rounded-xl border border-outline-variant/30">
+                                <p className="text-sm font-bold mb-4">Daily Waste Produced</p>
+                                <div className="flex gap-2">
+                                    {['<5 kg', '5-15 kg', '15+ kg'].map(v => (
+                                        <button key={v} className="flex-1 py-2 rounded-full border border-primary text-primary text-xs font-bold">{v}</button>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="bg-white p-6 rounded-xl border border-outline-variant/30">
+                                <div className="flex justify-between items-center mb-4">
+                                    <p className="text-sm font-bold">Delivery Partners</p>
+                                    <div className="w-10 h-5 bg-primary rounded-full relative"><div className="w-4 h-4 bg-white rounded-full absolute right-0.5 top-0.5"></div></div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="p-4 border-2 border-primary rounded-xl flex flex-col items-center">
+                                        <div className="w-10 h-10 bg-slate-100 rounded-full mb-2"></div>
+                                        <span className="text-xs font-bold">Zomato</span>
+                                    </div>
+                                    <div className="p-4 border border-outline-variant rounded-xl flex flex-col items-center">
+                                        <div className="w-10 h-10 bg-slate-100 rounded-full mb-2"></div>
+                                        <span className="text-xs font-bold">Swiggy</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onClick={() => navigate('/result')} className="w-full h-14 bg-primary-container text-white font-bold rounded-xl shadow-lg">Calculate My Footprint</button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const Result = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar title="Emissions Result" />
+                    <main className="pt-20 px-5 max-w-md mx-auto text-center">
+                        <p className="text-xs font-bold text-outline uppercase tracking-widest mb-4">Your Annual Footprint</p>
+                        <h2 className="text-5xl font-bold text-primary-container mb-4">8.4 <span className="text-2xl">tons CO₂</span></h2>
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-tertiary-fixed rounded-full text-xs font-bold mb-8">
+                            <span className="material-symbols-outlined text-sm">trending_down</span> 12% less than average
+                        </div>
+                        <div className="bg-white p-8 rounded-3xl shadow-sm border mb-8 text-left">
+                            <div className="flex justify-between items-end mb-2">
+                                <span className="text-xs font-bold text-outline">Sustainability Index</span>
+                                <span className="text-lg font-bold text-primary">Good</span>
+                            </div>
+                            <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden relative">
+                                <div className="h-full bg-gradient-to-r from-green-400 to-yellow-400 w-1/3"></div>
+                            </div>
+                        </div>
+                        <div className="bg-primary-container p-6 rounded-3xl text-white text-left relative overflow-hidden">
+                            <h3 className="text-xl font-bold mb-2">Become Carbon Neutral</h3>
+                            <p className="text-sm opacity-90 mb-6">Invest in reforestation to offset your remaining 8.4 tons.</p>
+                            <button onClick={() => navigate('/marketplace')} className="w-full h-14 bg-white text-primary font-bold rounded-xl">Offset My Emissions</button>
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const Marketplace = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar title="Marketplace" showBack={false}/>
+                    <main className="pt-20 px-5 max-w-md mx-auto">
+                        <div className="mb-6">
+                            <div className="relative">
+                                <span className="material-symbols-outlined absolute left-4 top-4 text-outline">search</span>
+                                <input className="w-full h-14 pl-12 pr-4 bg-white border border-outline-variant rounded-xl" placeholder="Search carbon projects..."/>
+                            </div>
+                        </div>
+                        <div className="flex gap-2 overflow-x-auto no-scrollbar mb-8">
+                            {['All Projects', 'Forest', 'Solar', 'Biogas'].map((c, i) => (
+                                <button key={c} className={`px-5 py-2 rounded-full whitespace-nowrap text-sm font-bold ${i===0 ? 'bg-primary-container text-white' : 'bg-white border text-outline'}`}>{c}</button>
+                            ))}
+                        </div>
+                        <div className="space-y-6">
+                            {[
+                                { name: 'Western Ghats Reforestation', loc: 'Karnataka, India', price: '₹850', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA-ZyVBdUgoS55INJplz4niga5ZxnjPBxvp7TLDfPXOvEeQLOF4loRn0w4z-sZjH-StsWsRdeMePFWS35z5v1z2eKuWKx4kaagi496eWQXYAFggbBcaGJdmnCwxNkQgmCAsttnQiJRmLRleQoAdC6eMZrMtWOPMs71bxTCGa5r90M7LbuDxLk5d833WJQ9AJk4Ye_YpperkBWj-UiwHB3b1kxhHmJbofi5mQ1iB6ObhVwAHAQv5jJ7BUWK2P8Ml5R-z6Myujpu_uFU' },
+                                { name: 'Rajasthan Solar Initiative', loc: 'Rajasthan, India', price: '₹620', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAz2OwsVMnwvm2qv4h9VYDYwZvrIV6ys6fpWDZFBJ2EWnlVqjbjNOFt8osYeqgvtiGqas7gxP3MU3In2aNN8KtZGAlP_dHhJEXOrs3OPMgiCCyX5BJdzoHbAUeZ-3ZcHu5mD0kysXgSi-AGo3qEFNXoAwTailWvUcd5Mk8KKZJ6jQq8YWmWFlI5ij8Xh-ECo0KT_0RlJ2dqhni5hndlvMEzY381pB3w7O0SF556SnMiOL5ULKHv8Rfe5c1Hfg66EJIINdnzvqmpnXU' }
+                            ].map(p => (
+                                <div key={p.name} onClick={() => navigate('/project-detail')} className="bg-white rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
+                                    <div className="h-48 overflow-hidden">
+                                        <img className="w-full h-full object-cover" src={p.img}/>
+                                    </div>
+                                    <div className="p-4">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div>
+                                                <h3 className="font-bold">{p.name}</h3>
+                                                <div className="flex items-center text-xs text-outline"><span className="material-symbols-outlined text-sm mr-1">location_on</span>{p.loc}</div>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-[10px] text-outline font-bold uppercase">TON/PRICE</p>
+                                                <p className="text-primary font-bold">{p.price}</p>
+                                            </div>
+                                        </div>
+                                        <button className="w-full h-12 bg-primary-container text-white font-bold rounded-xl">Offset Now</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const ProjectDetail = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Project Detail" />
+                    <main className="pt-16 pb-32 max-w-md mx-auto">
+                        <div className="relative h-72 overflow-hidden">
+                            <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdE9eUzybiE8iLLsrCohaCuHMVetNDm_wvzelPG11hfeuid0JFzFbXZ3XlRV__NFiO0ys-otW7Vcuh6D1T4Z1EdzXZpa8hUzLejB5dXXxAxVG8KlOKrLMlgmYTle6LhlRjXCjjTawrwZ5oGBqR3CLllmAcqO8Gzyrq_mFOGWxo5yJp50DvO6ghqXv2N20YTwJoyw-A3b8lvObSJs7aoeOiRok7xXDO_K8s8-V97iXhQU2TNJ_dI9QRfHgr99vfios2Vht_2c3ybFc"/>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
+                                <span className="bg-tertiary-container text-white px-3 py-1 rounded-full text-[10px] font-bold w-fit mb-2">VERIFIED PROJECT</span>
+                                <h2 className="text-2xl font-bold text-white">Nilgiri Highlands Restoration</h2>
+                            </div>
+                        </div>
+                        <div className="px-5 mt-8 space-y-6">
+                            <div className="flex justify-between bg-white p-4 rounded-xl shadow-sm border">
+                                <div className="text-center px-4">
+                                    <span className="material-symbols-outlined text-primary">eco</span>
+                                    <p className="text-lg font-bold">12.5k</p>
+                                    <p className="text-[10px] text-outline">OFFSET</p>
+                                </div>
+                                <div className="text-center px-4 border-l border-r">
+                                    <span className="material-symbols-outlined text-primary">groups</span>
+                                    <p className="text-lg font-bold">450</p>
+                                    <p className="text-[10px] text-outline">FAMILIES</p>
+                                </div>
+                                <div className="text-center px-4">
+                                    <span className="material-symbols-outlined text-primary">calendar_today</span>
+                                    <p className="text-lg font-bold">8+</p>
+                                    <p className="text-[10px] text-outline">YEARS</p>
+                                </div>
+                            </div>
+                            <div className="space-y-4">
+                                <h3 className="text-lg font-bold">Impact Narrative</h3>
+                                <p className="text-sm text-on-surface-variant leading-relaxed">This project focuses on restoring native biodiversity of the Nilgiri Highlands through strategic planting of indigenous tree species.</p>
+                            </div>
+                        </div>
+                        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white p-5 border-t">
+                            <button onClick={() => navigate('/checkout')} className="w-full h-14 bg-primary text-white font-bold rounded-xl shadow-lg">Select This Project</button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const Checkout = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Checkout" />
+                    <main className="pt-20 px-5 max-w-md mx-auto space-y-8">
+                        <div className="bg-white p-6 rounded-2xl border shadow-sm">
+                            <p className="text-xs font-bold text-outline mb-2">OFFSET CALCULATION</p>
+                            <h2 className="text-2xl font-bold text-primary mb-6">450 Credits Needed</h2>
+                            <div className="space-y-4">
+                                <div className="flex justify-between text-sm"><span>Credits (450 x ₹10)</span><span className="font-bold">₹4,500</span></div>
+                                <div className="flex justify-between text-sm"><span>Fees</span><span className="font-bold">₹150</span></div>
+                                <div className="flex justify-between text-sm"><span>GST (18%)</span><span className="font-bold">₹837</span></div>
+                                <div className="pt-4 border-t flex justify-between items-end">
+                                    <div><p className="text-[10px] text-outline uppercase font-bold">Total</p><p className="text-2xl font-bold text-primary">₹5,487</p></div>
+                                    <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded">100% SECURE</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="p-4 bg-white rounded-xl border text-center">
+                                <span className="material-symbols-outlined text-primary text-3xl mb-2">verified_user</span>
+                                <p className="text-xs font-bold">Secure Payment</p>
+                            </div>
+                            <div className="p-4 bg-white rounded-xl border text-center">
+                                <span className="material-symbols-outlined text-tertiary text-3xl mb-2">workspace_premium</span>
+                                <p className="text-xs font-bold">Fast Issuance</p>
+                            </div>
+                        </div>
+                        <button onClick={() => navigate('/payment')} className="w-full h-14 bg-primary text-white font-bold rounded-xl shadow-lg">Proceed to Payment</button>
+                    </main>
+                </div>
+            );
+        };
+
+        const Payment = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen">
+                    <TopAppBar title="Payment" />
+                    <main className="pt-20 px-5 max-w-md mx-auto">
+                        <div className="mb-8">
+                            <p className="text-xs text-outline font-bold uppercase mb-1">Payment Amount</p>
+                            <p className="text-3xl font-bold text-primary">₹5,487</p>
+                        </div>
+                        <div className="space-y-4">
+                            <h3 className="font-bold">UPI Options</h3>
+                            {[
+                                { name: 'Google Pay', logo: 'GPay' },
+                                { name: 'PhonePe', logo: 'PhonePe' },
+                                { name: 'Paytm', logo: 'Paytm' }
+                            ].map(u => (
+                                <div key={u.name} onClick={() => navigate('/certificate')} className="flex items-center justify-between p-4 bg-white border rounded-xl cursor-pointer hover:border-primary">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 bg-slate-100 rounded-lg"></div>
+                                        <span className="font-bold">{u.name}</span>
+                                    </div>
+                                    <span className="material-symbols-outlined text-outline">radio_button_unchecked</span>
+                                </div>
+                            ))}
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const Certificate = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar title="Certificate" showBack={false}/>
+                    <main className="pt-20 px-5 max-w-md mx-auto text-center">
+                        <div className="w-20 h-20 bg-tertiary-container rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span className="material-symbols-outlined text-white text-4xl">check_circle</span>
+                        </div>
+                        <h2 className="text-2xl font-bold mb-2">Carbon Neutral!</h2>
+                        <p className="text-on-surface-variant text-sm mb-8">Your business is officially certified as Sustainable.</p>
+                        
+                        <div className="bg-white p-8 rounded-3xl border-2 border-slate-100 shadow-xl text-left relative overflow-hidden mb-8">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-primary-container/10 rounded-bl-full"></div>
+                            <div className="relative z-10">
+                                <p className="text-[10px] text-primary font-bold mb-1 uppercase tracking-widest">Certificate of Impact</p>
+                                <h3 className="text-xl font-bold mb-12">GreenMark</h3>
+                                <div className="mb-10">
+                                    <p className="text-[10px] text-outline font-bold mb-1 uppercase">Issued to</p>
+                                    <p className="text-lg font-bold">Arora Green Textiles</p>
+                                </div>
+                                <div className="flex justify-between items-end">
+                                    <div><p className="text-[8px] text-outline font-bold uppercase">ID</p><p className="text-[10px] font-bold">GM-2024-X1</p></div>
+                                    <div><p className="text-[8px] text-outline font-bold uppercase">DATE</p><p className="text-[10px] font-bold">OCT 24, 2024</p></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            <button className="w-full h-14 bg-primary-container text-white font-bold rounded-2xl flex items-center justify-center gap-2">
+                                <span className="material-symbols-outlined">share</span> Share Impact
+                            </button>
+                            <button onClick={() => navigate('/dashboard')} className="w-full h-14 bg-white border text-primary font-bold rounded-2xl">Go to Dashboard</button>
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const Profile = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar title="Account" showBack={false}/>
+                    <main className="pt-20 px-5 max-w-md mx-auto space-y-6">
+                        <div className="bg-white p-8 rounded-3xl border shadow-sm text-center">
+                            <div className="w-24 h-24 rounded-full bg-slate-100 mx-auto mb-4 border-4 border-white shadow-sm overflow-hidden">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9FpVnMrJll6Cj5YqSipL1Pt9UI6S9_OcwAfl2_UXrhGuk5qOt2Wj-D4ndOxAStVbiRjUgcPjRYqXt0PbfeAAyZDA-IdmorS1WW_mC4JkVHzENkONPXlOQAJ7WYZ8dLQLKtEojgf1W7wZ8bCh5qLYYm9T_nntBSQb8r09YnH-ciCtiUTUjkSPWnzgOE5ty88k-pZgjJaNQLLyKRfUQFAfMM3kqKrJH5ROt1xwlLvpE2zjO5ztM_e1YdLW_PoYQSjnb3p31w2vy3hk" className="w-full h-full object-cover"/>
+                            </div>
+                            <h2 className="text-xl font-bold">Arora Green Textiles</h2>
+                            <p className="text-xs text-outline mb-4">Reg. ID: GMT-992348-IN</p>
+                            <div className="flex justify-center gap-2">
+                                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold">CARBON NEUTRAL</span>
+                                <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-[10px] font-bold">GOLD MEMBER</span>
+                            </div>
+                        </div>
+                        <div className="bg-white rounded-2xl border shadow-sm divide-y">
+                            {[
+                                { name: 'Payment Methods', icon: 'payments' },
+                                { name: 'My Certificates', icon: 'workspace_premium' },
+                                { name: 'Business Settings', icon: 'settings' },
+                                { name: 'Support', icon: 'headset_mic' }
+                            ].map(item => (
+                                <div key={item.name} className="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-primary"><span className="material-symbols-outlined">{item.icon}</span></div>
+                                        <span className="font-bold">{item.name}</span>
+                                    </div>
+                                    <span className="material-symbols-outlined text-outline">chevron_right</span>
+                                </div>
+                            ))}
+                            <div onClick={() => navigate('/login')} className="flex items-center p-5 text-red-500 cursor-pointer">
+                                <span className="material-symbols-outlined mr-4">logout</span>
+                                <span className="font-bold">Logout</span>
+                            </div>
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const Dashboard = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="min-h-screen pb-32">
+                    <TopAppBar title="Dashboard" showBack={false}/>
+                    <main className="pt-20 px-5 max-w-md mx-auto space-y-8">
+                        <div>
+                            <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">Welcome Back</p>
+                            <h2 className="text-2xl font-bold">Namaste, Arora Textiles</h2>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="col-span-2 bg-white p-6 rounded-2xl border shadow-sm relative overflow-hidden h-48 flex flex-col justify-between">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-12 -mt-12 blur-2xl"></div>
+                                <div><span className="material-symbols-outlined text-primary text-4xl" style={{fontVariationSettings: "'FILL' 1"}}>eco</span><p className="text-xs font-bold text-outline">TREES SAVED</p></div>
+                                <div className="flex items-baseline gap-2"><span className="text-5xl font-bold">142</span><span className="text-sm font-bold text-primary">Native Saplings</span></div>
+                            </div>
+                            <div className="bg-white p-4 rounded-2xl border shadow-sm">
+                                <span className="material-symbols-outlined text-tertiary">bolt</span>
+                                <p className="text-xl font-bold mt-2">2.5kW</p>
+                                <p className="text-[10px] text-outline font-bold uppercase">Energy Offset</p>
+                            </div>
+                            <div className="bg-white p-4 rounded-2xl border shadow-sm">
+                                <span className="material-symbols-outlined text-primary-container">family_restroom</span>
+                                <p className="text-xl font-bold mt-2">12</p>
+                                <p className="text-[10px] text-outline font-bold uppercase">Families Helped</p>
+                            </div>
+                        </div>
+                        <div className="bg-primary p-6 rounded-3xl text-white">
+                            <div className="flex justify-between items-start mb-4">
+                                <div><h4 className="font-bold">Quarterly Goal</h4><p className="text-xs opacity-80">Offset 5.0kW Energy</p></div>
+                                <span className="text-2xl font-bold">50%</span>
+                            </div>
+                            <div className="h-2 w-full bg-white/20 rounded-full mb-4 overflow-hidden"><div className="h-full bg-green-300 w-1/2"></div></div>
+                            <p className="text-xs font-medium">2.5kW more to reach Carbon Neutral status for Q3.</p>
+                        </div>
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-end"><h3 className="font-bold">Quick Actions</h3></div>
+                            <div className="flex gap-4">
+                                <button onClick={() => navigate('/marketplace')} className="flex-1 h-14 bg-primary text-white rounded-xl font-bold text-sm">New Project</button>
+                                <button onClick={() => navigate('/onboarding-1')} className="flex-1 h-14 bg-white border-2 border-primary text-primary rounded-xl font-bold text-sm">Re-calculate</button>
+                            </div>
+                        </div>
+                    </main>
+                    <BottomNavBar />
+                </div>
+            );
+        };
+
+        const App = () => {
+            return (
+                <MemoryRouter>
+                    <div className="max-w-md mx-auto bg-[#f0fcfc] min-h-screen relative overflow-x-hidden">
+                        <Routes>
+                            <Route path="/" element={<Splash />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<SignUp />} />
+                            <Route path="/onboarding-1" element={<Onboarding1 />} />
+                            <Route path="/onboarding-2" element={<Onboarding2 />} />
+                            <Route path="/step-electricity" element={<StepElectricity />} />
+                            <Route path="/step-gas" element={<StepGas />} />
+                            <Route path="/step-logistics" element={<StepLogistics />} />
+                            <Route path="/result" element={<Result />} />
+                            <Route path="/marketplace" element={<Marketplace />} />
+                            <Route path="/project-detail" element={<ProjectDetail />} />
+                            <Route path="/checkout" element={<Checkout />} />
+                            <Route path="/payment" element={<Payment />} />
+                            <Route path="/certificate" element={<Certificate />} />
+                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/profile" element={<Profile />} />
+                        </Routes>
+                    </div>
+                </MemoryRouter>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
