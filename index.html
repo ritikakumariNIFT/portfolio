@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ritika Kumari — Portfolio</title>
+    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.10/dist/dotlottie-wc.js" type="module"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap");
 
@@ -1022,32 +1023,40 @@
       }
       .phone-mockup {
         position: relative;
-        width: 430px;
-        height: 932px;
-        max-width: 100%;
+        width: 100%;
+        max-width: 340px;
+        aspect-ratio: 430 / 932;
+        height: auto;
+        max-height: 80vh;
         background: linear-gradient(135deg, #1d0d3a, #2d0d4a);
-        border: 12px solid #FF8C00;
-        border-radius: 55px;
+        border: 10px solid #FF8C00;
+        border-radius: 45px;
         box-shadow:
           0 20px 60px rgba(255, 140, 0, 0.25),
           inset 0 0 20px rgba(255, 140, 0, 0.1);
         overflow: hidden;
+        margin: 0 auto;
+      }
+      @supports not (aspect-ratio: 430 / 932) {
+        .phone-mockup {
+          height: 737px;
+        }
       }
       .phone-notch {
         position: absolute;
-        top: 12px;
+        top: 10px;
         left: 50%;
         transform: translateX(-50%);
-        width: 120px;
-        height: 35px;
+        width: 30%;
+        height: 30px;
         background: #000;
-        border-radius: 20px;
+        border-radius: 15px;
         z-index: 10;
       }
       .phone-screen {
         width: 100%;
         height: 100%;
-        border-radius: 43px;
+        border-radius: 35px;
         overflow: hidden;
         background: #000;
       }
@@ -1071,36 +1080,26 @@
       }
       @media (max-width: 768px) {
         .phone-mockup {
-          width: 350px;
-          height: 758px;
-          border: 10px solid #FF8C00;
-          border-radius: 45px;
-        }
-        .phone-notch {
-          top: 10px;
-          width: 100px;
-          height: 30px;
-          border-radius: 15px;
+          max-width: 300px;
+          border-radius: 40px;
+          border-width: 8px;
         }
         .phone-screen {
-          border-radius: 35px;
+          border-radius: 32px;
         }
       }
       @media (max-width: 480px) {
         .phone-mockup {
-          width: 300px;
-          height: 650px;
-          border: 8px solid #FF8C00;
+          max-width: 260px;
           border-radius: 35px;
+          border-width: 6px;
         }
         .phone-notch {
-          top: 8px;
-          width: 90px;
           height: 25px;
-          border-radius: 12px;
+          top: 8px;
         }
         .phone-screen {
-          border-radius: 27px;
+          border-radius: 29px;
         }
         .proto-info-text {
           font-size: 0.7rem;
@@ -1591,7 +1590,10 @@
     </style>
   </head>
   <body>
+    <!-- Purple Ocean Night Glow Background -->
+    <div style="position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(circle at center 80%, rgba(140, 0, 255, 0.15) 0%, rgba(10, 11, 12, 0) 70%); mix-blend-mode: screen;"></div>
     <canvas id="sc"></canvas>
+    <dotlottie-wc src="https://lottie.host/c86d07b2-9130-4ad3-a118-8b76f164910f/Ywqh7mPtZx.lottie" background="transparent" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; opacity: 0.8; mix-blend-mode: screen; filter: hue-rotate(60deg) saturate(1.8) drop-shadow(0 0 15px rgba(208,0,255,0.7));" autoplay loop></dotlottie-wc>
     <div
       id="butterfly-3d-container"
       style="
@@ -1642,8 +1644,14 @@
       <p class="hero-eyebrow">
         Graphic Design &middot; Brand Identity &middot; UI/UX
       </p>
-      <h1 class="hero-title">Portfolio</h1>
-      <div class="hero-sig">Ritika Kumari</div>
+      <div style="position: relative; display: inline-block; margin: 0.2em 0 0.1em;">
+        <h1 class="hero-title" style="margin: 0;">Portfolio</h1>
+        <dotlottie-wc src="https://lottie.host/ece9630a-12ff-45c8-9b18-bee99f72536b/hJMwSf3V0d.lottie" background="transparent" style="position: absolute; top: clamp(-50px, -8vw, -100px); left: clamp(-50px, -8vw, -100px); width: clamp(160px, 20vw, 280px); height: clamp(160px, 20vw, 280px); pointer-events: none; z-index: 10; opacity: 0; animation: fadeUp 1.2s 0.1s var(--ease) forwards;" autoplay loop></dotlottie-wc>
+      </div>
+      <div class="hero-sig" style="position: relative; display: inline-block;">
+        Ritika Kumari
+        <dotlottie-wc src="https://lottie.host/6ca4803e-4f2c-4687-800f-89fc884b4ec6/MoNiqmRZiG.lottie" background="transparent" style="position: absolute; top: clamp(-40px, -6vw, -90px); right: clamp(-60px, -8vw, -120px); width: clamp(120px, 15vw, 200px); height: clamp(120px, 15vw, 200px); pointer-events: none; z-index: 10; -webkit-background-clip: border-box; -webkit-text-fill-color: initial;" autoplay loop></dotlottie-wc>
+      </div>
       <div class="hero-scroll">
         <div class="scroll-line"></div>
         <span>Scroll</span>
@@ -1723,8 +1731,9 @@
       <div class="container">
         <div class="reveal">
           <div class="sec-label">Selected Works</div>
-          <h2 class="sec-title">
+          <h2 class="sec-title" style="position: relative; display: inline-block;">
             Logo <span style="color: var(--lime)">Folio</span>
+            <dotlottie-wc src="https://lottie.host/1f4852bc-7ff1-43d2-9082-b045c46e0679/rFMmk5B4ak.lottie" background="transparent" style="position: absolute; top: clamp(-30px, -5vw, -60px); right: clamp(-80px, -12vw, -160px); width: clamp(120px, 15vw, 200px); height: clamp(120px, 15vw, 200px); pointer-events: none; z-index: 10;" autoplay loop></dotlottie-wc>
           </h2>
           <p
             style="
@@ -1761,11 +1770,11 @@
               <div class="logo-lbl">Creative Agency</div>
             </div>
           </div>
-          <div class="logo-card lc4">
-            <div class="logo-num">04</div>
+          <div class="logo-card lc4" style="background: #fff; border-color: #eee;">
+            <div class="logo-num" style="color: rgba(0,0,0,0.03);">04</div>
             <div class="logo-inner">
-              <div class="logo-icon">ECHO</div>
-              <div class="logo-lbl">Music Platform</div>
+              <div class="logo-icon" style="background: transparent; border: none; color: #000; width: auto; font-family: 'DM Sans', sans-serif; font-size: 1.8rem; letter-spacing: -1.5px; text-transform: lowercase;">belle curls</div>
+              <div class="logo-lbl" style="color: #999;">Hair Brand</div>
             </div>
           </div>
         </div>
@@ -1992,6 +2001,23 @@
               </div>
             </div>
           </div>
+
+          <div style="margin-top: 3.5rem;">
+            <h3 class="patta-point-title" style="margin-bottom: 1.5rem; text-align: center; font-size: 1.5rem;">Contemporary Application: Fashion & Apparel</h3>
+            <p style="color: var(--muted); text-align: center; margin-bottom: 2rem; font-size: 0.9rem;">Integrating traditional Pattachitra motifs into modern streetwear, bespoke footwear, and denim.</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+              <div style="border-radius: 1rem; overflow: hidden; background: var(--s2); height: 280px; position: relative; border: 1px solid var(--border);">
+                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">[ Replace with Shoe Photo ]</div>
+              </div>
+              <div style="border-radius: 1rem; overflow: hidden; background: var(--s2); height: 280px; position: relative; border: 1px solid var(--border);">
+                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">[ Replace with Jacket Photo ]</div>
+              </div>
+              <div style="border-radius: 1rem; overflow: hidden; background: var(--s2); height: 280px; position: relative; border: 1px solid var(--border);">
+                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">[ Replace with T-Shirt Photo ]</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -2181,6 +2207,8 @@
       </div>
     </footer>
 
+    <div id="butterfly-3d-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@r128/examples/js/loaders/GLTFLoader.js"></script>
     <script>
@@ -2236,11 +2264,43 @@
           renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Mouse follow
-        document.addEventListener('mousemove', (e) => {
-          targetX = (e.clientX / window.innerWidth) * 2 - 1;
-          targetY = -(e.clientY / window.innerHeight) * 2 + 1;
-        });
+        // Autonomous flying to sections
+        const targetSelectors = ['.profile-frame', '.lc2', '.mockup-box:nth-child(2)', '.patta-card', '.uiux-card', '.cta-btn'];
+        let baseTargetX = 0;
+        let baseTargetY = 0;
+
+        function updateButterflyTarget() {
+          let minD = Infinity;
+          let best = null;
+          const wh = window.innerHeight / 2;
+          targetSelectors.forEach((sel, i) => {
+            const el = document.querySelector(sel);
+            if (el) {
+              const r = el.getBoundingClientRect();
+              // Alternate sides based on index
+              const cx = (i % 2 === 0) ? r.left + r.width - 20 : r.left + 20;
+              const cy = r.top + 20;
+              const d = Math.abs((r.top + r.height / 2) - wh);
+              if (d < minD) {
+                minD = d;
+                best = { x: cx, y: cy };
+              }
+            }
+          });
+          if (best) {
+            const ndcX = (best.x / window.innerWidth) * 2 - 1;
+            const ndcY = -(best.y / window.innerHeight) * 2 + 1;
+            
+            const frustumHeight = Math.tan((75 / 2) * Math.PI / 180) * 5 * 2;
+            const frustumWidth = frustumHeight * (window.innerWidth / window.innerHeight);
+            
+            baseTargetX = ndcX * (frustumWidth / 2);
+            baseTargetY = ndcY * (frustumHeight / 2);
+          }
+        }
+        window.addEventListener('scroll', updateButterflyTarget);
+        setInterval(updateButterflyTarget, 1000);
+        updateButterflyTarget();
 
         // Start animation loop immediately
         animateButterfly();
@@ -2254,20 +2314,22 @@
         time += 0.02;
 
         // Smooth movement
-        butterflyX += (targetX - butterflyX) * 0.08;
-        butterflyY += (targetY - butterflyY) * 0.08;
+        butterflyX += (baseTargetX - butterflyX) * 0.03;
+        butterflyY += (baseTargetY - butterflyY) * 0.03;
 
         // Flying pattern
-        const floatY = Math.sin(time * 1.5) * 0.3;
-        const floatX = Math.cos(time * 0.8) * 0.2;
+        const floatY = Math.sin(time * 2) * 0.3;
+        const floatX = Math.cos(time * 1.5) * 0.2;
 
         butterfly.position.x = butterflyX + floatX;
         butterfly.position.y = butterflyY + floatY;
         butterfly.position.z = Math.sin(time * 2) * 0.5 + 2;
 
-        // Rotation for wing movement
-        butterfly.rotation.y = Math.sin(time * 8) * 0.3;
-        butterfly.rotation.x = Math.cos(time * 6) * 0.2;
+        // Rotation for wing movement and direction
+        const dx = baseTargetX - butterflyX;
+        butterfly.rotation.y = Math.sin(time * 12) * 0.4 + (dx * 0.1);
+        butterfly.rotation.x = Math.cos(time * 8) * 0.2;
+        butterfly.rotation.z = -dx * 0.15;
 
         // Orange sparkles at butterfly position
         if (Math.random() > 0.85) {
