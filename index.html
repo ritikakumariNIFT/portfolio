@@ -74,7 +74,7 @@
       #cur-ring {
         width: 32px;
         height: 32px;
-        border: 1.5px solid rgba(0, 208, 255, 0.45);
+        border: 1.5px solid rgba(239, 77, 35, 0.45);
         transition:
           transform 0.35s var(--ease),
           width 0.25s,
@@ -104,7 +104,7 @@
           border-bottom 0.4s;
       }
       nav.scrolled {
-        background: rgba(10, 11, 12, 0.92);
+        background: rgba(255, 255, 255, 0.92);
         backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--border);
       }
@@ -230,8 +230,8 @@
         position: absolute;
         inset: 0;
         background-image:
-          linear-gradient(rgba(0, 208, 255, 0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0, 208, 255, 0.04) 1px, transparent 1px);
+          linear-gradient(rgba(239, 77, 35, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(239, 77, 35, 0.04) 1px, transparent 1px);
         background-size: 50px 50px;
         mask-image: radial-gradient(
           ellipse 70% 60% at center,
@@ -254,7 +254,7 @@
       .orb1 {
         width: 400px;
         height: 400px;
-        background: rgba(0, 208, 255, 0.06);
+        background: rgba(239, 77, 35, 0.06);
         top: -100px;
         left: -100px;
         animation: orbFloat 8s ease-in-out infinite;
@@ -297,7 +297,7 @@
         font-family: "Caveat", cursive;
         font-size: clamp(1.8rem, 6vw, 3.5rem);
         color: var(--lime);
-        filter: drop-shadow(0 0 20px rgba(0, 208, 255, 0.4));
+        filter: drop-shadow(0 0 20px rgba(239, 77, 35, 0.4));
         position: relative;
         z-index: 2;
         opacity: 0;
@@ -484,7 +484,7 @@
         transition: border-color 0.3s;
       }
       .profile-frame:hover {
-        border-color: rgba(208, 0, 255, 0.3);
+        border-color: rgba(239, 77, 35, 0.3);
       }
       .profile-frame::after {
         content: "";
@@ -492,7 +492,7 @@
         inset: 0;
         background: linear-gradient(
           135deg,
-          rgba(208, 0, 255, 0.08) 0%,
+          rgba(239, 77, 35, 0.08) 0%,
           transparent 60%
         );
         transition: opacity 0.4s;
@@ -503,7 +503,7 @@
       .profile-ph {
         font-family: "Caveat", cursive;
         font-size: 1.2rem;
-        color: rgba(255, 255, 255, 0.2);
+        color: rgba(0, 0, 0, 0.05);
         text-align: center;
         padding: 1rem;
         transform: rotate(-5deg);
@@ -573,7 +573,7 @@
         left: 1rem;
         background: transparent;
         color: var(--lime);
-        border: 1px solid rgba(208, 0, 255, 0.3);
+        border: 1px solid rgba(239, 77, 35, 0.3);
       }
 
       .skills-row {
@@ -597,7 +597,7 @@
       .skill-track {
         flex: 1;
         height: 2px;
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(0, 0, 0, 0.08);
         border-radius: 2px;
         overflow: hidden;
       }
@@ -644,14 +644,14 @@
         inset: 0;
         background: radial-gradient(
           circle at center,
-          rgba(208, 0, 255, 0.08) 0%,
+          rgba(239, 77, 35, 0.08) 0%,
           transparent 70%
         );
         opacity: 0;
         transition: opacity 0.3s;
       }
       .logo-card:hover {
-        border-color: rgba(208, 0, 255, 0.4);
+        border-color: rgba(239, 77, 35, 0.4);
         transform: translateY(-7px) scale(1.02);
       }
       .logo-card:hover::before {
@@ -696,7 +696,7 @@
         font-family: "Bebas Neue", sans-serif;
         font-size: 3rem;
         line-height: 1;
-        color: rgba(255, 255, 255, 0.04);
+        color: rgba(0, 0, 0, 0.04);
         user-select: none;
       }
       .lc1 .logo-icon {
@@ -712,7 +712,7 @@
       .lc3 .logo-icon {
         background: linear-gradient(135deg, #0a1a0a, #0d2d0d);
         color: var(--lime);
-        border: 1px solid rgba(208, 0, 255, 0.2);
+        border: 1px solid rgba(239, 77, 35, 0.2);
       }
       .lc4 .logo-icon {
         background: linear-gradient(135deg, #1a1000, #2d1e00);
@@ -759,8 +759,8 @@
         display: inline-flex;
         gap: 0.4rem;
         align-items: center;
-        background: rgba(208, 0, 255, 0.08);
-        border: 1px solid rgba(208, 0, 255, 0.2);
+        background: rgba(239, 77, 35, 0.08);
+        border: 1px solid rgba(239, 77, 35, 0.2);
         border-radius: 100px;
         padding: 0.3rem 0.9rem;
         font-size: 0.7rem;
@@ -783,7 +783,7 @@
         margin-bottom: 1.2rem;
       }
       .brand-desc {
-        color: rgba(255, 255, 255, 0.55);
+        color: rgba(0, 0, 0, 0.55);
         line-height: 1.75;
         max-width: 580px;
         margin-bottom: 2rem;
@@ -869,7 +869,7 @@
         border-radius: 50%;
         background: radial-gradient(
           circle,
-          rgba(208, 0, 255, 0.12),
+          rgba(239, 77, 35, 0.12),
           transparent
         );
         top: 50%;
@@ -883,14 +883,14 @@
         color: var(--lime);
         position: relative;
         z-index: 1;
-        text-shadow: 0 0 60px rgba(208, 0, 255, 0.3);
+        text-shadow: 0 0 60px rgba(239, 77, 35, 0.3);
       }
       .ourvita-sub {
         position: absolute;
         bottom: 1.2rem;
         font-size: 0.6rem;
         letter-spacing: 0.35em;
-        color: rgba(208, 0, 255, 0.4);
+        color: rgba(239, 77, 35, 0.4);
         text-transform: uppercase;
       }
       .ourvita-pkg {
@@ -939,7 +939,7 @@
         top: 18px;
         height: 36px;
         border-radius: 4px;
-        background: rgba(208, 0, 255, 0.85);
+        background: rgba(239, 77, 35, 0.85);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1017,8 +1017,8 @@
         text-transform: uppercase;
       }
       .tag.lime {
-        background: rgba(208, 0, 255, 0.08);
-        border-color: rgba(208, 0, 255, 0.2);
+        background: rgba(239, 77, 35, 0.08);
+        border-color: rgba(239, 77, 35, 0.2);
         color: var(--lime);
       }
 
@@ -1203,7 +1203,7 @@
       }
       .app-row {
         padding: 1.2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-top: 1px solid rgba(0, 0, 0, 0.04);
       }
       .app-row-lbl {
         font-size: 0.65rem;
@@ -1314,7 +1314,7 @@
         margin-top: 0.5rem;
       }
       .patta-desc {
-        color: rgba(255, 255, 255, 0.55);
+        color: rgba(0, 0, 0, 0.55);
         line-height: 1.8;
         max-width: 720px;
         margin: 1.5rem 0 2rem;
@@ -1339,8 +1339,8 @@
         gap: 1.2rem;
       }
       .patta-point {
-        background: rgba(208, 0, 255, 0.05);
-        border: 1px solid rgba(208, 0, 255, 0.15);
+        background: rgba(239, 77, 35, 0.05);
+        border: 1px solid rgba(239, 77, 35, 0.15);
         border-radius: 1rem;
         padding: 1.2rem;
       }
@@ -1357,7 +1357,7 @@
       }
       .patta-ref-box {
         background: linear-gradient(135deg, #1d0d3a, #2d0d4a);
-        border: 1px solid rgba(208, 0, 255, 0.2);
+        border: 1px solid rgba(239, 77, 35, 0.2);
         border-radius: 1.2rem;
         padding: 1.8rem;
         text-align: center;
@@ -1370,7 +1370,7 @@
         inset: 0;
         background: radial-gradient(
           circle at center,
-          rgba(208, 0, 255, 0.1),
+          rgba(239, 77, 35, 0.1),
           transparent
         );
       }
@@ -1385,7 +1385,7 @@
       .patta-ref-sub {
         font-size: 0.75rem;
         letter-spacing: 0.1em;
-        color: rgba(208, 0, 255, 0.6);
+        color: rgba(239, 77, 35, 0.6);
         text-transform: uppercase;
         position: relative;
         z-index: 1;
@@ -1464,7 +1464,7 @@
       }
       .cta-btn:hover {
         transform: scale(1.06);
-        box-shadow: 0 0 40px rgba(208, 0, 255, 0.3);
+        box-shadow: 0 0 40px rgba(239, 77, 35, 0.3);
       }
       .foot-socials {
         display: flex;
@@ -1600,7 +1600,7 @@
   </head>
   <body>
     <!-- Sparkle Ocean Blue Night Glow Background -->
-    <div style="position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(circle at center 80%, rgba(0, 140, 255, 0.15) 0%, rgba(10, 11, 12, 0) 70%); mix-blend-mode: screen;"></div>
+    <div style="position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(circle at center 80%, rgba(0, 140, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%); mix-blend-mode: screen;"></div>
     <canvas id="sc"></canvas>
     <div
       id="butterfly-3d-container"
@@ -1922,7 +1922,7 @@
                     style="
                       width: 64px;
                       height: 1px;
-                      background: rgba(208, 0, 255, 0.3);
+                      background: rgba(239, 77, 35, 0.3);
                       margin: 0.4rem auto;
                     "
                   ></div>
@@ -1930,7 +1930,7 @@
                     style="
                       font-size: 0.48rem;
                       letter-spacing: 0.28em;
-                      color: rgba(208, 0, 255, 0.4);
+                      color: rgba(239, 77, 35, 0.4);
                     "
                   >
                     EST. 2024
@@ -1976,102 +1976,75 @@
         <div class="reveal">
           <div class="sec-label">Research & Development</div>
           <h2 class="sec-title">
-            Pattachitra <span style="color: var(--lime)">Art</span>
+            Pattachitra <span style="color: var(--lime)">in Gen Z Fashion</span>
           </h2>
           <p
             style="
               color: var(--muted);
               margin-top: 0.8rem;
-              max-width: 480px;
+              max-width: 600px;
               line-height: 1.7;
               font-size: 0.93rem;
             "
           >
-            Exploring the rich heritage of Pattachitra traditional art form with
-            contemporary visual interpretation and design application.
+            Exploring how Pattachitra can be positioned in Gen Z fashion by understanding perspectives from Artisans, Fashion Designers, and Gen Z Consumers.
           </p>
         </div>
-        <div class="patta-card reveal d1">
-          <div class="patta-subtitle">✦ Animation / Dhingali</div>
-          <div class="patta-title">Research and Visual Development</div>
-          <p class="patta-desc">
-            Researching with an open mind and heart to find nuances, I've opted
-            for the Banijara embroidery style, seeking guidance from the book
-            "Textile of Banijara" for prime references. Delving into Law Garden
-            Market, I aimed to grasp the intricacies of beauty in complexity for
-            the background design. I'm actively exploring the visual nuances of
-            Banijara embroideries, painting onto existing cloths adorned with
-            Banijara's distinctive embroidery.
-          </p>
 
-          <div class="patta-research-grid">
-            <div class="patta-info">
-              <div class="patta-point">
-                <div class="patta-point-title">Heritage Origin</div>
-                <div class="patta-point-text">
-                  Derived from Sanskrit Patta (cloth) and Chitra (picture), this
-                  traditional art form is unique to eastern states of Odisha and
-                  West Bengal, each developing distinct identities with their
-                  own Geographical Indication (GI) tags.
-                </div>
-              </div>
-              <div class="patta-point">
-                <div class="patta-point-title">Cultural Significance</div>
-                <div class="patta-point-text">
-                  Every stroke carries religious or social narrative. This
-                  sophisticated tradition reflects the rich cultural heritage
-                  and storytelling traditions of India's eastern regions, with
-                  narratives drawn from mythology and daily life.
-                </div>
-              </div>
-              <div class="patta-point">
-                <div class="patta-point-title">Artistic Technique</div>
-                <div class="patta-point-text">
-                  Combining traditional embroidery techniques with visual
-                  exploration. The intricate patterns and designs showcase
-                  complexity and beauty in traditional textile arts, serving as
-                  inspiration for contemporary design applications.
-                </div>
-              </div>
-            </div>
-            <div class="patta-ref-box">
-              <div class="patta-ref-text">Research Phase</div>
-              <div class="patta-ref-sub">
-                Visual Exploration & Reference Study
-              </div>
-              <div
-                style="
-                  font-size: 0.8rem;
-                  margin-top: 1rem;
-                  color: rgba(208, 0, 255, 0.5);
-                  line-height: 1.6;
-                "
-              >
-                • Textile pattern analysis<br />
-                • Embroidery technique study<br />
-                • Color palette development<br />
-                • Visual narrative mapping<br />
-                • Contemporary interpretation
-              </div>
-            </div>
+        <div class="reveal d1" style="margin-top: 2.5rem;">
+          <!-- Hero Image -->
+          <div style="width: 100%; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; border: 1px solid var(--border);">
+            <img src="pattchitra.png" alt="Pattachitra Art Visual Development" style="width: 100%; height: auto; display: block; object-fit: cover;" />
           </div>
 
-          <div style="margin-top: 3.5rem;">
-            <h3 class="patta-point-title" style="margin-bottom: 1.5rem; text-align: center; font-size: 1.5rem;">Contemporary Application: Fashion & Apparel</h3>
-            <p style="color: var(--muted); text-align: center; margin-bottom: 2rem; font-size: 0.9rem;">Integrating traditional Pattachitra motifs into modern streetwear, bespoke footwear, and denim.</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
-              <div style="border-radius: 1rem; overflow: hidden; background: var(--s2); height: 280px; position: relative; border: 1px solid var(--border);">
-                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">[ Replace with Shoe Photo ]</div>
+          <!-- Research Points -->
+          <div style="background: var(--s1); border-radius: 1.5rem; padding: 2.5rem; border: 1px solid var(--border);">
+            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--lime); margin-bottom: 1.5rem; letter-spacing: 0.05em;">Key Research Findings</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+              
+              <!-- Problem -->
+              <div>
+                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">The Challenge</h4>
+                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                  While Gen Z shows interest in cultural fashion, traditional Pattachitra motifs often feel too heavy for everyday streetwear. Concurrently, artisans struggle with shrinking markets and low income.
+                </p>
               </div>
-              <div style="border-radius: 1rem; overflow: hidden; background: var(--s2); height: 280px; position: relative; border: 1px solid var(--border);">
-                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">[ Replace with Jacket Photo ]</div>
+
+              <!-- Artisans -->
+              <div>
+                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Artisan Perspectives</h4>
+                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                  Open to modern collaborations but highly concerned about over-modernization. They want to preserve cultural meaning and ensure fair compensation and recognition.
+                </p>
               </div>
-              <div style="border-radius: 1rem; overflow: hidden; background: var(--s2); height: 280px; position: relative; border: 1px solid var(--border);">
-                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">[ Replace with T-Shirt Photo ]</div>
+
+              <!-- Designers -->
+              <div>
+                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Designer Insights</h4>
+                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                  See huge potential in fusing heritage art with modern streetwear. Challenges include adapting to artisan production speeds and bridging the gap between traditional craft and modern aesthetics.
+                </p>
               </div>
+
+              <!-- Gen Z -->
+              <div>
+                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Gen Z Consumers</h4>
+                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                  Attracted to the aesthetic but prefer minimalist, stylized versions over heavy traditional prints. Pastel and monochrome palettes on oversized streetwear are favored over bright traditional colors.
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Conclusion -->
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--lime);">Conclusion & Strategy</h4>
+              <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6;">
+                Pattachitra has strong potential in youth fashion if adapted respectfully. The key is minimal stylization on comfortable silhouettes, paired with affordable pricing and authentic storytelling that highlights the artisan's contribution.
+              </p>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -2182,7 +2155,7 @@
               background: linear-gradient(
                 90deg,
                 transparent,
-                rgba(208, 0, 255, 0.3),
+                rgba(239, 77, 35, 0.3),
                 transparent
               );
               margin: 3rem 0;
@@ -2468,7 +2441,7 @@
       function star(x, y, sz, a) {
         ctx.save();
         ctx.globalAlpha = a;
-        ctx.strokeStyle = "rgba(0, 208, 255, " + a + ")";
+        ctx.strokeStyle = "rgba(239, 77, 35, " + a + ")";
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.arc(x, y, sz, 0, Math.PI * 2);
