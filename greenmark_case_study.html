@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenMark - UI/UX Case Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #128886;
+            --secondary: #0A6E6E;
+            --accent: #F5A623;
+            --bg-main: #F3F5F7;
+            --bg-dark: #121212;
+            --text-dark: #1A1A1A;
+            --text-gray: #666666;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #EAEAEA;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* The Behance Case Study Container */
+        .case-study-container {
+            width: 100%;
+            max-width: 1400px;
+            background-color: var(--white);
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6, .sora {
+            font-family: 'Sora', sans-serif;
+        }
+
+        /* Section Global Styles */
+        section {
+            padding: 100px 120px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+            letter-spacing: -1px;
+        }
+        
+        .section-title.light {
+            color: var(--white);
+        }
+
+        .section-desc {
+            font-size: 20px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            max-width: 800px;
+            margin-bottom: 60px;
+        }
+        
+        .section-desc.light {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* 1. Hero Section */
+        .hero {
+            background: var(--bg-dark);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            background: rgba(18, 136, 134, 0.2);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 24px;
+            border: 1px solid var(--primary);
+        }
+
+        .hero-title {
+            font-size: 80px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #128886 0%, #10B981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-mockups {
+            position: relative;
+            width: 50%;
+            height: 100%;
+        }
+
+        .mockup-frame {
+            background: #000;
+            border: 12px solid #222;
+            border-radius: 40px;
+            width: 320px;
+            height: 650px;
+            position: absolute;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .mockup-1 {
+            top: 50%;
+            left: 20%;
+            transform: translateY(-50%) rotate(-5deg);
+            z-index: 2;
+        }
+        
+        .mockup-2 {
+            top: 60%;
+            left: 50%;
+            transform: translateY(-50%) rotate(5deg);
+            z-index: 1;
+            filter: brightness(0.7);
+        }
+
+        /* 2. Overview */
+        .overview {
+            background: var(--bg-main);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .overview-box {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .overview-box h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* 3. Design System */
+        .design-system {
+            background: var(--white);
+        }
+
+        .ds-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .color-card {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .color-fill {
+            height: 150px;
+        }
+
+        .color-info {
+            padding: 20px;
+            background: var(--white);
+        }
+
+        .color-info h4 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .color-info p {
+            color: var(--text-gray);
+            font-family: monospace;
+        }
+
+        .typography {
+            margin-top: 40px;
+        }
+
+        .font-showcase {
+            background: var(--bg-main);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .font-name {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        /* 4. Wireframes & User Flow */
+        .wireframes {
+            background: var(--bg-dark);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .flow-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+
+        .flow-step {
+            background: #222;
+            padding: 20px 30px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            min-width: 200px;
+        }
+
+        .flow-arrow {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        /* 5. High Fidelity Screens */
+        .hifi {
+            background: var(--bg-main);
+        }
+
+        .screens-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .screen-mock {
+            background: var(--white);
+            border-radius: 30px;
+            height: 560px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .screen-label {
+            margin-top: 20px;
+            text-align: center;
+            font-family: 'Sora';
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 18px;
+        }
+
+        /* Mini UI Elements inside mockups to show the flow */
+        .ui-header { height: 60px; border-bottom: 1px solid #EAEAEA; display: flex; align-items: center; padding: 0 20px; font-family: 'Sora'; font-weight: 600;}
+        .ui-content { padding: 20px; flex-grow: 1; }
+        .ui-btn { background: var(--primary); color: white; padding: 15px; border-radius: 12px; text-align: center; font-family: 'Sora'; font-weight: 600; margin-top: auto; margin-bottom: 20px; margin-inline: 20px;}
+        .ui-input { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-bottom: 15px; color: #999; }
+        .ui-card { border: 1px solid #ddd; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px;}
+        .ui-card.active { border-color: var(--primary); background: rgba(18, 136, 134, 0.1); }
+        .ui-circle { width: 120px; height: 120px; border-radius: 50%; border: 8px solid var(--primary); margin: 30px auto; display: flex; align-items: center; justify-content: center; font-family: 'Sora'; font-size: 24px; font-weight: 700; color: var(--primary);}
+
+        /* 6. Component Showcase */
+        .components {
+            background: var(--white);
+            text-align: center;
+        }
+
+        .comp-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .comp-box {
+            background: var(--bg-main);
+            padding: 40px;
+            border-radius: 20px;
+            width: 300px;
+        }
+
+        /* 7. Conclusion */
+        .footer {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 120px;
+        }
+        
+        .footer h2 {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="case-study-container">
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-tag">UI/UX Case Study</div>
+            <h1 class="hero-title sora">GreenMark</h1>
+            <p class="section-desc light">A simplified carbon offsetting platform designed to make climate action as easy as using Zomato or Swiggy for Indian small businesses.</p>
+            
+            <div style="display: flex; gap: 40px; margin-top: 40px;">
+                <div>
+                    <h5 style="color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Role</h5>
+                    <p>UI/UX Designer</p>
+                </div>
+                <div>
+                    <h5 style="color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Timeline</h5>
+                    <p>4 Weeks</p>
+                </div>
+                <div>
+                    <h5 style="color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Platform</h5>
+                    <p>iOS & Android</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-mockups">
+            <div class="mockup-frame mockup-1">
+                <!-- Dashboard Visual -->
+                <div style="background: white; height: 100%; display: flex; flex-direction: column;">
+                    <div style="padding: 30px 20px; background: #F8FAFC;">
+                        <h2 style="font-family: 'Sora'; font-size: 20px; margin-bottom: 5px;">Mukul's Café 👋</h2>
+                        <p style="font-size: 12px; color: #666;">You're doing great!</p>
+                    </div>
+                    <div style="flex-grow: 1; padding: 20px; text-align: center;">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; border: 12px solid #EAEAEA; border-top-color: var(--primary); border-right-color: var(--primary); border-bottom-color: var(--primary); margin: 0 auto 30px; display: flex; align-items: center; justify-content: center; transform: rotate(-45deg);">
+                            <div style="transform: rotate(45deg);">
+                                <span style="font-family: 'Sora'; font-size: 32px; font-weight: 700; color: var(--primary);">75%</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <div style="flex:1; background: #E6F7F6; padding: 15px; border-radius: 12px; color: var(--primary); font-weight: 600;">Offset</div>
+                            <div style="flex:1; border: 1px solid #ddd; padding: 15px; border-radius: 12px; font-weight: 600;">Share</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mockup-frame mockup-2">
+                <!-- Splash Visual -->
+                <div style="background: var(--primary); height: 100%; color: white; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;">
+                    <h1 style="font-family: 'Sora'; font-size: 36px; margin-bottom: 10px;">Make Your Business Carbon Neutral</h1>
+                    <div style="background: white; color: var(--primary); padding: 15px; text-align: center; border-radius: 12px; font-family: 'Sora'; font-weight: 600; margin-top: 30px;">Get Started</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="overview">
+        <div>
+            <h2 class="section-title">Project Overview</h2>
+            <p class="section-desc">Small business owners in India, such as café and restaurant operators, are eager to adopt sustainable practices. However, existing carbon markets are complex, enterprise-focused, and filled with technical jargon.</p>
+            <p class="section-desc">GreenMark bridges this gap by providing an intuitive, fintech-style app that simplifies footprint calculation, marketplace purchasing, and sustainability branding.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="overview-box">
+                <h3><i class="ph-fill ph-warning-circle"></i> The Problem</h3>
+                <p style="color: var(--text-gray); line-height: 1.6;">Café owners lack awareness about carbon emissions and find existing carbon credit systems too expensive and complex. There are no simple tools tailored for Indian F&B businesses to measure and showcase their impact.</p>
+            </div>
+            <div class="overview-box">
+                <h3><i class="ph-fill ph-lightbulb"></i> The Solution</h3>
+                <p style="color: var(--text-gray); line-height: 1.6;">An all-in-one mobile app offering a simplified 3-step carbon calculator, an e-commerce style marketplace for verified carbon offsets, and a shareable digital certificate to build customer trust.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design System Section -->
+    <section class="design-system">
+        <h2 class="section-title">Design System</h2>
+        <p class="section-desc">The visual language blends "Minimalist Fintech" with an organic, eco-friendly touch to inspire trust and environmental action.</p>
+
+        <div class="ds-grid">
+            <div>
+                <h3 class="sora" style="font-size: 24px; margin-bottom: 20px;">Colors</h3>
+                <p style="color: var(--text-gray);">A vibrant Action Green leads the experience, supported by a professional Teal and accented with Marigold for warnings and highlights.</p>
+                
+                <div class="color-palette">
+                    <div class="color-card">
+                        <div class="color-fill" style="background: #128886;"></div>
+                        <div class="color-info">
+                            <h4>Action Green</h4>
+                            <p>#128886</p>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-fill" style="background: #0A6E6E;"></div>
+                        <div class="color-info">
+                            <h4>Teal</h4>
+                            <p>#0A6E6E</p>
+                        </div>
+                    </div>
+                    <div class="color-card">
+                        <div class="color-fill" style="background: #F5A623;"></div>
+                        <div class="color-info">
+                            <h4>Marigold</h4>
+                            <p>#F5A623</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typography">
+                <h3 class="sora" style="font-size: 24px; margin-bottom: 20px;">Typography</h3>
+                <p style="color: var(--text-gray); margin-bottom: 30px;">Sora's geometric warmth signals fintech credibility, while Inter's neutral clarity carries the load on small screens.</p>
+                
+                <div class="font-showcase" style="font-family: 'Sora';">
+                    <div class="font-name">Sora</div>
+                    <p style="font-size: 18px; margin-bottom: 10px; font-weight: 700;">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm</p>
+                    <p style="color: var(--text-gray);">Headings • Display • Numbers</p>
+                </div>
+
+                <div class="font-showcase" style="font-family: 'Inter';">
+                    <div class="font-name" style="font-weight: 600;">Inter</div>
+                    <p style="font-size: 18px; margin-bottom: 10px;">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm</p>
+                    <p style="color: var(--text-gray);">Body Text • UI Labels • Captions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Flow Section -->
+    <section class="wireframes">
+        <h2 class="section-title light">App Architecture & Flow</h2>
+        <p class="section-desc light" style="margin: 0 auto;">A frictionless 10-screen journey from onboarding to carbon neutrality.</p>
+
+        <div class="flow-container">
+            <div class="flow-step">
+                <h4 class="sora">1. Onboarding</h4>
+                <p style="font-size: 14px; color: #888; margin-top: 8px;">Splash & Sign Up</p>
+            </div>
+            <i class="ph ph-arrow-right flow-arrow"></i>
+            <div class="flow-step">
+                <h4 class="sora">2. Profiling</h4>
+                <p style="font-size: 14px; color: #888; margin-top: 8px;">Business Type</p>
+            </div>
+            <i class="ph ph-arrow-right flow-arrow"></i>
+            <div class="flow-step" style="border-color: var(--primary);">
+                <h4 class="sora" style="color: var(--primary);">3. Calculator</h4>
+                <p style="font-size: 14px; color: #888; margin-top: 8px;">Electricity, Gas, Waste</p>
+            </div>
+            <i class="ph ph-arrow-right flow-arrow"></i>
+            <div class="flow-step">
+                <h4 class="sora">4. Marketplace</h4>
+                <p style="font-size: 14px; color: #888; margin-top: 8px;">Select Projects</p>
+            </div>
+            <i class="ph ph-arrow-right flow-arrow"></i>
+            <div class="flow-step" style="background: rgba(18, 136, 134, 0.2); border-color: var(--primary);">
+                <h4 class="sora" style="color: var(--primary);">5. Certification</h4>
+                <p style="font-size: 14px; color: var(--white); margin-top: 8px;">Checkout & Dashboard</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- UI Screens Showcase Section -->
+    <section class="hifi">
+        <h2 class="section-title">High-Fidelity Screens</h2>
+        <p class="section-desc">Translating the wireframes into a premium, eco-friendly fintech interface.</p>
+
+        <div class="screens-grid">
+            
+            <!-- Screen 1: Sign Up -->
+            <div>
+                <div class="screen-mock">
+                    <div class="ui-header" style="justify-content: center; font-size: 18px;">GreenMark</div>
+                    <div class="ui-content">
+                        <h2 class="sora" style="font-size: 24px; margin-bottom: 10px;">Create Account</h2>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 30px;">Join 500+ sustainable businesses</p>
+                        
+                        <div class="ui-input">Business Name</div>
+                        <div class="ui-input">Email Address</div>
+                        <div class="ui-input">Password</div>
+                    </div>
+                    <div class="ui-btn">Sign Up</div>
+                </div>
+                <div class="screen-label">1. Onboarding</div>
+            </div>
+
+            <!-- Screen 2: Questionnaire -->
+            <div>
+                <div class="screen-mock">
+                    <div class="ui-header"><i class="ph ph-arrow-left"></i></div>
+                    <div class="ui-content">
+                        <h2 class="sora" style="font-size: 24px; margin-bottom: 30px;">What kind of business?</h2>
+                        
+                        <div class="ui-card active">
+                            <div style="background: var(--primary); color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;"><i class="ph-fill ph-coffee"></i></div>
+                            <span class="sora" style="font-weight: 600;">Café</span>
+                        </div>
+                        <div class="ui-card">
+                            <div style="background: #F3F5F7; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;"><i class="ph-fill ph-fork-knife"></i></div>
+                            <span class="sora" style="font-weight: 600;">Restaurant</span>
+                        </div>
+                        <div class="ui-card">
+                            <div style="background: #F3F5F7; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;"><i class="ph-fill ph-storefront"></i></div>
+                            <span class="sora" style="font-weight: 600;">Cloud Kitchen</span>
+                        </div>
+                    </div>
+                    <div class="ui-btn">Continue</div>
+                </div>
+                <div class="screen-label">2. Profiling</div>
+            </div>
+
+            <!-- Screen 3: Calculator Result -->
+            <div>
+                <div class="screen-mock">
+                    <div class="ui-header" style="justify-content: space-between;">
+                        <i class="ph ph-arrow-left"></i>
+                        <span>Results</span>
+                        <div style="width: 24px;"></div>
+                    </div>
+                    <div class="ui-content" style="text-align: center;">
+                        <p style="color: #666; font-size: 14px; margin-top: 20px;">Your Carbon Footprint</p>
+                        <div class="ui-circle">8.4 t</div>
+                        <div style="background: #FFF4D6; color: #D98D00; padding: 15px; border-radius: 12px; text-align: left; font-size: 13px; font-weight: 500;">
+                            <i class="ph-fill ph-car-profile"></i> Like driving 35,000 km
+                        </div>
+                        
+                        <div style="margin-top: 30px; text-align: left;">
+                            <p style="font-size: 14px; font-weight: 600; margin-bottom: 10px;">You emit 12% less than average!</p>
+                            <div style="height: 8px; background: #EAEAEA; border-radius: 4px;"><div style="width: 70%; height: 100%; background: var(--primary); border-radius: 4px;"></div></div>
+                        </div>
+                    </div>
+                    <div class="ui-btn">Offset Emissions</div>
+                </div>
+                <div class="screen-label">3. Calculator Output</div>
+            </div>
+
+            <!-- Screen 4: Marketplace -->
+            <div>
+                <div class="screen-mock">
+                    <div class="ui-header" style="justify-content: space-between;">
+                        <i class="ph ph-arrow-left"></i>
+                        <span>Projects</span>
+                        <div style="width: 24px;"></div>
+                    </div>
+                    <div class="ui-content" style="padding: 15px;">
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px; overflow: hidden;">
+                            <div style="background: var(--primary); color: white; padding: 6px 15px; border-radius: 20px; font-size: 12px;">All</div>
+                            <div style="border: 1px solid #ddd; padding: 6px 15px; border-radius: 20px; font-size: 12px;">Solar</div>
+                            <div style="border: 1px solid #ddd; padding: 6px 15px; border-radius: 20px; font-size: 12px;">Forest</div>
+                        </div>
+
+                        <!-- Project Card -->
+                        <div style="border: 1px solid #ddd; border-radius: 16px; overflow: hidden; margin-bottom: 15px;">
+                            <div style="height: 100px; background: #222; display: flex; align-items: center; justify-content: center; color: white;">[ Image ]</div>
+                            <div style="padding: 15px;">
+                                <div style="color: var(--primary); font-size: 10px; font-weight: 700; margin-bottom: 5px;">VERIFIED</div>
+                                <h4 class="sora" style="font-size: 16px; margin-bottom: 5px;">Rajasthan Solar</h4>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                                    <span style="font-weight: 600;">₹850 / t</span>
+                                    <div style="color: var(--primary); font-weight: 600; font-size: 14px;">Select</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-label">4. Marketplace</div>
+            </div>
+
+        </div>
+
+        <div class="screens-grid" style="margin-top: 80px;">
+            
+            <!-- Screen 5: Checkout -->
+            <div>
+                <div class="screen-mock">
+                    <div class="ui-header" style="justify-content: space-between;">
+                        <i class="ph ph-arrow-left"></i>
+                        <span>Checkout</span>
+                        <div style="width: 24px;"></div>
+                    </div>
+                    <div class="ui-content">
+                        <h2 class="sora" style="font-size: 20px; margin-bottom: 20px;">Order Summary</h2>
+                        <div style="background: #F8FAFC; padding: 20px; border-radius: 16px; margin-bottom: 30px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;"><span style="color: #666;">Project</span><strong>Solar Farm</strong></div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;"><span style="color: #666;">Quantity</span><strong>8.4 t</strong></div>
+                            <div style="border-top: 1px dashed #ccc; margin: 15px 0;"></div>
+                            <div style="display: flex; justify-content: space-between; font-size: 18px;"><span style="color: #666;">Total</span><strong class="sora" style="color: var(--primary);">₹7,140</strong></div>
+                        </div>
+
+                        <h4 class="sora" style="margin-bottom: 15px;">Pay with UPI</h4>
+                        <div style="border: 2px solid var(--primary); background: #E6F7F6; padding: 15px; border-radius: 12px; text-align: center; font-weight: 600; color: var(--primary); margin-bottom: 10px;">Google Pay</div>
+                        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 12px; text-align: center; font-weight: 600; color: #666;">PhonePe</div>
+                    </div>
+                    <div class="ui-btn">Pay Securely</div>
+                </div>
+                <div class="screen-label">5. Payment</div>
+            </div>
+
+            <!-- Screen 6: Success -->
+            <div>
+                <div class="screen-mock" style="background: var(--primary); color: white;">
+                    <div class="ui-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; height: 100%;">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 30px;">
+                            <i class="ph-fill ph-check" style="font-size: 40px;"></i>
+                        </div>
+                        <h2 class="sora" style="font-size: 28px; margin-bottom: 15px;">Carbon Neutral!</h2>
+                        <p style="opacity: 0.9; margin-bottom: 40px;">Mukul's Café is officially certified.</p>
+                        
+                        <div style="background: white; border-radius: 16px; width: 100%; padding: 20px; color: var(--text-dark); text-align: left; margin-bottom: 40px;">
+                            <div style="font-size: 10px; color: var(--accent); font-weight: 700; letter-spacing: 1px; margin-bottom: 5px;">CERTIFICATE</div>
+                            <h3 class="sora" style="font-size: 18px; color: var(--primary); margin-bottom: 20px;">GreenMark</h3>
+                            <p style="font-size: 12px; color: #666;">Issued to:</p>
+                            <p style="font-weight: 600; margin-bottom: 15px;">Mukul's Café</p>
+                        </div>
+                        
+                        <div style="background: white; color: var(--primary); width: 100%; padding: 15px; border-radius: 12px; font-family: 'Sora'; font-weight: 600; display: flex; justify-content: center; gap: 10px; align-items: center;">
+                            <i class="ph-fill ph-instagram-logo" style="font-size: 20px;"></i> Share
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-label">6. Success / Share</div>
+            </div>
+
+            <!-- Screen 7: Dashboard -->
+            <div style="grid-column: span 2;">
+                <div class="screen-mock" style="flex-direction: row;">
+                    <div style="flex: 1; padding: 40px; border-right: 1px solid #EAEAEA; display: flex; flex-direction: column; justify-content: center;">
+                        <h2 class="sora" style="font-size: 32px; margin-bottom: 20px;">The Sustainability Dashboard</h2>
+                        <p style="color: var(--text-gray); line-height: 1.6; margin-bottom: 30px;">Applying the <strong>Zeigarnik Effect</strong>, the dashboard features an incomplete progress ring (e.g., 75% toward Carbon Neutral) to keep small business owners engaged and motivated to return.</p>
+                        <p style="color: var(--text-gray); line-height: 1.6;">Bottom navigation ensures quick access to the calculator, marketplace, and profile settings.</p>
+                    </div>
+                    <div style="flex: 1; display: flex; align-items: center; justify-content: center; background: #F8FAFC;">
+                        <!-- Mini Dashboard mockup -->
+                        <div style="width: 260px; height: 480px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 4px solid #333; display: flex; flex-direction: column;">
+                            <div style="padding: 20px;">
+                                <h3 class="sora" style="font-size: 16px;">Mukul's Café</h3>
+                            </div>
+                            <div style="flex-grow: 1; padding: 0 20px;">
+                                <div style="width: 120px; height: 120px; border-radius: 50%; border: 8px solid #EAEAEA; border-top-color: var(--primary); border-right-color: var(--primary); border-bottom-color: var(--primary); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; transform: rotate(-45deg);">
+                                    <div style="transform: rotate(45deg); text-align: center;">
+                                        <span style="font-family: 'Sora'; font-size: 24px; font-weight: 700; color: var(--primary);">75%</span>
+                                    </div>
+                                </div>
+                                <h4 class="sora" style="font-size: 14px; margin-bottom: 10px;">Impact So Far</h4>
+                                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                                    <div style="flex: 1; background: #F3F5F7; padding: 10px; border-radius: 8px; text-align: center;">
+                                        <i class="ph-fill ph-tree-evergreen" style="color: #10B981; font-size: 20px;"></i>
+                                        <div style="font-size: 14px; font-weight: 700;">6</div>
+                                    </div>
+                                    <div style="flex: 1; background: #F3F5F7; padding: 10px; border-radius: 8px; text-align: center;">
+                                        <i class="ph-fill ph-lightning" style="color: var(--accent); font-size: 20px;"></i>
+                                        <div style="font-size: 14px; font-weight: 700;">4.2k</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height: 60px; border-top: 1px solid #EAEAEA; display: flex; justify-content: space-around; align-items: center; color: #999;">
+                                <i class="ph-fill ph-house" style="color: var(--primary);"></i>
+                                <i class="ph ph-calculator"></i>
+                                <i class="ph ph-leaf"></i>
+                                <i class="ph ph-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="screen-label">7. Main Dashboard</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Components Section -->
+    <section class="components">
+        <h2 class="section-title">UI Components</h2>
+        <p class="section-desc" style="margin: 0 auto;">Consistent states and clear visual feedback.</p>
+
+        <div class="comp-grid">
+            <div class="comp-box">
+                <h4 class="sora" style="margin-bottom: 20px; text-align: left;">Buttons</h4>
+                <div style="background: var(--primary); color: white; padding: 15px; border-radius: 12px; font-family: 'Sora'; font-weight: 600; margin-bottom: 15px;">Primary Action</div>
+                <div style="background: rgba(18, 136, 134, 0.1); color: var(--primary); padding: 15px; border-radius: 12px; font-family: 'Sora'; font-weight: 600;">Secondary Action</div>
+            </div>
+            <div class="comp-box">
+                <h4 class="sora" style="margin-bottom: 20px; text-align: left;">Selection Cards</h4>
+                <div style="border: 2px solid var(--primary); background: var(--primary); color: white; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                    <i class="ph-fill ph-check-circle" style="font-size: 20px;"></i> Selected State
+                </div>
+                <div style="border: 2px solid #ddd; background: white; color: #666; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px;">
+                    <i class="ph ph-circle" style="font-size: 20px;"></i> Default State
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Outro -->
+    <footer class="footer">
+        <h2 class="sora">Thank You</h2>
+        <p style="font-size: 20px; opacity: 0.8;">for reviewing this UI/UX Case Study.</p>
+    </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GreenMark - Carbon Offsetting for Small Businesses</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        :root {
+            --primary: #128886; /* Action Green */
+            --primary-dark: #0e6b69;
+            --primary-light: #e6f7f6;
+            --secondary: #0A6E6E; /* Teal */
+            --accent: #F5A623; /* Marigold */
+            --accent-light: #FFF4D6;
+            --bg-light: #F8FAFC;
+            --bg-white: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --border-light: #E2E8F0;
+            --error: #EF4444;
+            --success: #10B981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #E5E7EB; /* Darker background outside phone */
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6, .sora {
+            font-family: 'Sora', sans-serif;
+        }
+
+        /* Mobile App Container */
+        .app-container {
+            width: 100%;
+            max-width: 414px; /* iPhone Max width */
+            height: 100vh;
+            max-height: 896px; /* iPhone Max height */
+            background-color: var(--bg-white);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 450px) {
+            .app-container {
+                height: 90vh;
+                border-radius: 40px;
+                border: 12px solid #1f2937;
+            }
+        }
+
+        /* Screen Management */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateX(20px);
+            overflow-y: auto;
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+
+        .screen.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+            z-index: 10;
+        }
+
+        /* Common Elements */
+        .header {
+            padding: 24px 24px 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--bg-white);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            margin-left: -8px;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .back-btn:active {
+            background: var(--bg-light);
+        }
+
+        .content {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Typography */
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 18px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Sora', sans-serif;
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border: none;
+            border-radius: 16px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Sora', sans-serif;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 12px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-dark);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 16px;
+            font-size: 15px;
+            font-weight: 500;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .btn-text {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 15px;
+            margin-top: 24px;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Inputs */
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+            background: var(--bg-white);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        /* Cards & Selectables */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .selectable-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 24px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .selectable-card i {
+            font-size: 32px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .selectable-card span {
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--text-dark);
+            transition: color 0.2s;
+        }
+
+        /* Selection interaction rule */
+        .selectable-card.selected {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .selectable-card.selected i,
+        .selectable-card.selected span {
+            color: white;
+        }
+
+        /* Stepper */
+        .stepper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+        }
+
+        .stepper-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: none;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .stepper-btn:active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .stepper-value {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Sora', sans-serif;
+        }
+
+        /* Chips */
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .chip {
+            padding: 12px 20px;
+            border-radius: 100px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-white);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chip.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: var(--border-light);
+            border-radius: 3px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .step-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Helper Card */
+        .helper-card {
+            background: var(--primary-light);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+
+        .helper-card i {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .helper-text {
+            font-size: 14px;
+            color: var(--primary-dark);
+            line-height: 1.5;
+        }
+
+        /* Result Visuals */
+        .result-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin: 24px 0 8px;
+            font-family: 'Sora', sans-serif;
+        }
+        
+        .result-unit {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-bottom: 32px;
+        }
+
+        .comparison-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        /* Marketplace */
+        .project-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        
+        .project-card:active {
+            transform: scale(0.98);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 160px;
+            background: url('https://images.unsplash.com/photo-1509391366360-1e97f52cefd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            background: #ECFDF5;
+            color: #059669;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .project-price {
+            font-weight: 700;
+            font-size: 18px;
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Dashboard Ring */
+        .progress-ring-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 32px;
+        }
+
+        .progress-ring {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) 75%, var(--border-light) 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-ring-inner {
+            width: 130px;
+            height: 130px;
+            background: var(--bg-light);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-white);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+            z-index: 50;
+            display: none; /* hidden by default */
+        }
+
+        .bottom-nav.active {
+            display: flex;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        /* Sticky Bottom for buttons */
+        .sticky-bottom {
+            margin-top: auto;
+            padding-top: 24px;
+        }
+
+        /* Checkbox */
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: var(--bg-white);
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+        
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-muted);
+            margin: 24px 0;
+            font-size: 14px;
+        }
+        
+        .separator::before, .separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .separator:not(:empty)::before {
+            margin-right: .5em;
+        }
+        
+        .separator:not(:empty)::after {
+            margin-left: .5em;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent);
+            opacity: 0;
+        }
+
+        /* Splash BG */
+        .splash-bg {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
+            color: white;
+        }
+        .splash-bg .title {
+            color: white;
+            font-size: 36px;
+        }
+        .splash-bg .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Screen 1: Splash -->
+    <div id="splash" class="screen active splash-bg">
+        <div style="padding: 40px 24px; margin-top: auto; padding-bottom: 48px;">
+            <div style="background: var(--primary); color: white; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; margin-bottom: 24px;">
+                <i class="ph-fill ph-leaf" style="font-size: 28px;"></i>
+            </div>
+            <h1 class="title">Make Your Business Carbon Neutral</h1>
+            <p class="subtitle" style="margin-bottom: 40px;">Simple tools for cafés & restaurants to measure, offset, and showcase sustainability.</p>
+            
+            <button class="btn-primary" onclick="navTo('signup')">
+                Get Started
+                <i class="ph ph-arrow-right"></i>
+            </button>
+            <button class="btn-text" style="color: white; opacity: 0.9;" onclick="navTo('signup')">I already have an account →</button>
+        </div>
+    </div>
+
+    <!-- Screen 2: Sign-Up -->
+    <div id="signup" class="screen" style="background: var(--bg-white);">
+        <div class="header">
+            <button class="back-btn" onclick="navTo('splash')"><i class="ph ph-arrow-left"></i></button>
+        </div>
+        <div class="content">
+            <h1 class="title">Create Your Account</h1>
+            <p class="subtitle">Join 500+ sustainable businesses in India 🌿</p>
+
+            <button class="btn-outline" onclick="navTo('questionnaire')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" width="20">
+                Continue with Google
+            </button>
+
+            <div class="separator">or</div>
+
+            <div class="input-group">
+                <label class="input-label">Business Name</label>
+                <input type="text" class="input-field" placeholder="e.g. Mukul's Café">
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Email address</label>
+                <input type="email" class="input-field" placeholder="name@business.com">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Password</label>
+                <input type="password" class="input-field" placeholder="••••••••">
+            </div>
+
+            <div class="sticky-bottom">
+                <button class="btn-primary" onclick="navTo('questionnaire')">Create Account</button>
+                <p style="text-align: center; margin-top: 16px; font-size: 14px; color: var(--text-muted);">
+                    Already have an account? <span style="color: var(--primary); font-weight: 600;">Log in</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: Onboarding Questionnaire -->
+    <div id="questionnaire" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="navTo('signup')"><i class="ph ph-arrow-left"></i></button>
+        </div>
+        <div class="content">
+            <h1 class="title">What kind of business do you run?</h1>
+            <p class="subtitle">We'll customize everything based on your business type.</p>
+
+            <div class="grid-cards">
+                <div class="selectable-card" onclick="selectCard(this)">
+                    <i class="ph ph-coffee"></i>
+                    <span>Café</span>
+                </div>
+                <div class="selectable-card" onclick="selectCard(this)">
+                    <i class="ph ph-fork-knife"></i>
+                    <span>Restaurant</span>
+                </div>
+                <div class="selectable-card" onclick="selectCard(this)">
+                    <i class="ph ph-croissant"></i>
+                    <span>Bakery</span>
+                </div>
+                <div class="selectable-card" onclick="selectCard(this)">
+                    <i class="ph ph-storefront"></i>
+                    <span>Cloud Kitchen</span>
+                </div>
+            </div>
+
+            <div class="selectable-card" onclick="selectCard(this)" style="margin-bottom: 24px;">
+                <i class="ph ph-buildings"></i>
+                <span>Other Small Business</span>
+            </div>
+
+            <div class="sticky-bottom">
+                <button class="btn-primary" onclick="navTo('calc1')">Continue <i class="ph ph-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 4: Calculator 1 -->
+    <div id="calc1" class="screen" style="background: var(--bg-white);">
+        <div class="header">
+            <button class="back-btn" onclick="navTo('questionnaire')"><i class="ph ph-arrow-left"></i></button>
+        </div>
+        <div class="content">
+            <div class="step-label">Step 1 of 3</div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 33%;"></div>
+            </div>
+
+            <h1 class="title">How much electricity does your café use? ⚡</h1>
+            <p class="subtitle">Enter your monthly consumption.</p>
+
+            <div class="input-group" style="position: relative;">
+                <input type="number" class="input-field" value="500" style="font-size: 24px; padding-right: 80px; font-weight: 600; font-family: 'Sora';">
+                <span style="position: absolute; right: 20px; top: 20px; color: var(--text-muted); font-weight: 500;">kWh</span>
+            </div>
+
+            <div class="helper-card">
+                <i class="ph-fill ph-info"></i>
+                <div class="helper-text">
+                    <strong>Not sure?</strong><br>
+                    A typical Indian café uses between 400–800 units (kWh) per month.
+                </div>
+            </div>
+
+            <button class="btn-text" style="text-align: left; margin-top: 0;">I don't have my bill — use average</button>
+
+            <div class="sticky-bottom">
+                <button class="btn-primary" onclick="navTo('calc2')">Next <i class="ph ph-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 5: Calculator 2 -->
+    <div id="calc2" class="screen" style="background: var(--bg-white);">
+        <div class="header">
+            <button class="back-btn" onclick="navTo('calc1')"><i class="ph ph-arrow-left"></i></button>
+        </div>
+        <div class="content">
+            <div class="step-label">Step 2 of 3</div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 66%;"></div>
+            </div>
+
+            <h1 class="title">How many LPG cylinders do you use? 🔥</h1>
+            <p class="subtitle">Monthly usage for cooking.</p>
+
+            <div class="stepper">
+                <button class="stepper-btn" onclick="updateStepper(-1)">-</button>
+                <div class="stepper-value" id="lpg-value">2</div>
+                <button class="stepper-btn" onclick="updateStepper(1)">+</button>
+            </div>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 32px;">cylinders / month</p>
+
+            <div class="checkbox-row" onclick="toggleCheckbox('piped-gas')">
+                <input type="checkbox" id="piped-gas">
+                <span style="font-weight: 500;">We use piped gas (PNG) instead</span>
+            </div>
+
+            <div class="sticky-bottom">
+                <button class="btn-primary" onclick="navTo('calc3')">Next <i class="ph ph-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 6: Calculator 3 -->
+    <div id="calc3" class="screen" style="background: var(--bg-white);">
+        <div class="header">
+            <button class="back-btn" onclick="navTo('calc2')"><i class="ph ph-arrow-left"></i></button>
+        </div>
+        <div class="content">
+            <div class="step-label">Step 3 of 3</div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+
+            <h1 class="title">Almost done! 🎉</h1>
+            <p class="subtitle">Just a few more details about operations.</p>
+
+            <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-dark);">How much waste per week? 🗑</h3>
+            <div class="chips-container">
+                <div class="chip" onclick="selectChip(this)">Under 5 kg</div>
+                <div class="chip selected" onclick="selectChip(this)">5–15 kg</div>
+                <div class="chip" onclick="selectChip(this)">More than 15 kg</div>
+            </div>
+
+            <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--text-dark);">Do you offer food delivery? 🛵</h3>
+            <div class="chips-container">
+                <div class="chip selected" onclick="selectChip(this)">Yes</div>
+                <div class="chip" onclick="selectChip(this)">No</div>
+            </div>
+
+            <div class="input-group" id="delivery-apps">
+                <label class="input-label">Which services?</label>
+                <input type="text" class="input-field" placeholder="Swiggy, Zomato..." value="Swiggy, Zomato">
+            </div>
+
+            <div class="sticky-bottom">
+                <button class="btn-primary" style="background-color: var(--success);" onclick="navTo('result')">
+                    <i class="ph-fill ph-leaf"></i> Calculate My Footprint
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 7: Impact Result -->
+    <div id="result" class="screen">
+        <div class="header" style="background: transparent;">
+            <button class="back-btn" onclick="navTo('calc3')"><i class="ph ph-arrow-left"></i></button>
+            <span style="font-weight: 600; font-family: 'Sora'; flex-grow: 1; text-align: center; margin-right: 40px;">Results</span>
+        </div>
+        <div class="content">
+            <div style="background: white; border-radius: 24px; padding: 32px 24px; text-align: center; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); margin-bottom: 24px;">
+                <h2 style="color: var(--text-muted); font-size: 16px; font-weight: 500;">Your Café's Footprint</h2>
+                <div class="result-number">8.4</div>
+                <div class="result-unit">tons CO₂ / year</div>
+
+                <div style="display: flex; align-items: center; gap: 12px; background: #FEF3C7; color: #D97706; padding: 12px 16px; border-radius: 12px; text-align: left; margin-top: 24px;">
+                    <i class="ph-fill ph-car-profile" style="font-size: 24px;"></i>
+                    <span style="font-size: 14px; font-weight: 500;">Like driving 35,000 km by car in a year</span>
+                </div>
+            </div>
+
+            <div class="comparison-card">
+                <h3 style="font-size: 15px; margin-bottom: 16px;">How you compare</h3>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <span style="width: 40px; font-size: 14px; font-weight: 500;">You</span>
+                    <div style="flex-grow: 1; height: 12px; background: var(--border-light); border-radius: 6px; overflow: hidden;">
+                        <div style="width: 70%; height: 100%; background: var(--primary); border-radius: 6px;"></div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <span style="width: 40px; font-size: 14px; font-weight: 500;">Avg</span>
+                    <div style="flex-grow: 1; height: 12px; background: var(--border-light); border-radius: 6px; overflow: hidden;">
+                        <div style="width: 85%; height: 100%; background: var(--text-muted); border-radius: 6px;"></div>
+                    </div>
+                </div>
+                <div style="color: var(--success); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+                    <i class="ph-fill ph-check-circle"></i> You emit 12% less than average!
+                </div>
+            </div>
+
+            <div class="sticky-bottom">
+                <button class="btn-primary" onclick="navTo('marketplace')">Offset My Emissions 🌿</button>
+                <button class="btn-secondary" onclick="navTo('dashboard')">Save Report for Later</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 8: Marketplace -->
+    <div id="marketplace" class="screen">
+        <div class="header" style="background: transparent;">
+            <button class="back-btn" onclick="navTo('result')"><i class="ph ph-arrow-left"></i></button>
+            <span style="font-weight: 600; font-family: 'Sora'; flex-grow: 1; text-align: center; margin-right: 40px;">Offset Projects</span>
+        </div>
+        <div class="content" style="padding-top: 0;">
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Every credit = 1 ton CO₂ removed. Choose a verified project to support.</p>
+
+            <div class="chips-container" style="margin-bottom: 24px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px;">
+                <div class="chip selected" style="white-space: nowrap;">All</div>
+                <div class="chip" style="white-space: nowrap;">🌳 Forest</div>
+                <div class="chip" style="white-space: nowrap;">☀️ Solar</div>
+                <div class="chip" style="white-space: nowrap;">💨 Wind</div>
+            </div>
+
+            <!-- Project 1 -->
+            <div class="project-card" onclick="navTo('checkout')">
+                <div class="project-img">
+                    <div style="position: absolute; top: 12px; left: 12px; background: var(--accent); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; font-family: 'Sora';">⭐ Recommended</div>
+                </div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag"><i class="ph-fill ph-check-circle"></i> Gold Standard Verified</span>
+                        <span class="tag" style="background: var(--bg-light); color: var(--text-muted);"><i class="ph-fill ph-map-pin"></i> Rajasthan</span>
+                    </div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; font-family: 'Sora'; font-weight: 700;">Rajasthan Solar Farm</h3>
+                    <p style="font-size: 14px; color: var(--text-muted); line-height: 1.4;">Replacing diesel generators with clean solar energy for 340 rural families.</p>
+                    
+                    <div class="project-price">
+                        <span>₹850 <span style="font-size: 14px; font-weight: 500; color: var(--text-muted);">/ credit</span></span>
+                        <div style="color: var(--primary); font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                            Select <i class="ph ph-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card" onclick="navTo('checkout')">
+                <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="project-info">
+                    <div class="project-tags">
+                        <span class="tag"><i class="ph-fill ph-check-circle"></i> Verra Verified</span>
+                        <span class="tag" style="background: var(--bg-light); color: var(--text-muted);"><i class="ph-fill ph-map-pin"></i> Kerala</span>
+                    </div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; font-family: 'Sora'; font-weight: 700;">Kerala Forest Conservation</h3>
+                    <p style="font-size: 14px; color: var(--text-muted); line-height: 1.4;">Protecting old-growth forests and supporting local tribal communities.</p>
+                    
+                    <div class="project-price">
+                        <span>₹720 <span style="font-size: 14px; font-weight: 500; color: var(--text-muted);">/ credit</span></span>
+                        <div style="color: var(--primary); font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                            Select <i class="ph ph-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 9: Checkout -->
+    <div id="checkout" class="screen" style="background: var(--bg-white);">
+        <div class="header">
+            <button class="back-btn" onclick="navTo('marketplace')"><i class="ph ph-arrow-left"></i></button>
+            <span style="font-weight: 600; font-family: 'Sora'; flex-grow: 1; text-align: center; margin-right: 40px;">Checkout</span>
+        </div>
+        <div class="content">
+            <h1 class="title">Review Your Offset</h1>
+            
+            <div style="background: var(--bg-light); border-radius: 16px; padding: 20px; margin-bottom: 32px; border: 1px solid var(--border-light);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span style="color: var(--text-muted);">Project</span>
+                    <span style="font-weight: 600; color: var(--text-dark);">Rajasthan Solar Farm</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span style="color: var(--text-muted);">Credits needed</span>
+                    <span style="font-weight: 600; color: var(--text-dark);">8.4 tons CO₂</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                    <span style="color: var(--text-muted);">Price per credit</span>
+                    <span style="font-weight: 600; color: var(--text-dark);">₹850</span>
+                </div>
+                <div style="height: 1px; background: var(--border-light); margin: 16px 0;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: 600; font-size: 16px;">Total Amount</span>
+                    <span style="font-weight: 700; font-size: 24px; font-family: 'Sora'; color: var(--primary);">₹7,140</span>
+                </div>
+            </div>
+
+            <h3 style="font-size: 16px; margin-bottom: 16px; font-family: 'Sora';">Pay with UPI</h3>
+            
+            <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                <div style="flex: 1; border: 1px solid var(--primary); border-radius: 12px; padding: 16px; text-align: center; background: var(--primary-light); cursor: pointer;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI" height="20">
+                </div>
+                <div style="flex: 1; border: 1px solid var(--border-light); border-radius: 12px; padding: 16px; text-align: center; cursor: pointer;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="GPay" height="20">
+                </div>
+                <div style="flex: 1; border: 1px solid var(--border-light); border-radius: 12px; padding: 16px; text-align: center; cursor: pointer;">
+                    <span style="font-weight: 600; font-size: 14px;">Cards/Net</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="Enter UPI ID (e.g. mukul@okaxis)">
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted); font-size: 12px; margin-bottom: 24px;">
+                <i class="ph-fill ph-lock-key"></i> 256-bit encrypted · Powered by <strong style="color: #0A2540;">Razorpay</strong>
+            </div>
+
+            <div class="sticky-bottom">
+                <button class="btn-primary" onclick="processPayment()">
+                    Pay ₹7,140 Securely
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 10: Success -->
+    <div id="success" class="screen" style="background: var(--primary); color: white;">
+        <div class="content" style="align-items: center; justify-content: center; text-align: center; padding: 40px 24px;">
+            <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+                <i class="ph-fill ph-check" style="font-size: 40px; color: white;"></i>
+            </div>
+            
+            <h1 class="title" style="color: white; margin-bottom: 12px;">Congratulations! 🎉</h1>
+            <p style="font-size: 18px; opacity: 0.9; margin-bottom: 40px; line-height: 1.4;">Mukul's Café is now officially <strong>carbon neutral</strong>.</p>
+
+            <!-- Certificate Card -->
+            <div style="background: white; color: var(--text-dark); border-radius: 16px; padding: 32px 24px; width: 100%; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); margin-bottom: 40px; position: relative; overflow: hidden;">
+                <!-- Decorative pattern -->
+                <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--primary-light); border-radius: 50%; opacity: 0.5;"></div>
+                
+                <div style="color: var(--accent); font-weight: 700; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">Official Certificate</div>
+                <h2 style="font-family: 'Sora'; font-size: 24px; color: var(--primary); margin-bottom: 24px;">Carbon Neutral</h2>
+                
+                <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 4px;">Issued to</p>
+                <p style="font-size: 18px; font-weight: 700; margin-bottom: 24px; font-family: 'Sora';">Mukul's Café</p>
+                
+                <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-light); padding-top: 16px; text-align: left;">
+                    <div>
+                        <p style="font-size: 11px; color: var(--text-muted);">Date</p>
+                        <p style="font-size: 13px; font-weight: 600;">April 2026</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-size: 11px; color: var(--text-muted);">Registry ID</p>
+                        <p style="font-size: 13px; font-weight: 600; font-family: monospace;">GRM-26-0847</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="background: white; color: var(--primary); width: 100%; margin-bottom: 16px;" onclick="navTo('dashboard')">
+                <i class="ph-fill ph-instagram-logo" style="font-size: 20px;"></i> Share on Instagram
+            </button>
+            
+            <button class="btn-text" style="color: white; opacity: 0.9;" onclick="navTo('dashboard')">Go to Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Screen 11: Dashboard -->
+    <div id="dashboard" class="screen has-nav">
+        <div class="header">
+            <div style="width: 40px; height: 40px; background: var(--primary-light); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Sora';">M</div>
+            <div style="flex-grow: 1;">
+                <p style="font-size: 13px; color: var(--text-muted);">Hello,</p>
+                <h2 style="font-family: 'Sora'; font-size: 18px; font-weight: 700;">Mukul's Café 👋</h2>
+            </div>
+            <button style="background: none; border: none; font-size: 24px; color: var(--text-dark); position: relative;">
+                <i class="ph ph-bell"></i>
+                <span style="position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; background: var(--error); border-radius: 50%;"></span>
+            </button>
+        </div>
+
+        <div class="content">
+            <!-- Progress Ring (Zeigarnik Effect) -->
+            <div class="progress-ring-container">
+                <div class="progress-ring">
+                    <div class="progress-ring-inner">
+                        <span style="font-size: 28px; font-weight: 700; font-family: 'Sora'; color: var(--primary);">75%</span>
+                        <span style="font-size: 11px; color: var(--text-muted); text-align: center; padding: 0 10px;">toward Carbon Neutral</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 32px;">
+                <button class="btn-primary" style="flex: 1; padding: 12px; border-radius: 12px; font-size: 14px;" onclick="navTo('marketplace')">
+                    Offset More
+                </button>
+                <button class="btn-outline" style="flex: 1; padding: 12px; border-radius: 12px; font-size: 14px; margin: 0; background: white;" onclick="navTo('success')">
+                    <i class="ph ph-certificate"></i> Badge
+                </button>
+            </div>
+
+            <h3 style="font-family: 'Sora'; font-size: 18px; margin-bottom: 16px;">Your Impact So Far</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px;">
+                <div style="background: white; padding: 16px; border-radius: 16px; border: 1px solid var(--border-light);">
+                    <i class="ph-fill ph-tree-evergreen" style="font-size: 24px; color: var(--success); margin-bottom: 8px;"></i>
+                    <div style="font-size: 20px; font-weight: 700; font-family: 'Sora';">6</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">Trees equivalent</div>
+                </div>
+                <div style="background: white; padding: 16px; border-radius: 16px; border: 1px solid var(--border-light);">
+                    <i class="ph-fill ph-lightning" style="font-size: 24px; color: var(--accent); margin-bottom: 8px;"></i>
+                    <div style="font-size: 20px; font-weight: 700; font-family: 'Sora';">4.2k</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">kWh clean energy</div>
+                </div>
+            </div>
+
+            <h3 style="font-family: 'Sora'; font-size: 18px; margin-bottom: 16px;">Recent Activity</h3>
+            <div style="background: white; border-radius: 16px; border: 1px solid var(--border-light); padding: 16px;">
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                    <div style="width: 40px; height: 40px; background: var(--primary-light); color: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="ph-fill ph-check-circle" style="font-size: 20px;"></i>
+                    </div>
+                    <div style="flex-grow: 1;">
+                        <h4 style="font-size: 14px; font-weight: 600;">Rajasthan Solar Farm</h4>
+                        <p style="font-size: 12px; color: var(--text-muted);">8.4 tons offset • Today</p>
+                    </div>
+                </div>
+                <div style="height: 1px; background: var(--border-light); margin-bottom: 16px;"></div>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div style="width: 40px; height: 40px; background: var(--bg-light); color: var(--text-dark); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="ph-fill ph-calculator" style="font-size: 20px;"></i>
+                    </div>
+                    <div style="flex-grow: 1;">
+                        <h4 style="font-size: 14px; font-weight: 600;">Footprint Calculated</h4>
+                        <p style="font-size: 12px; color: var(--text-muted);">8.4 tons • Today</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav" id="bottom-nav">
+        <a class="nav-item active" onclick="navTo('dashboard')">
+            <i class="ph-fill ph-house"></i>
+            Home
+        </a>
+        <a class="nav-item" onclick="navTo('calc1')">
+            <i class="ph ph-calculator"></i>
+            Calculate
+        </a>
+        <a class="nav-item" onclick="navTo('marketplace')">
+            <i class="ph ph-leaf"></i>
+            Offset
+        </a>
+        <a class="nav-item">
+            <i class="ph ph-chart-bar"></i>
+            Stats
+        </a>
+        <a class="nav-item">
+            <i class="ph ph-user"></i>
+            Profile
+        </a>
+    </div>
+
+</div>
+
+<script>
+    // Navigation logic
+    function navTo(screenId) {
+        // Hide all screens
+        document.querySelectorAll('.screen').forEach(el => {
+            el.classList.remove('active');
+        });
+        
+        // Show target screen
+        const target = document.getElementById(screenId);
+        target.classList.add('active');
+        target.scrollTop = 0;
+
+        // Manage Bottom Nav visibility
+        const bottomNav = document.getElementById('bottom-nav');
+        if (target.classList.contains('has-nav') || screenId === 'dashboard') {
+            bottomNav.classList.add('active');
+            updateNavActive('dashboard');
+        } else {
+            bottomNav.classList.remove('active');
+        }
+
+        // Special handling for success screen confetti
+        if(screenId === 'success') {
+            triggerConfetti();
+        }
+    }
+
+    // Card selection toggle (turn green immediately)
+    function selectCard(el) {
+        const siblings = el.parentElement.querySelectorAll('.selectable-card');
+        siblings.forEach(s => s.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+
+    // Chip selection toggle
+    function selectChip(el) {
+        const siblings = el.parentElement.querySelectorAll('.chip');
+        siblings.forEach(s => s.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+
+    // Checkbox styling toggle
+    function toggleCheckbox(id) {
+        const cb = document.getElementById(id);
+        cb.checked = !cb.checked;
+        const row = cb.closest('.checkbox-row');
+        if(cb.checked) {
+            row.style.borderColor = 'var(--primary)';
+            row.style.backgroundColor = 'var(--primary-light)';
+        } else {
+            row.style.borderColor = 'var(--border-light)';
+            row.style.backgroundColor = 'var(--bg-white)';
+        }
+    }
+
+    // Stepper logic
+    let lpgCount = 2;
+    function updateStepper(change) {
+        lpgCount += change;
+        if(lpgCount < 0) lpgCount = 0;
+        document.getElementById('lpg-value').innerText = lpgCount;
+    }
+
+    // Simulated Payment Processing
+    function processPayment() {
+        const btn = document.querySelector('#checkout .btn-primary');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="ph ph-spinner ph-spin"></i> Processing...';
+        btn.style.opacity = '0.8';
+        
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.opacity = '1';
+            navTo('success');
+        }, 1500);
+    }
+
+    // Bottom Nav Active State logic
+    function updateNavActive(id) {
+        const items = document.querySelectorAll('.nav-item');
+        items.forEach(item => {
+            item.classList.remove('active');
+            // Swap icon to outlined if not active
+            const icon = item.querySelector('i');
+            icon.classList.remove('ph-fill');
+            icon.classList.add('ph');
+        });
+        
+        // Find matching nav item (simplified)
+        let activeItem = items[0]; // default home
+        if(id === 'dashboard') activeItem = items[0];
+        
+        activeItem.classList.add('active');
+        const icon = activeItem.querySelector('i');
+        icon.classList.remove('ph');
+        icon.classList.add('ph-fill');
+    }
+
+    // Confetti Effect
+    function triggerConfetti() {
+        const colors = ['#128886', '#F5A623', '#0A6E6E', '#10B981'];
+        const container = document.getElementById('success');
+        
+        for(let i=0; i<50; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.top = '-10px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Random animation
+            const duration = Math.random() * 3 + 2;
+            const delay = Math.random() * 2;
+            
+            confetti.style.animation = `fall ${duration}s ${delay}s ease-in forwards`;
+            
+            // Add keyframes dynamically if not exists
+            if(!document.getElementById('confetti-styles')) {
+                const style = document.createElement('style');
+                style.id = 'confetti-styles';
+                style.innerHTML = `
+                    @keyframes fall {
+                        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            container.appendChild(confetti);
+            
+            // Cleanup
+            setTimeout(() => {
+                confetti.remove();
+            }, (duration + delay) * 1000);
+        }
+    }
+</script>
+
+</body>
+</html>
