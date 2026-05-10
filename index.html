@@ -1,1610 +1,1780 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ritika Kumari — Portfolio</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap");
 
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ritika Kumari — Portfolio</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap");
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --lime: #ef4d23;
+      --lime-dim: rgba(239, 77, 35, 0.15);
+      --bg: #ededed;
+      --s1: #ffffff;
+      --s2: #f5f2ee;
+      --text: #171717;
+      --muted: #525252;
+      --border: rgba(0, 0, 0, 0.08);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (min-width: 768px) {
+      .nav-desktop-links {
+        display: flex !important;
       }
 
-      :root {
-        --lime: #ef4d23;
-        --lime-dim: rgba(239, 77, 35, 0.15);
-        --bg: #ededed;
-        --s1: #ffffff;
-        --s2: #f5f2ee;
-        --text: #171717;
-        --muted: #525252;
-        --border: rgba(0, 0, 0, 0.08);
-        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      .ham-theme {
+        display: none !important;
       }
+    }
 
-      @media (min-width: 768px) {
-        .nav-desktop-links {
-          display: flex !important;
-        }
-        .ham-theme {
-          display: none !important;
-        }
-      }
+    html {
+      scroll-behavior: smooth;
+    }
 
-      html {
-        scroll-behavior: smooth;
-      }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
 
-      body {
-        background: var(--bg);
-        color: var(--text);
-        font-family: "DM Sans", sans-serif;
-        overflow-x: hidden;
-      }
+    canvas#sc {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-      canvas#sc {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 1;
-      }
+    #cur,
+    #cur-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 50%;
+    }
+
+    #cur {
+      width: 10px;
+      height: 10px;
+      background: var(--lime);
+      mix-blend-mode: difference;
+      transition: transform 0.12s;
+    }
+
+    #cur-ring {
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid rgba(239, 77, 35, 0.45);
+      transition:
+        transform 0.35s var(--ease),
+        width 0.25s,
+        height 0.25s;
+    }
+
+    @media (pointer: coarse) {
 
       #cur,
       #cur-ring {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 9999;
-        border-radius: 50%;
+        display: none;
       }
-      #cur {
-        width: 10px;
-        height: 10px;
-        background: var(--lime);
-        mix-blend-mode: difference;
-        transition: transform 0.12s;
-      }
-      #cur-ring {
-        width: 32px;
-        height: 32px;
-        border: 1.5px solid rgba(239, 77, 35, 0.45);
-        transition:
-          transform 0.35s var(--ease),
-          width 0.25s,
-          height 0.25s;
-      }
+    }
 
-      @media (pointer: coarse) {
-        #cur,
-        #cur-ring {
-          display: none;
-        }
-      }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2rem;
+      z-index: 200;
+      transition:
+        background 0.4s,
+        backdrop-filter 0.4s,
+        border-bottom 0.4s;
+    }
 
-      nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.2rem 2rem;
-        z-index: 200;
-        transition:
-          background 0.4s,
-          backdrop-filter 0.4s,
-          border-bottom 0.4s;
-      }
-      nav.scrolled {
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-logo {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 1.5rem;
-        letter-spacing: 0.1em;
-        color: var(--lime);
-      }
+    nav.scrolled {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      color: var(--lime);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--lime);
+    }
+
+    .ham {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .ham span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      transition: all 0.35s var(--ease);
+    }
+
+    .ham.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .ham.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .ham.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: 0;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(24px);
+      z-index: 190;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--ease);
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 3rem;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      text-decoration: none;
+      transition:
+        color 0.3s,
+        transform 0.3s;
+      display: block;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--lime);
+      transform: translateX(8px);
+    }
+
+    @media (max-width: 768px) {
       .nav-links {
-        display: flex;
-        gap: 2rem;
-        list-style: none;
-      }
-      .nav-links a {
-        color: var(--muted);
-        text-decoration: none;
-        font-size: 0.8rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        transition: color 0.3s;
-      }
-      .nav-links a:hover {
-        color: var(--lime);
+        display: none;
       }
 
       .ham {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 4px;
-      }
-      .ham span {
-        display: block;
-        width: 22px;
-        height: 1.5px;
-        background: var(--text);
-        transition: all 0.35s var(--ease);
-      }
-      .ham.open span:nth-child(1) {
-        transform: translateY(6.5px) rotate(45deg);
-      }
-      .ham.open span:nth-child(2) {
-        opacity: 0;
-        transform: scaleX(0);
-      }
-      .ham.open span:nth-child(3) {
-        transform: translateY(-6.5px) rotate(-45deg);
+        display: flex;
       }
 
       .mobile-menu {
-        display: none;
-        position: fixed;
-        inset: 0;
-        top: 0;
-        background: rgba(255, 255, 255, 0.97);
-        backdrop-filter: blur(24px);
-        z-index: 190;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2.5rem;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.4s var(--ease);
-      }
-      .mobile-menu.open {
-        opacity: 1;
-        pointer-events: all;
-      }
-      .mobile-menu a {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 3rem;
-        letter-spacing: 0.1em;
-        color: var(--text);
-        text-decoration: none;
-        transition:
-          color 0.3s,
-          transform 0.3s;
-        display: block;
-      }
-      .mobile-menu a:hover {
-        color: var(--lime);
-        transform: translateX(8px);
-      }
-
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none;
-        }
-        .ham {
-          display: flex;
-        }
-        .mobile-menu {
-          display: flex;
-        }
-      }
-
-      .hero {
-        min-height: 100vh;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        padding: 0 1.5rem;
       }
-      .hero-bg {
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          ellipse 80% 60% at 50% 40%,
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 1.5rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%,
           #0d2d4a 0%,
-          #0a0b0c 60%
-        );
-      }
-      .hero-grid {
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(239, 77, 35, 0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(239, 77, 35, 0.04) 1px, transparent 1px);
-        background-size: 50px 50px;
-        mask-image: radial-gradient(
-          ellipse 70% 60% at center,
-          black 20%,
-          transparent 80%
-        );
-        -webkit-mask-image: radial-gradient(
-          ellipse 70% 60% at center,
-          black 20%,
-          transparent 80%
-        );
-      }
-      .orb {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(80px);
-        pointer-events: none;
-        z-index: 1;
-      }
-      .orb1 {
-        width: 400px;
-        height: 400px;
-        background: rgba(239, 77, 35, 0.06);
-        top: -100px;
-        left: -100px;
-        animation: orbFloat 8s ease-in-out infinite;
-      }
-      .orb2 {
-        width: 300px;
-        height: 300px;
-        background: rgba(0, 180, 255, 0.05);
-        bottom: 0;
-        right: -80px;
-        animation: orbFloat 10s 2s ease-in-out infinite reverse;
-      }
+          #0a0b0c 60%);
+    }
 
-      .hero-eyebrow {
-        font-size: 0.72rem;
-        letter-spacing: 0.35em;
-        text-transform: uppercase;
-        color: var(--lime);
-        position: relative;
-        z-index: 2;
-        opacity: 0;
-        animation: fadeUp 1s 0.3s var(--ease) forwards;
-      }
-      .hero-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(5rem, 22vw, 14rem);
-        line-height: 0.9;
-        letter-spacing: -0.01em;
-        position: relative;
-        z-index: 2;
-        background: linear-gradient(175deg, #fff 30%, #555 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        opacity: 0;
-        animation: fadeUp 1.2s 0.1s var(--ease) forwards;
-        margin: 0.2em 0 0.1em;
-      }
-      .hero-sig {
-        font-family: "Caveat", cursive;
-        font-size: clamp(1.8rem, 6vw, 3.5rem);
-        color: var(--lime);
-        filter: drop-shadow(0 0 20px rgba(239, 77, 35, 0.4));
-        position: relative;
-        z-index: 2;
-        opacity: 0;
-        animation: sigPop 1.5s 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-      }
-      .hero-scroll {
-        position: absolute;
-        bottom: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.4rem;
-        font-size: 0.65rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--muted);
-        z-index: 2;
-        opacity: 0;
-        animation: fadeIn 2s 2s forwards;
-      }
-      .scroll-line {
-        width: 1px;
-        height: 40px;
-        background: linear-gradient(to bottom, transparent, var(--lime));
-        animation: scrollPulse 2s ease infinite;
-      }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(239, 77, 35, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(239, 77, 35, 0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse 70% 60% at center,
+          black 20%,
+          transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at center,
+          black 20%,
+          transparent 80%);
+    }
 
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .orb1 {
+      width: 400px;
+      height: 400px;
+      background: rgba(239, 77, 35, 0.06);
+      top: -100px;
+      left: -100px;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+
+    .orb2 {
+      width: 300px;
+      height: 300px;
+      background: rgba(0, 180, 255, 0.05);
+      bottom: 0;
+      right: -80px;
+      animation: orbFloat 10s 2s ease-in-out infinite reverse;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--lime);
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s var(--ease) forwards;
+    }
+
+    .hero-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(5rem, 22vw, 14rem);
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(175deg, #fff 30%, #555 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      animation: fadeUp 1.2s 0.1s var(--ease) forwards;
+      margin: 0.2em 0 0.1em;
+    }
+
+    .hero-sig {
+      font-family: "Caveat", cursive;
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      color: var(--lime);
+      filter: drop-shadow(0 0 20px rgba(239, 77, 35, 0.4));
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: sigPop 1.5s 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 2;
+      opacity: 0;
+      animation: fadeIn 2s 2s forwards;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--lime));
+      animation: scrollPulse 2s ease infinite;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
       .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-        position: relative;
-        z-index: 2;
+        padding: 0 1.2rem;
       }
-      @media (max-width: 768px) {
-        .container {
-          padding: 0 1.2rem;
-        }
-      }
+    }
 
+    section {
+      padding: 6rem 0;
+    }
+
+    @media (max-width: 768px) {
       section {
-        padding: 6rem 0;
+        padding: 4rem 0;
       }
-      @media (max-width: 768px) {
-        section {
-          padding: 4rem 0;
-        }
-      }
-      @media (max-width: 480px) {
-        section {
-          padding: 3rem 0;
-        }
-      }
+    }
 
-      .sec-label {
-        font-size: 0.7rem;
-        letter-spacing: 0.38em;
-        text-transform: uppercase;
-        color: var(--lime);
-        margin-bottom: 0.8rem;
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
+    @media (max-width: 480px) {
+      section {
+        padding: 3rem 0;
       }
-      .sec-label::before {
-        content: "";
-        display: block;
-        width: 1.6rem;
-        height: 1px;
-        background: var(--lime);
-      }
-      .sec-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(3rem, 7vw, 7rem);
-        line-height: 0.9;
-        letter-spacing: 0.01em;
-      }
+    }
 
-      /* ABOUT */
-      .about-grid {
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 3.5rem;
-        align-items: center;
-        background: var(--s1);
-        border-radius: 2rem;
-        padding: 3.5rem;
-        border: 1px solid var(--border);
-        position: relative;
-        overflow: hidden;
-      }
-      .about-grid::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: 3rem;
-        right: 3rem;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
+    .sec-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .sec-label::before {
+      content: "";
+      display: block;
+      width: 1.6rem;
+      height: 1px;
+      background: var(--lime);
+    }
+
+    .sec-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(3rem, 7vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      background: var(--s1);
+      border-radius: 2rem;
+      padding: 3.5rem;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-grid::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 3rem;
+      right: 3rem;
+      height: 1px;
+      background: linear-gradient(90deg,
           transparent,
           var(--lime),
-          transparent
-        );
-      }
-      @media (max-width: 900px) {
-        .about-grid {
-          grid-template-columns: 1fr;
-          padding: 2.5rem;
-          gap: 2.5rem;
-        }
-        .about-grid::before {
-          left: 2rem;
-          right: 2rem;
-        }
-      }
-      @media (max-width: 480px) {
-        .about-grid {
-          padding: 1.8rem;
-          border-radius: 1.5rem;
-          gap: 2rem;
-        }
+          transparent);
+    }
+
+    @media (max-width: 900px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        padding: 2.5rem;
+        gap: 2.5rem;
       }
 
-      .about-heading {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 2.8rem;
-        color: var(--lime);
-        margin-bottom: 0.4rem;
+      .about-grid::before {
+        left: 2rem;
+        right: 2rem;
       }
-      .about-name {
-        font-size: 1.4rem;
-        font-weight: 600;
-        margin-bottom: 1.2rem;
-      }
-      @media (max-width: 480px) {
-        .about-heading {
-          font-size: 2.2rem;
-        }
-        .about-name {
-          font-size: 1.2rem;
-        }
-      }
-      .about-bio {
-        color: var(--muted);
-        line-height: 1.8;
-        font-size: 0.95rem;
-      }
-      .about-stats {
-        display: flex;
-        gap: 2rem;
-        margin-top: 1.5rem;
-        border-top: 1px solid var(--border);
-        padding-top: 1.5rem;
-        flex-wrap: wrap;
-      }
-      .stat-num {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 2.8rem;
-        color: var(--lime);
-        line-height: 1;
-      }
-      .stat-lbl {
-        font-size: 0.7rem;
-        color: var(--muted);
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        margin-top: 0.2rem;
-      }
+    }
 
-      .profile-frame {
-        aspect-ratio: 4/5;
-        background: var(--s2);
+    @media (max-width: 480px) {
+      .about-grid {
+        padding: 1.8rem;
         border-radius: 1.5rem;
-        border: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-        cursor: pointer;
-        transition: border-color 0.3s;
+        gap: 2rem;
       }
-      .profile-frame:hover {
-        border-color: rgba(239, 77, 35, 0.3);
-      }
-      .profile-frame::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          135deg,
-          rgba(239, 77, 35, 0.08) 0%,
-          transparent 60%
-        );
-        transition: opacity 0.4s;
-      }
-      .profile-frame:hover::after {
-        opacity: 0;
-      }
-      .profile-ph {
-        font-family: "Caveat", cursive;
-        font-size: 1.2rem;
-        color: rgba(0, 0, 0, 0.05);
-        text-align: center;
-        padding: 1rem;
-        transform: rotate(-5deg);
-        position: relative;
-        z-index: 1;
-      }
-      .pcorner {
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        border-color: var(--lime);
-        border-style: solid;
-        border-width: 0;
-        transition: all 0.3s;
-      }
-      .pcorner.tl {
-        top: 10px;
-        left: 10px;
-        border-top-width: 2px;
-        border-left-width: 2px;
-        border-radius: 2px 0 0 0;
-      }
-      .pcorner.tr {
-        top: 10px;
-        right: 10px;
-        border-top-width: 2px;
-        border-right-width: 2px;
-        border-radius: 0 2px 0 0;
-      }
-      .pcorner.bl {
-        bottom: 10px;
-        left: 10px;
-        border-bottom-width: 2px;
-        border-left-width: 2px;
-        border-radius: 0 0 0 2px;
-      }
-      .pcorner.br {
-        bottom: 10px;
-        right: 10px;
-        border-bottom-width: 2px;
-        border-right-width: 2px;
-        border-radius: 0 0 2px 0;
-      }
-      .profile-frame:hover .pcorner {
-        width: 30px;
-        height: 30px;
-      }
-      .fbadge {
-        position: absolute;
-        font-size: 0.6rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.3rem 0.75rem;
-        border-radius: 100px;
-        z-index: 2;
-        animation: badgeFloat 4s ease-in-out infinite;
-      }
-      .fbadge.top {
-        top: 1rem;
-        right: 1rem;
-        background: var(--lime);
-        color: #000;
-      }
-      .fbadge.bot {
-        bottom: 1rem;
-        left: 1rem;
-        background: transparent;
-        color: var(--lime);
-        border: 1px solid rgba(239, 77, 35, 0.3);
+    }
+
+    .about-heading {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2.8rem;
+      color: var(--lime);
+      margin-bottom: 0.4rem;
+    }
+
+    .about-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    @media (max-width: 480px) {
+      .about-heading {
+        font-size: 2.2rem;
       }
 
-      .skills-row {
-        margin-top: 1.4rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.65rem;
+      .about-name {
+        font-size: 1.2rem;
       }
-      .skill-item {
-        display: flex;
-        align-items: center;
+    }
+
+    .about-bio {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-num {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2.8rem;
+      color: var(--lime);
+      line-height: 1;
+    }
+
+    .stat-lbl {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    .profile-frame {
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, #f5f0ea 0%, #ede8e0 100%);
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    .profile-frame:hover {
+      border-color: rgba(239, 77, 35, 0.3);
+    }
+
+    .profile-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg,
+          rgba(239, 77, 35, 0.08) 0%,
+          transparent 60%);
+      transition: opacity 0.4s;
+    }
+
+    .profile-frame:hover::after {
+      opacity: 0;
+    }
+
+    .profile-art {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .pcorner {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-color: var(--lime);
+      border-style: solid;
+      border-width: 0;
+      transition: all 0.3s;
+    }
+
+    .pcorner.tl {
+      top: 10px;
+      left: 10px;
+      border-top-width: 2px;
+      border-left-width: 2px;
+      border-radius: 2px 0 0 0;
+    }
+
+    .pcorner.tr {
+      top: 10px;
+      right: 10px;
+      border-top-width: 2px;
+      border-right-width: 2px;
+      border-radius: 0 2px 0 0;
+    }
+
+    .pcorner.bl {
+      bottom: 10px;
+      left: 10px;
+      border-bottom-width: 2px;
+      border-left-width: 2px;
+      border-radius: 0 0 0 2px;
+    }
+
+    .pcorner.br {
+      bottom: 10px;
+      right: 10px;
+      border-bottom-width: 2px;
+      border-right-width: 2px;
+      border-radius: 0 0 2px 0;
+    }
+
+    .profile-frame:hover .pcorner {
+      width: 30px;
+      height: 30px;
+    }
+
+    .fbadge {
+      position: absolute;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      z-index: 2;
+      animation: badgeFloat 4s ease-in-out infinite;
+    }
+
+    .fbadge.top {
+      top: 1rem;
+      right: 1rem;
+      background: var(--lime);
+      color: #000;
+    }
+
+    .fbadge.bot {
+      bottom: 1rem;
+      left: 1rem;
+      background: transparent;
+      color: var(--lime);
+      border: 1px solid rgba(239, 77, 35, 0.3);
+    }
+
+    .skills-row {
+      margin-top: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .skill-name {
+      font-size: 0.72rem;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      text-transform: uppercase;
+      min-width: 110px;
+    }
+
+    .skill-track {
+      flex: 1;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      background: var(--lime);
+      border-radius: 2px;
+      width: 0;
+      transition: width 1.2s var(--ease);
+    }
+
+    /* LOGOS */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .logo-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 0.75rem;
       }
-      .skill-name {
-        font-size: 0.72rem;
-        letter-spacing: 0.07em;
-        color: var(--muted);
-        text-transform: uppercase;
-        min-width: 110px;
-      }
-      .skill-track {
-        flex: 1;
-        height: 2px;
-        background: rgba(0, 0, 0, 0.08);
-        border-radius: 2px;
-        overflow: hidden;
-      }
-      .skill-fill {
-        height: 100%;
-        background: var(--lime);
-        border-radius: 2px;
-        width: 0;
-        transition: width 1.2s var(--ease);
-      }
+    }
 
-      /* LOGOS */
-      .logo-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.85rem;
-        margin-top: 2.5rem;
-      }
-      @media (max-width: 768px) {
-        .logo-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 0.75rem;
-        }
-      }
+    .logo-card {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: 1.4rem;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition:
+        border-color 0.3s,
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
 
-      .logo-card {
-        background: var(--s1);
-        border: 1px solid var(--border);
-        border-radius: 1.4rem;
-        aspect-ratio: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-        transition:
-          border-color 0.3s,
-          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-      .logo-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          circle at center,
+    .logo-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center,
           rgba(239, 77, 35, 0.08) 0%,
-          transparent 70%
-        );
-        opacity: 0;
-        transition: opacity 0.3s;
-      }
-      .logo-card:hover {
-        border-color: rgba(239, 77, 35, 0.4);
-        transform: translateY(-7px) scale(1.02);
-      }
-      .logo-card:hover::before {
-        opacity: 1;
-      }
-      .logo-inner {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.6rem;
-        z-index: 1;
-      }
-      .logo-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
-        font-weight: 700;
-        font-family: "Bebas Neue", sans-serif;
-        letter-spacing: 0.05em;
-      }
-      @media (max-width: 480px) {
-        .logo-icon {
-          width: 40px;
-          height: 40px;
-          font-size: 0.9rem;
-        }
-      }
-      .logo-lbl {
-        font-size: 0.65rem;
-        color: var(--muted);
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-      }
-      .logo-num {
-        position: absolute;
-        top: 0.75rem;
-        right: 0.75rem;
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 3rem;
-        line-height: 1;
-        color: rgba(0, 0, 0, 0.04);
-        user-select: none;
-      }
-      .lc1 .logo-icon {
-        background: linear-gradient(135deg, #1a1a2e, #16213e);
-        color: #4a9eff;
-        border: 1px solid rgba(74, 158, 255, 0.2);
-      }
-      .lc2 .logo-icon {
-        background: linear-gradient(135deg, #1a0a0a, #2d1515);
-        color: #ff6b6b;
-        border: 1px solid rgba(255, 107, 107, 0.2);
-      }
-      .lc3 .logo-icon {
-        background: linear-gradient(135deg, #0a1a0a, #0d2d0d);
-        color: var(--lime);
-        border: 1px solid rgba(239, 77, 35, 0.2);
-      }
-      .lc4 .logo-icon {
-        background: linear-gradient(135deg, #1a1000, #2d1e00);
-        color: #ffaa00;
-        border: 1px solid rgba(255, 170, 0, 0.2);
-      }
+          transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
 
-      /* BRANDING */
-      .brand-card {
-        background: var(--s1);
-        border: 1px solid var(--border);
-        border-radius: 2rem;
-        padding: 3rem;
-        position: relative;
-        overflow: hidden;
-        margin-top: 2.5rem;
+    .logo-card:hover {
+      border-color: rgba(239, 77, 35, 0.4);
+      transform: translateY(-7px) scale(1.02);
+    }
+
+    .logo-card:hover::before {
+      opacity: 1;
+    }
+
+    .logo-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 1;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 480px) {
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
       }
-      .brand-card::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: 3rem;
-        right: 3rem;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
+    }
+
+    .logo-lbl {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .logo-num {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 3rem;
+      line-height: 1;
+      color: rgba(0, 0, 0, 0.04);
+      user-select: none;
+    }
+
+    .lc1 .logo-icon {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #4a9eff;
+      border: 1px solid rgba(74, 158, 255, 0.2);
+    }
+
+    .lc2 .logo-icon {
+      background: linear-gradient(135deg, #1a0a0a, #2d1515);
+      color: #ff6b6b;
+      border: 1px solid rgba(255, 107, 107, 0.2);
+    }
+
+    .lc3 .logo-icon {
+      background: linear-gradient(135deg, #0a1a0a, #0d2d0d);
+      color: var(--lime);
+      border: 1px solid rgba(239, 77, 35, 0.2);
+    }
+
+    .lc4 .logo-icon {
+      background: linear-gradient(135deg, #1a1000, #2d1e00);
+      color: #ffaa00;
+      border: 1px solid rgba(255, 170, 0, 0.2);
+    }
+
+    /* BRANDING */
+    .brand-card {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      margin-top: 2.5rem;
+    }
+
+    .brand-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 3rem;
+      right: 3rem;
+      height: 1px;
+      background: linear-gradient(90deg,
           transparent,
           var(--lime),
-          transparent
-        );
-      }
-      @media (max-width: 768px) {
-        .brand-card {
-          padding: 2rem;
-          border-radius: 1.5rem;
-        }
-      }
-      @media (max-width: 480px) {
-        .brand-card {
-          padding: 1.5rem;
-        }
-      }
-      .brand-tag {
-        display: inline-flex;
-        gap: 0.4rem;
-        align-items: center;
-        background: rgba(239, 77, 35, 0.08);
-        border: 1px solid rgba(239, 77, 35, 0.2);
-        border-radius: 100px;
-        padding: 0.3rem 0.9rem;
-        font-size: 0.7rem;
-        letter-spacing: 0.1em;
-        color: var(--lime);
-        text-transform: uppercase;
-        margin-bottom: 1.2rem;
-      }
-      .brand-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        color: var(--lime);
-        margin-bottom: 0.2rem;
-      }
-      .brand-ind {
-        font-size: 0.75rem;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 1.2rem;
-      }
-      .brand-desc {
-        color: rgba(0, 0, 0, 0.55);
-        line-height: 1.75;
-        max-width: 580px;
-        margin-bottom: 2rem;
-        font-size: 0.93rem;
-      }
+          transparent);
+    }
 
-      .mockup-grid {
-        display: grid;
-        gap: 0.85rem;
-        grid-template-columns: 1fr 1fr;
+    @media (max-width: 768px) {
+      .brand-card {
+        padding: 2rem;
+        border-radius: 1.5rem;
       }
-      .mockup-box {
-        background: var(--s2);
-        border-radius: 1rem;
-        overflow: hidden;
-        position: relative;
-        cursor: pointer;
-        transition: transform 0.3s;
-      }
-      .mockup-box:hover {
-        transform: scale(1.02);
-      }
-      .mockup-box:first-child {
-        grid-column: 1 / -1;
-      }
-      @media (max-width: 600px) {
-        .mockup-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-      .mockup-inner {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        aspect-ratio: 16/7;
-        position: relative;
-      }
-      .mockup-box:first-child .mockup-inner {
-        aspect-ratio: 16/6;
-      }
-      @media (max-width: 600px) {
-        .mockup-inner {
-          aspect-ratio: 16/9;
-        }
-        .mockup-box:first-child .mockup-inner {
-          aspect-ratio: 16/8;
-        }
-      }
-      .mockup-lbl {
-        position: absolute;
-        bottom: 0.75rem;
-        left: 0.75rem;
-        font-size: 0.65rem;
-        letter-spacing: 0.12em;
-        color: var(--muted);
-        text-transform: uppercase;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(10px);
-        padding: 0.25rem 0.65rem;
-        border-radius: 100px;
-        border: 1px solid var(--border);
-      }
-      .ourvita-hero {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(
-          135deg,
-          #1d0d3a 0%,
-          #2d0d4a 50%,
-          #1a0530 100%
-        );
-        position: relative;
-        overflow: hidden;
-      }
-      .ourvita-hero::before {
-        content: "";
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          rgba(239, 77, 35, 0.12),
-          transparent
-        );
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-      .ourvita-txt {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(1.5rem, 5vw, 3rem);
-        letter-spacing: 0.3em;
-        color: var(--lime);
-        position: relative;
-        z-index: 1;
-        text-shadow: 0 0 60px rgba(239, 77, 35, 0.3);
-      }
-      .ourvita-sub {
-        position: absolute;
-        bottom: 1.2rem;
-        font-size: 0.6rem;
-        letter-spacing: 0.35em;
-        color: rgba(239, 77, 35, 0.4);
-        text-transform: uppercase;
-      }
-      .ourvita-pkg {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.2rem;
-        background: linear-gradient(160deg, #f5f0e8, #e8e0d0);
-        overflow: hidden;
-      }
-      .pkg-b {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.4rem;
-      }
-      .pkg-shape {
-        width: 44px;
-        height: 80px;
-        border-radius: 8px 8px 12px 12px;
-        position: relative;
-        box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.15);
-        transition: transform 0.3s;
-      }
-      .mockup-box:hover .pkg-shape {
-        transform: translateY(-4px);
-      }
-      .ps1 {
-        background: linear-gradient(160deg, #2d1050, #1d0530);
-      }
-      .ps2 {
-        background: linear-gradient(160deg, #f5f0e8, #e0d5c5);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        height: 60px;
-        width: 34px;
-      }
-      .ps3 {
-        background: linear-gradient(160deg, #3a2d5a, #251a3a);
-      }
-      .pkg-strip {
-        position: absolute;
-        left: 5px;
-        right: 5px;
-        top: 18px;
-        height: 36px;
-        border-radius: 4px;
-        background: rgba(239, 77, 35, 0.85);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 0.5rem;
-        letter-spacing: 0.12em;
-        color: #1a2510;
-      }
-      .pkg-nm {
-        font-size: 0.48rem;
-        color: rgba(255, 255, 255, 0.25);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-      }
-      @media (max-width: 480px) {
-        .pkg-shape {
-          width: 36px;
-          height: 64px;
-        }
-        .ps2 {
-          width: 28px;
-          height: 50px;
-        }
-      }
+    }
 
-      /* UI UX */
-      .uiux-ttl {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(4rem, 14vw, 10rem);
-        color: var(--lime);
-        line-height: 0.85;
-        letter-spacing: -0.01em;
-      }
-      .uiux-card {
-        background: var(--s1);
-        border: 1px solid var(--border);
-        border-radius: 2rem;
-        padding: 3rem;
-        margin-top: 2.5rem;
-        position: relative;
-        overflow: hidden;
-      }
-      @media (max-width: 768px) {
-        .uiux-card {
-          padding: 2rem;
-          border-radius: 1.5rem;
-        }
-      }
-      @media (max-width: 480px) {
-        .uiux-card {
-          padding: 1.5rem;
-        }
-      }
-      .uiux-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-      .tag-row {
-        display: flex;
-        gap: 0.4rem;
-        flex-wrap: wrap;
-      }
-      .tag {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border);
-        border-radius: 100px;
-        font-size: 0.62rem;
-        letter-spacing: 0.1em;
-        color: var(--muted);
-        padding: 0.28rem 0.7rem;
-        text-transform: uppercase;
-      }
-      .tag.lime {
-        background: rgba(239, 77, 35, 0.08);
-        border-color: rgba(239, 77, 35, 0.2);
-        color: var(--lime);
-      }
-
-      /* PHONE MOCKUP */
-      .phone-mockup-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 2rem 0;
+    @media (max-width: 480px) {
+      .brand-card {
         padding: 1.5rem;
       }
+    }
+
+    .brand-tag {
+      display: inline-flex;
+      gap: 0.4rem;
+      align-items: center;
+      background: rgba(239, 77, 35, 0.08);
+      border: 1px solid rgba(239, 77, 35, 0.2);
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--lime);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .brand-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--lime);
+      margin-bottom: 0.2rem;
+    }
+
+    .brand-ind {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .brand-desc {
+      color: rgba(0, 0, 0, 0.55);
+      line-height: 1.75;
+      max-width: 580px;
+      margin-bottom: 2rem;
+      font-size: 0.93rem;
+    }
+
+    .mockup-grid {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .mockup-box {
+      background: var(--s2);
+      border-radius: 1rem;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .mockup-box:hover {
+      transform: scale(1.02);
+    }
+
+    .mockup-box:first-child {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 600px) {
+      .mockup-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mockup-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 16/7;
+      position: relative;
+    }
+
+    .mockup-box:first-child .mockup-inner {
+      aspect-ratio: 16/6;
+    }
+
+    @media (max-width: 600px) {
+      .mockup-inner {
+        aspect-ratio: 16/9;
+      }
+
+      .mockup-box:first-child .mockup-inner {
+        aspect-ratio: 16/8;
+      }
+    }
+
+    .mockup-lbl {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 0.75rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+    }
+
+    .ourvita-hero {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg,
+          #1d0d3a 0%,
+          #2d0d4a 50%,
+          #1a0530 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ourvita-hero::before {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+          rgba(239, 77, 35, 0.12),
+          transparent);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .ourvita-txt {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(1.5rem, 5vw, 3rem);
+      letter-spacing: 0.3em;
+      color: var(--lime);
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 60px rgba(239, 77, 35, 0.3);
+    }
+
+    .ourvita-sub {
+      position: absolute;
+      bottom: 1.2rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: rgba(239, 77, 35, 0.4);
+      text-transform: uppercase;
+    }
+
+    .ourvita-pkg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      background: linear-gradient(160deg, #f5f0e8, #e8e0d0);
+      overflow: hidden;
+    }
+
+    .pkg-b {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .pkg-shape {
+      width: 44px;
+      height: 80px;
+      border-radius: 8px 8px 12px 12px;
+      position: relative;
+      box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s;
+    }
+
+    .mockup-box:hover .pkg-shape {
+      transform: translateY(-4px);
+    }
+
+    .ps1 {
+      background: linear-gradient(160deg, #2d1050, #1d0530);
+    }
+
+    .ps2 {
+      background: linear-gradient(160deg, #f5f0e8, #e0d5c5);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      height: 60px;
+      width: 34px;
+    }
+
+    .ps3 {
+      background: linear-gradient(160deg, #3a2d5a, #251a3a);
+    }
+
+    .pkg-strip {
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      top: 18px;
+      height: 36px;
+      border-radius: 4px;
+      background: rgba(239, 77, 35, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.12em;
+      color: #1a2510;
+    }
+
+    .pkg-nm {
+      font-size: 0.48rem;
+      color: rgba(255, 255, 255, 0.25);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    @media (max-width: 480px) {
+      .pkg-shape {
+        width: 36px;
+        height: 64px;
+      }
+
+      .ps2 {
+        width: 28px;
+        height: 50px;
+      }
+    }
+
+    /* UI UX */
+    .uiux-ttl {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(4rem, 14vw, 10rem);
+      color: var(--lime);
+      line-height: 0.85;
+      letter-spacing: -0.01em;
+    }
+
+    .uiux-card {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 3rem;
+      margin-top: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .uiux-card {
+        padding: 2rem;
+        border-radius: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .uiux-card {
+        padding: 1.5rem;
+      }
+    }
+
+    .uiux-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      padding: 0.28rem 0.7rem;
+      text-transform: uppercase;
+    }
+
+    .tag.lime {
+      background: rgba(239, 77, 35, 0.08);
+      border-color: rgba(239, 77, 35, 0.2);
+      color: var(--lime);
+    }
+
+    /* PHONE MOCKUP — Premium Real-life Feel */
+    .phone-mockup-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 3rem 0;
+      padding: 1rem;
+    }
+
+    .phone-mockup {
+      position: relative;
+      width: clamp(260px, 32vw, 340px);
+      aspect-ratio: 9 / 19.5;
+      background: #000;
+      border: 12px solid #1a1a1a;
+      border-radius: 50px;
+      box-shadow:
+        0 0 0 2px #000,
+        0 30px 60px rgba(0, 0, 0, 0.4),
+        inset 0 0 15px rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      margin: 0 auto;
+      transition: transform 0.5s var(--ease);
+    }
+
+    .phone-mockup::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 38px;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 28px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 20;
+      box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 38px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+
+    .phone-screen iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
+    }
+
+    .phone-screen iframe::-webkit-scrollbar {
+      display: none;
+      /* Chrome, Safari, Opera */
+    }
+
+    .phone-home-btn {
+      display: none;
+    }
+
+    .proto-info {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .proto-info-text {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
       .phone-mockup {
-        position: relative;
-        width: 100%;
-        max-width: 340px;
-        aspect-ratio: 430 / 932;
-        height: auto;
-        max-height: 80vh;
-        background: linear-gradient(135deg, #1d0d3a, #2d0d4a);
-        border: 10px solid #FF8C00;
-        border-radius: 45px;
-        box-shadow:
-          0 20px 60px rgba(255, 140, 0, 0.25),
-          inset 0 0 20px rgba(255, 140, 0, 0.1);
-        overflow: hidden;
-        margin: 0 auto;
+        border-width: 10px;
       }
-      @supports not (aspect-ratio: 430 / 932) {
-        .phone-mockup {
-          height: 737px;
-        }
+    }
+
+    @media (max-width: 480px) {
+      .phone-mockup {
+        border-width: 8px;
       }
+
       .phone-notch {
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 30%;
-        height: 30px;
-        background: #000;
-        border-radius: 15px;
-        z-index: 10;
+        width: 80px;
+        height: 22px;
+        top: 12px;
       }
-      .phone-screen {
-        width: 100%;
-        height: 100%;
-        border-radius: 35px;
-        overflow: hidden;
-        background: #000;
-      }
-      .phone-screen iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-      .phone-home-btn {
-        display: none;
-      }
-      .proto-info {
-        text-align: center;
-        margin-top: 1.5rem;
-      }
-      .proto-info-text {
-        font-size: 0.8rem;
-        letter-spacing: 0.1em;
-        color: var(--muted);
-        text-transform: uppercase;
-      }
-      @media (max-width: 768px) {
-        .phone-mockup {
-          max-width: 300px;
-          border-radius: 40px;
-          border-width: 8px;
-        }
-        .phone-screen {
-          border-radius: 32px;
-        }
-      }
-      @media (max-width: 480px) {
-        .phone-mockup {
-          max-width: 260px;
-          border-radius: 35px;
-          border-width: 6px;
-        }
-        .phone-notch {
-          height: 25px;
-          top: 8px;
-        }
-        .phone-screen {
-          border-radius: 29px;
-        }
-        .proto-info-text {
-          font-size: 0.7rem;
-        }
-      }
+    }
 
-      .app-frame {
-        background: #0e0e10;
-        border-radius: 1.2rem;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .app-bar {
-        background: #0a0a0c;
-        padding: 0.9rem 1.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      }
-      .app-logo {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 1.3rem;
-        letter-spacing: 0.1em;
-        color: var(--lime);
-      }
+    .app-frame {
+      background: #0e0e10;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .app-bar {
+      background: #0a0a0c;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .app-logo {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      color: var(--lime);
+    }
+
+    .app-nav {
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    .app-nav span {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .app-nav span.a {
+      color: var(--text);
+    }
+
+    @media (max-width: 480px) {
       .app-nav {
-        display: flex;
-        gap: 1.2rem;
-      }
-      .app-nav span {
-        font-size: 0.7rem;
-        color: var(--muted);
-        letter-spacing: 0.05em;
-      }
-      .app-nav span.a {
-        color: var(--text);
-      }
-      @media (max-width: 480px) {
-        .app-nav {
-          gap: 0.6rem;
-        }
-        .app-nav span {
-          font-size: 0.6rem;
-        }
-      }
-      .app-banner {
-        background: linear-gradient(135deg, #2d0d4a, #1a0d3a);
-        padding: 2rem 1.2rem;
-        position: relative;
-        overflow: hidden;
-      }
-      .app-banner::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          ellipse at 70% 50%,
-          rgba(180, 0, 255, 0.25),
-          transparent 60%
-        );
-      }
-      .app-movie {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 1.9rem;
-        color: var(--text);
-        position: relative;
-        z-index: 1;
-      }
-      .app-meta {
-        font-size: 0.65rem;
-        color: var(--muted);
-        margin-top: 0.2rem;
-        position: relative;
-        z-index: 1;
-        letter-spacing: 0.04em;
-      }
-      .app-cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        background: var(--lime);
-        color: #000;
-        font-weight: 700;
-        font-size: 0.75rem;
-        padding: 0.5rem 1.2rem;
-        border-radius: 100px;
-        margin-top: 0.85rem;
-        position: relative;
-        z-index: 1;
-        letter-spacing: 0.04em;
-      }
-      .app-row {
-        padding: 1.2rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.04);
-      }
-      .app-row-lbl {
-        font-size: 0.65rem;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 0.85rem;
-      }
-      .cards-row {
-        display: flex;
         gap: 0.6rem;
-        overflow: hidden;
       }
+
+      .app-nav span {
+        font-size: 0.6rem;
+      }
+    }
+
+    .app-banner {
+      background: linear-gradient(135deg, #2d0d4a, #1a0d3a);
+      padding: 2rem 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%,
+          rgba(180, 0, 255, 0.25),
+          transparent 60%);
+    }
+
+    .app-movie {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.9rem;
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+    }
+
+    .app-meta {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.04em;
+    }
+
+    .app-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--lime);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      margin-top: 0.85rem;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.04em;
+    }
+
+    .app-row {
+      padding: 1.2rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .app-row-lbl {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .cards-row {
+      display: flex;
+      gap: 0.6rem;
+      overflow: hidden;
+    }
+
+    .mini-card {
+      flex-shrink: 0;
+      width: 90px;
+      border-radius: 9px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .mini-thumb {
+      height: 58px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.35rem;
+    }
+
+    .mini-lbl {
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: var(--text);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+      line-height: 1.2;
+    }
+
+    @media (max-width: 480px) {
       .mini-card {
-        flex-shrink: 0;
-        width: 90px;
-        border-radius: 9px;
-        overflow: hidden;
-        cursor: pointer;
+        width: 76px;
       }
+
       .mini-thumb {
-        height: 58px;
-        display: flex;
-        align-items: flex-end;
-        padding: 0.35rem;
+        height: 50px;
       }
-      .mini-lbl {
-        font-size: 0.55rem;
-        font-weight: 600;
-        color: var(--text);
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-        line-height: 1.2;
-      }
-      @media (max-width: 480px) {
-        .mini-card {
-          width: 76px;
-        }
-        .mini-thumb {
-          height: 50px;
-        }
-      }
-      .mc1 {
-        background: linear-gradient(160deg, #2d1050, #5a2a7f);
-      }
-      .mc2 {
-        background: linear-gradient(160deg, #1d0530, #3d0d7a);
-      }
-      .mc3 {
-        background: linear-gradient(160deg, #2e0a4a, #5a1a7a);
-      }
-      .mc4 {
-        background: linear-gradient(160deg, #1a0d3a, #3d1a6a);
-      }
-      .mc5 {
-        background: linear-gradient(160deg, #3a0d5a, #6a1a8a);
-      }
+    }
 
-      /* PATTACHITRA */
+    .mc1 {
+      background: linear-gradient(160deg, #2d1050, #5a2a7f);
+    }
+
+    .mc2 {
+      background: linear-gradient(160deg, #1d0530, #3d0d7a);
+    }
+
+    .mc3 {
+      background: linear-gradient(160deg, #2e0a4a, #5a1a7a);
+    }
+
+    .mc4 {
+      background: linear-gradient(160deg, #1a0d3a, #3d1a6a);
+    }
+
+    .mc5 {
+      background: linear-gradient(160deg, #3a0d5a, #6a1a8a);
+    }
+
+    /* PATTACHITRA */
+    .patta-card {
+      background: var(--s1);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      margin-top: 2.5rem;
+    }
+
+    .patta-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 3rem;
+      right: 3rem;
+      height: 1px;
+      background: linear-gradient(90deg,
+          transparent,
+          var(--lime),
+          transparent);
+    }
+
+    @media (max-width: 768px) {
       .patta-card {
-        background: var(--s1);
-        border: 1px solid var(--border);
-        border-radius: 2rem;
-        padding: 3rem;
-        position: relative;
-        overflow: hidden;
-        margin-top: 2.5rem;
+        padding: 2rem;
+        border-radius: 1.5rem;
       }
-      .patta-card::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: 3rem;
-        right: 3rem;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          var(--lime),
-          transparent
-        );
+    }
+
+    @media (max-width: 480px) {
+      .patta-card {
+        padding: 1.5rem;
       }
-      @media (max-width: 768px) {
-        .patta-card {
-          padding: 2rem;
-          border-radius: 1.5rem;
-        }
-      }
-      @media (max-width: 480px) {
-        .patta-card {
-          padding: 1.5rem;
-        }
-      }
-      .patta-subtitle {
-        font-size: 0.72rem;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        color: var(--lime);
-        position: relative;
-        z-index: 2;
-        opacity: 0;
-        animation: fadeUp 0.8s 0.2s var(--ease) forwards;
-      }
-      .patta-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(2.2rem, 5vw, 3.5rem);
-        color: var(--lime);
-        margin-bottom: 1rem;
-        margin-top: 0.5rem;
-      }
-      .patta-desc {
-        color: rgba(0, 0, 0, 0.55);
-        line-height: 1.8;
-        max-width: 720px;
-        margin: 1.5rem 0 2rem;
-        font-size: 0.93rem;
-      }
+    }
+
+    .patta-subtitle {
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--lime);
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s var(--ease) forwards;
+    }
+
+    .patta-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      color: var(--lime);
+      margin-bottom: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .patta-desc {
+      color: rgba(0, 0, 0, 0.55);
+      line-height: 1.8;
+      max-width: 720px;
+      margin: 1.5rem 0 2rem;
+      font-size: 0.93rem;
+    }
+
+    .patta-research-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
       .patta-research-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        margin-top: 2rem;
-        align-items: start;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
-      @media (max-width: 900px) {
-        .patta-research-grid {
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-      }
-      .patta-info {
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
-      }
-      .patta-point {
-        background: rgba(239, 77, 35, 0.05);
-        border: 1px solid rgba(239, 77, 35, 0.15);
-        border-radius: 1rem;
-        padding: 1.2rem;
-      }
-      .patta-point-title {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: 1.1rem;
-        color: var(--lime);
-        margin-bottom: 0.4rem;
-      }
-      .patta-point-text {
-        font-size: 0.85rem;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-      .patta-ref-box {
-        background: linear-gradient(135deg, #1d0d3a, #2d0d4a);
-        border: 1px solid rgba(239, 77, 35, 0.2);
-        border-radius: 1.2rem;
-        padding: 1.8rem;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-      .patta-ref-box::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          circle at center,
+    }
+
+    .patta-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .patta-point {
+      background: rgba(239, 77, 35, 0.05);
+      border: 1px solid rgba(239, 77, 35, 0.15);
+      border-radius: 1rem;
+      padding: 1.2rem;
+    }
+
+    .patta-point-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.1rem;
+      color: var(--lime);
+      margin-bottom: 0.4rem;
+    }
+
+    .patta-point-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .patta-ref-box {
+      background: linear-gradient(135deg, #1d0d3a, #2d0d4a);
+      border: 1px solid rgba(239, 77, 35, 0.2);
+      border-radius: 1.2rem;
+      padding: 1.8rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .patta-ref-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center,
           rgba(239, 77, 35, 0.1),
-          transparent
-        );
-      }
-      .patta-ref-text {
-        font-family: "Caveat", cursive;
-        font-size: 1.3rem;
-        color: var(--lime);
-        position: relative;
-        z-index: 1;
-        margin-bottom: 0.5rem;
-      }
-      .patta-ref-sub {
-        font-size: 0.75rem;
-        letter-spacing: 0.1em;
-        color: rgba(239, 77, 35, 0.6);
-        text-transform: uppercase;
-        position: relative;
-        z-index: 1;
-      }
+          transparent);
+    }
 
-      .div-acc {
-        width: 1px;
-        height: 60px;
-        background: linear-gradient(
-          to bottom,
+    .patta-ref-text {
+      font-family: "Caveat", cursive;
+      font-size: 1.3rem;
+      color: var(--lime);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .patta-ref-sub {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: rgba(239, 77, 35, 0.6);
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .div-acc {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom,
           transparent,
           var(--lime),
-          transparent
-        );
-        margin: 0 auto;
-      }
+          transparent);
+      margin: 0 auto;
+    }
 
-      /* FOOTER */
+    /* FOOTER */
+    footer {
+      background: var(--s1);
+      border-top: 1px solid var(--border);
+      padding: 7rem 0 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg,
+          transparent,
+          var(--lime),
+          transparent);
+    }
+
+    .foot-big {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(3.5rem, 12vw, 9rem);
+      color: var(--lime);
+      line-height: 0.9;
+    }
+
+    .foot-sub {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 300;
+      margin: 1rem 0 0.6rem;
+    }
+
+    .foot-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      max-width: 380px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+      padding: 0 1rem;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: var(--lime);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      padding: 0.9rem 2.2rem;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition:
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s;
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 40px rgba(239, 77, 35, 0.3);
+    }
+
+    .foot-socials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .soc {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      transition:
+        border-color 0.3s,
+        color 0.3s,
+        transform 0.3s;
+    }
+
+    .soc:hover {
+      border-color: var(--lime);
+      color: var(--lime);
+      transform: translateY(-4px);
+    }
+
+    .foot-copy {
+      color: rgba(255, 255, 255, 0.18);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      margin-top: 3.5rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition:
+        opacity 0.9s var(--ease),
+        transform 0.9s var(--ease);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .d1 {
+      transition-delay: 0.12s;
+    }
+
+    .d2 {
+      transition-delay: 0.25s;
+    }
+
+    .d3 {
+      transition-delay: 0.38s;
+    }
+
+    @media (max-width: 480px) {
       footer {
-        background: var(--s1);
-        border-top: 1px solid var(--border);
-        padding: 7rem 0 4rem;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-      footer::before {
-        content: "";
-        position: absolute;
-        top: -1px;
-        left: 20%;
-        right: 20%;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          var(--lime),
-          transparent
-        );
-      }
-      .foot-big {
-        font-family: "Bebas Neue", sans-serif;
-        font-size: clamp(3.5rem, 12vw, 9rem);
-        color: var(--lime);
-        line-height: 0.9;
-      }
-      .foot-sub {
-        font-size: clamp(1.2rem, 3vw, 1.6rem);
-        font-weight: 300;
-        margin: 1rem 0 0.6rem;
-      }
-      .foot-desc {
-        color: var(--muted);
-        font-size: 0.9rem;
-        max-width: 380px;
-        margin: 0 auto 2.5rem;
-        line-height: 1.7;
-        padding: 0 1rem;
-      }
-      .cta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.65rem;
-        background: var(--lime);
-        color: #000;
-        font-weight: 700;
-        font-size: 0.9rem;
-        letter-spacing: 0.05em;
-        padding: 0.9rem 2.2rem;
-        border-radius: 100px;
-        border: none;
-        cursor: pointer;
-        transition:
-          transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-          box-shadow 0.3s;
-      }
-      .cta-btn:hover {
-        transform: scale(1.06);
-        box-shadow: 0 0 40px rgba(239, 77, 35, 0.3);
-      }
-      .foot-socials {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1.2rem;
-        margin-top: 2.5rem;
-        flex-wrap: wrap;
-      }
-      .soc {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        border: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: var(--muted);
-        text-decoration: none;
-        font-size: 0.7rem;
-        letter-spacing: 0.04em;
-        transition:
-          border-color 0.3s,
-          color 0.3s,
-          transform 0.3s;
-      }
-      .soc:hover {
-        border-color: var(--lime);
-        color: var(--lime);
-        transform: translateY(-4px);
-      }
-      .foot-copy {
-        color: rgba(255, 255, 255, 0.18);
-        font-size: 0.7rem;
-        letter-spacing: 0.1em;
-        margin-top: 3.5rem;
+        padding: 5rem 0 3rem;
       }
 
-      .reveal {
+      .foot-socials {
+        gap: 0.75rem;
+      }
+
+      .soc {
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
         opacity: 0;
         transform: translateY(35px);
-        transition:
-          opacity 0.9s var(--ease),
-          transform 0.9s var(--ease);
       }
-      .reveal.visible {
+
+      to {
         opacity: 1;
         transform: none;
       }
-      .d1 {
-        transition-delay: 0.12s;
-      }
-      .d2 {
-        transition-delay: 0.25s;
-      }
-      .d3 {
-        transition-delay: 0.38s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
       }
 
-      @media (max-width: 480px) {
-        footer {
-          padding: 5rem 0 3rem;
-        }
-        .foot-socials {
-          gap: 0.75rem;
-        }
-        .soc {
-          width: 38px;
-          height: 38px;
-        }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes sigPop {
+      from {
+        opacity: 0;
+        transform: scale(0.8) rotate(-15deg);
       }
 
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(35px);
-        }
-        to {
-          opacity: 1;
-          transform: none;
-        }
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(-6deg);
       }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+    }
+
+    @keyframes scrollPulse {
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scaleY(0.5);
+        transform-origin: top;
       }
-      @keyframes sigPop {
-        from {
-          opacity: 0;
-          transform: scale(0.8) rotate(-15deg);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1) rotate(-6deg);
-        }
+
+      50% {
+        opacity: 1;
+        transform: scaleY(1);
       }
-      @keyframes scrollPulse {
-        0%,
-        100% {
-          opacity: 0.3;
-          transform: scaleY(0.5);
-          transform-origin: top;
-        }
-        50% {
-          opacity: 1;
-          transform: scaleY(1);
-        }
+    }
+
+    @keyframes orbFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0);
       }
-      @keyframes orbFloat {
-        0%,
-        100% {
-          transform: translateY(0) rotate(0);
-        }
-        50% {
-          transform: translateY(-25px) rotate(8deg);
-        }
+
+      50% {
+        transform: translateY(-25px) rotate(8deg);
       }
-      @keyframes badgeFloat {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-5px);
-        }
+    }
+
+    @keyframes badgeFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
       }
-    </style>
-  </head>
-  <body>
-    <!-- Sparkle Ocean Blue Night Glow Background -->
-    <div style="position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(circle at center 80%, rgba(0, 140, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%); mix-blend-mode: screen;"></div>
-    <canvas id="sc"></canvas>
-    <div
-      id="butterfly-3d-container"
-      style="
+
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sparkle Ocean Blue Night Glow Background -->
+  <div
+    style="position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(circle at center 80%, rgba(0, 140, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%); mix-blend-mode: screen;">
+  </div>
+  <canvas id="sc"></canvas>
+  <div id="butterfly-3d-container" style="
         position: fixed;
         top: 0;
         left: 0;
@@ -1612,596 +1782,723 @@
         height: 100vh;
         z-index: 15;
         pointer-events: none;
-      "
-    ></div>
-    <div id="cur"></div>
-    <div id="cur-ring"></div>
+      "></div>
+  <div id="cur"></div>
+  <div id="cur-ring"></div>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu" id="mm">
-      <a href="#about" onclick="closeMM()">About</a>
-      <a href="#pattachitra" onclick="closeMM()">Research</a>
-      <a href="#branding" onclick="closeMM()">Branding</a>
-      <a href="#uiux" onclick="closeMM()">UI/UX</a>
-      <a href="#contact" onclick="closeMM()">Contact</a>
-    </div>
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mm">
+    <a href="#about" onclick="closeMM()">About</a>
+    <a href="#pattachitra" onclick="closeMM()">Research</a>
+    <a href="#branding" onclick="closeMM()">Branding</a>
+    <a href="#uiux" onclick="closeMM()">UI/UX</a>
+    <a href="#contact" onclick="closeMM()">Contact</a>
+  </div>
 
-    <!-- HERO & NAV -->
-    <div style="padding: 0.75rem; font-family: 'Inter', sans-serif;">
-      <div style="position: relative; width: 100%; height: calc(100vh - 24px); overflow: hidden; background: #d9d9d9; border-radius: 1.5rem;">
-        
-        <!-- Video -->
-        <video autoplay loop muted playsinline preload="auto" disableRemotePlayback webkit-playsinline="true" x5-playsinline="true" poster="https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=60" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
-          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260424_064411_9e9d7f84-9277-41f4-ab10-59172d89e6be.mp4" type="video/mp4">
-        </video>
-        <div style="position: absolute; inset: 0; background: rgba(255,255,255,0.1);"></div>
+  <!-- HERO & NAV -->
+  <div style="padding: 0.75rem; font-family: 'Inter', sans-serif;">
+    <div
+      style="position: relative; width: 100%; height: calc(100vh - 24px); overflow: hidden; background: #d9d9d9; border-radius: 1.5rem;">
 
-        <!-- Content Wrapper -->
-        <div style="position: relative; z-index: 10; display: flex; flex-direction: column; height: 100%;">
-          
-          <!-- Floating Nav -->
-          <div style="display: flex; justify-content: center; padding-top: 1.5rem; padding-inline: 1rem;">
-            <nav style="background: white; border-radius: 9999px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; padding: 0.5rem; width: 100%; max-width: 760px;">
-              
-              <!-- Logo -->
-              <div style="flex-shrink: 0; padding-left: 0.5rem;">
-                <svg width="28" height="28" viewBox="0 0 32 32" style="fill: #ef4d23;">
-                  <circle cx="16" cy="16" r="3.5" />
-                  <circle cx="16" cy="6" r="3.5" />
-                  <circle cx="16" cy="26" r="3.5" />
-                  <circle cx="6" cy="16" r="3.5" />
-                  <circle cx="26" cy="16" r="3.5" />
-                  <circle cx="8.9" cy="8.9" r="3.5" />
-                  <circle cx="23.1" cy="8.9" r="3.5" />
-                  <circle cx="8.9" cy="23.1" r="3.5" />
-                  <circle cx="23.1" cy="23.1" r="3.5" />
+      <!-- Video -->
+      <video autoplay loop muted playsinline preload="auto" disableRemotePlayback webkit-playsinline="true"
+        x5-playsinline="true" poster="https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=60"
+        style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+        <source
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260403_050628_c4e32401-fab4-4a27-b7a8-6e9291cd5959.mp4"
+          type="video/mp4">
+      </video>
+      <div style="position: absolute; inset: 0; background: rgba(255,255,255,0.1);"></div>
+
+      <!-- Content Wrapper -->
+      <div style="position: relative; z-index: 10; display: flex; flex-direction: column; height: 100%;">
+
+        <!-- Floating Nav -->
+        <div style="display: flex; justify-content: center; padding-top: 1.5rem; padding-inline: 1rem;">
+          <nav
+            style="background: white; border-radius: 9999px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; padding: 0.5rem; width: 100%; max-width: 760px;">
+
+            <!-- Logo -->
+            <div style="flex-shrink: 0; padding-left: 0.5rem;">
+              <svg width="28" height="28" viewBox="0 0 32 32" style="fill: #ef4d23;">
+                <circle cx="16" cy="16" r="3.5" />
+                <circle cx="16" cy="6" r="3.5" />
+                <circle cx="16" cy="26" r="3.5" />
+                <circle cx="6" cy="16" r="3.5" />
+                <circle cx="26" cy="16" r="3.5" />
+                <circle cx="8.9" cy="8.9" r="3.5" />
+                <circle cx="23.1" cy="8.9" r="3.5" />
+                <circle cx="8.9" cy="23.1" r="3.5" />
+                <circle cx="23.1" cy="23.1" r="3.5" />
+              </svg>
+            </div>
+
+            <!-- Desktop Links -->
+            <div style="display: none; align-items: center; gap: 1.5rem; font-size: 14px; font-weight: 500;"
+              class="nav-desktop-links">
+              <a href="#about"
+                style="text-decoration: none; color: #171717; display: flex; align-items: center; gap: 0.25rem;">
+                <span style="width: 4px; height: 4px; background: black; border-radius: 50%;"></span>
+                About
+              </a>
+              <a href="#pattachitra" style="text-decoration: none; color: #171717;">Research</a>
+              <a href="#branding" style="text-decoration: none; color: #171717;">Branding</a>
+              <a href="#uiux" style="text-decoration: none; color: #171717;">UI/UX</a>
+            </div>
+
+            <!-- Right Area -->
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <a href="#contact"
+                style="background: #ef4d23; color: white; border-radius: 9999px; padding: 0.5rem 0.5rem 0.5rem 1.25rem; font-size: 14px; font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                <span class="nav-desktop-links" style="display: none;">Let's Talk</span>
+                <span class="ham-theme">Contact</span>
+                <div
+                  style="width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </div>
+              </a>
+              <button id="ham" class="ham-theme"
+                style="background: none; border: none; cursor: pointer; padding: 0.5rem; display: flex;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="4" x2="20" y1="12" y2="12" />
+                  <line x1="4" x2="20" y1="6" y2="6" />
+                  <line x1="4" x2="20" y1="18" y2="18" />
                 </svg>
-              </div>
-
-              <!-- Desktop Links -->
-              <div style="display: none; align-items: center; gap: 1.5rem; font-size: 14px; font-weight: 500;" class="nav-desktop-links">
-                <a href="#about" style="text-decoration: none; color: #171717; display: flex; align-items: center; gap: 0.25rem;">
-                  <span style="width: 4px; height: 4px; background: black; border-radius: 50%;"></span>
-                  About
-                </a>
-                <a href="#pattachitra" style="text-decoration: none; color: #171717;">Research</a>
-                <a href="#branding" style="text-decoration: none; color: #171717;">Branding</a>
-                <a href="#uiux" style="text-decoration: none; color: #171717;">UI/UX</a>
-              </div>
-
-              <!-- Right Area -->
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <a href="#contact" style="background: #ef4d23; color: white; border-radius: 9999px; padding: 0.5rem 0.5rem 0.5rem 1.25rem; font-size: 14px; font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
-                  <span class="nav-desktop-links" style="display: none;">Let's Talk</span>
-                  <span class="ham-theme">Contact</span>
-                  <div style="width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                  </div>
-                </a>
-                <button id="ham" class="ham-theme" style="background: none; border: none; cursor: pointer; padding: 0.5rem; display: flex;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-                </button>
-              </div>
-            </nav>
-          </div>
-
-          <!-- Hero Content Center -->
-          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; text-align: center;">
-            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: white; border-radius: 9999px; padding: 0.375rem 1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); font-size: 13px; font-weight: 500; color: #171717;">
-              <span style="width: 8px; height: 8px; background: #ef4d23; border-radius: 50%;"></span>
-              Ritika Kumari
+              </button>
             </div>
-            
-            <h1 style="font-size: clamp(36px, 8vw, 72px); line-height: 1.05; font-weight: 500; letter-spacing: -0.02em; margin-top: 1.5rem; max-width: 56rem; color: #171717;">
-              Crafting <span style="font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;">Identities</span><br>of tomorrow
-            </h1>
-            
-            <p style="margin-top: 1.5rem; color: #525252; font-size: clamp(13px, 3.5vw, 16px); max-width: 32rem;">
-              The all-in-one portfolio spanning Graphic Design, Brand Identity, and UI/UX.
-            </p>
-            
-            <a href="#about" style="margin-top: 2rem; display: inline-flex; align-items: center; gap: 0.75rem; background: #0b0f1a; color: white; border-radius: 9999px; padding: 0.625rem 0.625rem 0.625rem 1.75rem; font-size: 14px; font-weight: 500; text-decoration: none;">
-              Get Started
-              <div style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-              </div>
-            </a>
+          </nav>
+        </div>
+
+        <!-- Hero Content Center -->
+        <div
+          style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; text-align: center;">
+          <div
+            style="display: inline-flex; align-items: center; gap: 0.5rem; background: white; border-radius: 9999px; padding: 0.375rem 1rem; box-shadow: 0 1px 2px rgba(255, 255, 255, 0.05); font-size: 13px; font-weight: 500; color: #171717;">
+            <span style="width: 8px; height: 8px; background: #ef4d23; border-radius: 50%;"></span>
+            Ritika Kumari
           </div>
 
+          <h1
+            style="font-size: clamp(36px, 8vw, 72px); line-height: 1.05; font-weight: 500; letter-spacing: -0.02em; margin-top: 1.5rem; max-width: 56rem; color: #ffffff;">
+            Crafting <span
+              style="font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;">Identities</span><br>of
+            tomorrow
+          </h1>
+
+          <p style="margin-top: 1.5rem; color: rgba(255, 255, 255, 0.9); font-size: clamp(13px, 3.5vw, 16px); max-width: 32rem;">
+            The all-in-one portfolio spanning Graphic Design, Brand Identity, and UI/UX.
+          </p>
+
+          <a href="#about"
+            style="margin-top: 2rem; display: inline-flex; align-items: center; gap: 0.75rem; background: #0b0f1a; color: white; border-radius: 9999px; padding: 0.625rem 0.625rem 0.625rem 1.75rem; font-size: 14px; font-weight: 500; text-decoration: none;">
+            Get Started
+            <div
+              style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid reveal">
+        <div>
+          <div class="sec-label">About Me</div>
+          <h2 class="about-heading">Hello!</h2>
+          <div class="about-name">I am Ritika Kumari.</div>
+          <p class="about-bio">
+            Creative graphic designer with a passion for visual storytelling
+            and brand design. I thrive on new challenges that push the
+            boundaries of creativity — exploring trends and techniques to
+            deliver impactful work.
+          </p>
+          <div class="skills-row" id="skills-row">
+            <div class="skill-item">
+              <span class="skill-name">Brand Design</span>
+              <div class="skill-track">
+                <div class="skill-fill" data-w="92"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">Logo Design</span>
+              <div class="skill-track">
+                <div class="skill-fill" data-w="88"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">UI / UX</span>
+              <div class="skill-track">
+                <div class="skill-fill" data-w="80"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">Typography</span>
+              <div class="skill-track">
+                <div class="skill-fill" data-w="95"></div>
+              </div>
+            </div>
+          </div>
+          <div class="about-stats">
+            <div>
+              <div class="stat-num">50+</div>
+              <div class="stat-lbl">Projects</div>
+            </div>
+            <div>
+              <div class="stat-num">30+</div>
+              <div class="stat-lbl">Clients</div>
+            </div>
+            <div>
+              <div class="stat-num">3+</div>
+              <div class="stat-lbl">Years</div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-frame">
+          <div class="profile-art">
+            <svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+              <defs>
+                <linearGradient id="monogramGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ef4d23" />
+                  <stop offset="100%" stop-color="#ff8c42" />
+                </linearGradient>
+                <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="10" />
+                  <feOffset dx="0" dy="5" result="offsetblur" />
+                  <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.3" />
+                  </feComponentTransfer>
+                  <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <rect width="300" height="380" fill="#fcfaf7" />
+              <circle cx="150" cy="180" r="130" fill="none" stroke="rgba(239,77,35,0.03)" stroke-width="2" />
+              <circle cx="150" cy="180" r="100" fill="none" stroke="rgba(239,77,35,0.05)" stroke-width="1" />
+
+              <text x="150" y="200" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="90"
+                fill="url(#monogramGrad)" filter="url(#softShadow)" letter-spacing="8">RK</text>
+              <text x="150" y="245" text-anchor="middle" font-family="'Inter', sans-serif" font-size="10" fill="#171717"
+                font-weight="600" letter-spacing="4" style="text-transform: uppercase; opacity: 0.6;">Creative
+                Designer</text>
+
+              <line x1="120" y1="265" x2="180" y2="265" stroke="rgba(239,77,35,0.2)" stroke-width="1.5" />
+            </svg>
+          </div>
+          <div class="pcorner tl"></div>
+          <div class="pcorner tr"></div>
+          <div class="pcorner bl"></div>
+          <div class="pcorner br"></div>
+          <div class="fbadge top">Available ✦</div>
+          <div class="fbadge bot">Open to work</div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- ABOUT -->
-    <section id="about">
-      <div class="container">
-        <div class="about-grid reveal">
-          <div>
-            <div class="sec-label">About Me</div>
-            <h2 class="about-heading">Hello!</h2>
-            <div class="about-name">I am Ritika Kumari.</div>
-            <p class="about-bio">
-              Creative graphic designer with a passion for visual storytelling
-              and brand design. I thrive on new challenges that push the
-              boundaries of creativity — exploring trends and techniques to
-              deliver impactful work.
-            </p>
-            <div class="skills-row" id="skills-row">
-              <div class="skill-item">
-                <span class="skill-name">Brand Design</span>
-                <div class="skill-track">
-                  <div class="skill-fill" data-w="92"></div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Logo Design</span>
-                <div class="skill-track">
-                  <div class="skill-fill" data-w="88"></div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">UI / UX</span>
-                <div class="skill-track">
-                  <div class="skill-fill" data-w="80"></div>
-                </div>
-              </div>
-              <div class="skill-item">
-                <span class="skill-name">Typography</span>
-                <div class="skill-track">
-                  <div class="skill-fill" data-w="95"></div>
-                </div>
-              </div>
-            </div>
-            <div class="about-stats">
-              <div>
-                <div class="stat-num">50+</div>
-                <div class="stat-lbl">Projects</div>
-              </div>
-              <div>
-                <div class="stat-num">30+</div>
-                <div class="stat-lbl">Clients</div>
-              </div>
-              <div>
-                <div class="stat-num">3+</div>
-                <div class="stat-lbl">Years</div>
-              </div>
-            </div>
-          </div>
-          <div class="profile-frame">
-            <div class="profile-ph">Your Photo<br />Goes Here ✦</div>
-            <div class="pcorner tl"></div>
-            <div class="pcorner tr"></div>
-            <div class="pcorner bl"></div>
-            <div class="pcorner br"></div>
-            <div class="fbadge top">Available ✦</div>
-            <div class="fbadge bot">Open to work</div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- PATTACHITRA placeholder removed, branding moved below research -->
 
-    <!-- PATTACHITRA placeholder removed, branding moved below research -->
-
-    <!-- PATTACHITRA -->
-    <section id="pattachitra">
-      <div class="container">
-        <div class="reveal">
-          <div class="sec-label">Research & Development</div>
-          <h2 class="sec-title">
-            Pattachitra <span style="color: var(--lime)">in Gen Z Fashion</span>
-          </h2>
-          <p
-            style="
+  <!-- PATTACHITRA -->
+  <section id="pattachitra">
+    <div class="container">
+      <div class="reveal">
+        <div class="sec-label">Research & Development</div>
+        <h2 class="sec-title">
+          Pattachitra <span style="color: var(--lime)">in Gen Z Fashion</span>
+        </h2>
+        <p style="
               color: var(--muted);
               margin-top: 0.8rem;
               max-width: 600px;
               line-height: 1.7;
               font-size: 0.93rem;
-            "
-          >
-            Exploring how Pattachitra can be positioned in Gen Z fashion by understanding perspectives from Artisans, Fashion Designers, and Gen Z Consumers.
-          </p>
+            ">
+          Exploring how Pattachitra can be positioned in Gen Z fashion by understanding perspectives from Artisans,
+          Fashion Designers, and Gen Z Consumers.
+        </p>
+      </div>
+
+      <div class="reveal d1" style="margin-top: 2.5rem;">
+        <!-- Hero Image -->
+        <div
+          style="width: 100%; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; border: 1px solid var(--border);">
+          <img src="pattchitra.png" alt="Pattachitra Art Visual Development"
+            style="width: 100%; height: auto; display: block; object-fit: cover;" />
         </div>
 
-        <div class="reveal d1" style="margin-top: 2.5rem;">
-          <!-- Hero Image -->
-          <div style="width: 100%; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 3rem; border: 1px solid var(--border);">
-            <img src="pattchitra.png" alt="Pattachitra Art Visual Development" style="width: 100%; height: auto; display: block; object-fit: cover;" />
-          </div>
+        <!-- Research Points -->
+        <div style="background: var(--s1); border-radius: 1.5rem; padding: 2.5rem; border: 1px solid var(--border);">
+          <h3
+            style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--lime); margin-bottom: 1.5rem; letter-spacing: 0.05em;">
+            Key Research Findings</h3>
 
-          <!-- Research Points -->
-          <div style="background: var(--s1); border-radius: 1.5rem; padding: 2.5rem; border: 1px solid var(--border);">
-            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--lime); margin-bottom: 1.5rem; letter-spacing: 0.05em;">Key Research Findings</h3>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-              
-              <!-- Problem -->
-              <div>
-                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">The Challenge</h4>
-                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
-                  While Gen Z shows interest in cultural fashion, traditional Pattachitra motifs often feel too heavy for everyday streetwear. Concurrently, artisans struggle with shrinking markets and low income.
-                </p>
-              </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
 
-              <!-- Artisans -->
-              <div>
-                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Artisan Perspectives</h4>
-                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
-                  Open to modern collaborations but highly concerned about over-modernization. They want to preserve cultural meaning and ensure fair compensation and recognition.
-                </p>
-              </div>
-
-              <!-- Designers -->
-              <div>
-                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Designer Insights</h4>
-                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
-                  See huge potential in fusing heritage art with modern streetwear. Challenges include adapting to artisan production speeds and bridging the gap between traditional craft and modern aesthetics.
-                </p>
-              </div>
-
-              <!-- Gen Z -->
-              <div>
-                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Gen Z Consumers</h4>
-                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
-                  Attracted to the aesthetic but prefer minimalist, stylized versions over heavy traditional prints. Pastel and monochrome palettes on oversized streetwear are favored over bright traditional colors.
-                </p>
-              </div>
-
-            </div>
-
-            <!-- Conclusion -->
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);">
-              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--lime);">Conclusion & Strategy</h4>
-              <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6;">
-                Pattachitra has strong potential in youth fashion if adapted respectfully. The key is minimal stylization on comfortable silhouettes, paired with affordable pricing and authentic storytelling that highlights the artisan's contribution.
+            <!-- Problem -->
+            <div>
+              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">The Challenge
+              </h4>
+              <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                While Gen Z shows interest in cultural fashion, traditional Pattachitra motifs often feel too heavy for
+                everyday streetwear. Concurrently, artisans struggle with shrinking markets and low income.
               </p>
             </div>
+
+            <!-- Artisans -->
+            <div>
+              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Artisan
+                Perspectives</h4>
+              <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                Open to modern collaborations but highly concerned about over-modernization. They want to preserve
+                cultural meaning and ensure fair compensation and recognition.
+              </p>
+            </div>
+
+            <!-- Designers -->
+            <div>
+              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Designer
+                Insights</h4>
+              <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                See huge potential in fusing heritage art with modern streetwear. Challenges include adapting to artisan
+                production speeds and bridging the gap between traditional craft and modern aesthetics.
+              </p>
+            </div>
+
+            <!-- Gen Z -->
+            <div>
+              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Gen Z
+                Consumers</h4>
+              <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                Attracted to the aesthetic but prefer minimalist, stylized versions over heavy traditional prints.
+                Pastel and monochrome palettes on oversized streetwear are favored over bright traditional colors.
+              </p>
+            </div>
+
+          </div>
+
+          <div style="margin-top: 1.5rem; text-align: right;">
+            <a href="https://drive.google.com/file/d/1Xxg8Mf5OS6NPG9RVVRNDYyQWZUQeSewA/view?usp=sharing" target="_blank"
+              rel="noopener noreferrer"
+              style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--lime); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; border: 1px solid rgba(239,77,35,0.3); border-radius: 100px; padding: 0.6rem 1.4rem; transition: all 0.3s;"
+              onmouseover="this.style.background='var(--lime)'; this.style.color='#fff';"
+              onmouseout="this.style.background='transparent'; this.style.color='var(--lime)';">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+              View Full Research
+            </a>
           </div>
         </div>
+      </div>
 
-        <!-- Pattachitra Product Design Collage -->
-        <style>
+      <!-- Pattachitra Product Design Collage -->
+      <style>
+        .pattachitra-masonry {
+          column-count: 3;
+          column-gap: 1.5rem;
+          margin-top: 2rem;
+        }
+
+        .pattachitra-masonry .masonry-item {
+          break-inside: avoid;
+          margin-bottom: 1.5rem;
+          border-radius: 1rem;
+          overflow: hidden;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+          border: 1px solid var(--border);
+          transition: transform 0.3s;
+        }
+
+        .pattachitra-masonry .masonry-item:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .pattachitra-masonry img {
+          width: 100%;
+          height: auto;
+          display: block;
+          background: var(--s2);
+          object-fit: cover;
+        }
+
+        @media (max-width: 900px) {
           .pattachitra-masonry {
             column-count: 3;
-            column-gap: 1.5rem;
-            margin-top: 2rem;
+            column-gap: 1rem;
           }
+        }
+
+        @media (max-width: 600px) {
+          .pattachitra-masonry {
+            column-count: 2;
+            column-gap: 0.75rem;
+          }
+
           .pattachitra-masonry .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 1.5rem;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
-            transition: transform 0.3s;
+            margin-bottom: 0.75rem;
+            border-radius: 0.6rem;
           }
-          .pattachitra-masonry .masonry-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-          }
-          .pattachitra-masonry img {
-            width: 100%;
-            height: auto;
-            display: block;
-            background: var(--s2);
-            object-fit: cover;
-          }
-          @media (max-width: 900px) {
-            .pattachitra-masonry { column-count: 3; column-gap: 1rem; }
-          }
-          @media (max-width: 600px) {
-            .pattachitra-masonry { column-count: 2; column-gap: 0.75rem; }
-            .pattachitra-masonry .masonry-item { margin-bottom: 0.75rem; border-radius: 0.6rem; }
-          }
-        </style>
-        <div class="reveal d2">
-          <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--text); margin-top: 4rem; letter-spacing: 0.05em;">Product Design <span style="color: var(--lime)">Concepts</span></h3>
-          <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem; max-width: 600px; line-height: 1.6;">Visualizing Pattachitra art translated into modern Gen Z streetwear and apparel.</p>
-          <div class="pattachitra-masonry">
-            <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_.png" alt="Pattachitra Concept 1"></div>
-            <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_ (1).png" alt="Pattachitra Concept 2"></div>
-            <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_ (2).png" alt="Pattachitra Concept 3"></div>
-            <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_ (3).png" alt="Pattachitra Concept 4"></div>
-            <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_ (4).png" alt="Pattachitra Concept 5"></div>
+        }
+      </style>
+      <div class="reveal d2">
+        <h3
+          style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--text); margin-top: 4rem; letter-spacing: 0.05em;">
+          Product Design <span style="color: var(--lime)">Concepts</span></h3>
+        <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem; max-width: 600px; line-height: 1.6;">
+          Visualizing Pattachitra art translated into modern Gen Z streetwear and apparel.</p>
+        <div class="pattachitra-masonry">
+          <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_.png" alt="Pattachitra Concept 1">
+          </div>
+          <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_ (1).png" alt="Pattachitra Concept 2">
+          </div>
+          <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_ (2).png" alt="Pattachitra Concept 3">
+          </div>
+          <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_ (3).png" alt="Pattachitra Concept 4">
+          </div>
+          <div class="masonry-item"><img src="pattchittra/Gemini_Generated_Image_ (4).png" alt="Pattachitra Concept 5">
           </div>
         </div>
+      </div>
 
-        <!-- Q-Commerce Research -->
-        <div class="reveal d2" style="margin-top: 4rem;">
-          <h2 class="sec-title" style="font-size: clamp(2.5rem, 5vw, 4rem);">
-            Q-Commerce <span style="color: var(--lime)">Student Purchasing Patterns</span>
-          </h2>
-          <p style="color: var(--muted); margin-top: 0.8rem; max-width: 800px; line-height: 1.7; font-size: 0.93rem; margin-bottom: 2.5rem;">
-            A comparative study on quick commerce purchasing preferences and shopping patterns of college students based on their living arrangements.
-          </p>
+      <!-- Q-Commerce Research -->
+      <div class="reveal d2" style="margin-top: 4rem;">
+        <h2 class="sec-title" style="font-size: clamp(2.5rem, 5vw, 4rem);">
+          Q-Commerce <span style="color: var(--lime)">Student Purchasing Patterns</span>
+        </h2>
+        <p
+          style="color: var(--muted); margin-top: 0.8rem; max-width: 800px; line-height: 1.7; font-size: 0.93rem; margin-bottom: 2.5rem;">
+          A comparative study on quick commerce purchasing preferences and shopping patterns of college students based
+          on their living arrangements.
+        </p>
 
-          <div style="background: var(--s1); border-radius: 1.5rem; padding: 2.5rem; border: 1px solid var(--border);">
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
-              <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--lime); letter-spacing: 0.05em;">Abstract & Objectives</h3>
-              <p style="color: var(--text); font-weight: 500; font-size: 0.95rem;">Authors: Lopamudra Sahu, Prinshu Singh, Ritika Kumari</p>
-              <p style="color: var(--muted); font-size: 0.85rem;">Supervisors: Prof. Dr. Ritika Saxena, Prof. Bhawana Chauhan</p>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-              
-              <!-- Problem -->
-              <div>
-                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Research Problem</h4>
-                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
-                  Quick commerce has disrupted retail, but a critical underexplored factor is how a student's living arrangement shapes their usage frequency, product choices, and spending behavior.
-                </p>
-              </div>
+        <div style="background: var(--s1); border-radius: 1.5rem; padding: 2.5rem; border: 1px solid var(--border);">
+          <div
+            style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
+            <h3
+              style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--lime); letter-spacing: 0.05em;">
+              Abstract & Objectives</h3>
+            <p style="color: var(--text); font-weight: 500; font-size: 0.95rem;">Authors: Lopamudra Sahu, Prinshu Singh,
+              Ritika Kumari</p>
+            <p style="color: var(--muted); font-size: 0.85rem;">Supervisors: Prof. Dr. Ritika Saxena, Prof. Bhawana
+              Chauhan</p>
+          </div>
 
-              <!-- Methodology -->
-              <div>
-                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Methodology</h4>
-                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
-                  A quantitative, cross-sectional design using convenience sampling. Data from 59 college students was analyzed using independent t-tests and chi-square tests.
-                </p>
-              </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
 
-              <!-- Key Findings -->
-              <div>
-                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Key Findings</h4>
-                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
-                  Contrary to initial hypotheses, students living at home use Q-commerce more frequently than those in hostels/PGs (p=0.024), likely due to financial factors and budget constraints.
-                </p>
-              </div>
-
-              <!-- Preferences -->
-              <div>
-                <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Product Preferences</h4>
-                <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
-                  Hostel/PG students heavily favor Food & Snacks (64.7%), often ordering late at night, while students at home lean towards Groceries & Household Staples (40%). UPI is the dominant payment mode.
-                </p>
-              </div>
-
-            </div>
-
-            <!-- Conclusion -->
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);">
-              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--lime);">Conclusion & Strategy</h4>
-              <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6;">
-                Living arrangements significantly influence Q-commerce frequency and category preferences. Operators should tailor marketing: targeting hostel students with late-night food convenience, and home segments with grocery cashback promotions.
+            <!-- Problem -->
+            <div>
+              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Research
+                Problem</h4>
+              <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                Quick commerce has disrupted retail, but a critical underexplored factor is how a student's living
+                arrangement shapes their usage frequency, product choices, and spending behavior.
               </p>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- BRANDING -->
-    <section id="branding">
-      <div class="container">
-        <div class="reveal">
-          <div class="sec-label">Case Study</div>
-          <h2 class="sec-title">Branding</h2>
-          <p style="color: var(--muted); margin-top: 0.8rem; max-width: 480px; line-height: 1.7; font-size: 0.93rem;">
-            Brand identity projects creating impactful visual marks aligned with mission and goals.
-          </p>
-        </div>
-        <!-- Carry Cool Branding Case Study -->
-        <div class="brand-card reveal d1" style="background: var(--s1); border-color: var(--border);">
-          <span class="brand-tag">✦ Featured Project</span>
-          <div class="brand-title">Carry Cool</div>
-          <div class="brand-ind">Industry: Tech-Integrated Smart Backpacks</div>
-          <p class="brand-desc">
-            CARRY COOL is a fusion of intelligent technology and ergonomic design.
-            Addressing modern challenges of health and security with an AI-driven, tech-integrated carry solution.
-          </p>
-          <div class="mockup-grid">
-            <div class="mockup-box" style="grid-column: 1 / -1; background: linear-gradient(135deg, var(--lime) 0%, #ff8c42 100%); border: 1px solid var(--border); overflow: hidden;">
-              <div class="mockup-inner" style="aspect-ratio: auto; min-height: 300px; height: 45vw; max-height: 500px; justify-content: center; align-items: center; position: relative; padding: 2rem;">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(200px, 50vw, 400px); height: clamp(200px, 50vw, 400px); border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%); pointer-events: none;"></div>
-                <img src="carry_cool_realistic_bag.png" alt="Carry Cool Backpack" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 25px 40px rgba(0,0,0,0.5)); transition: transform 0.4s ease; position: relative; z-index: 2;" onmouseover="this.style.transform='scale(1.05) translateY(-10px)'" onmouseout="this.style.transform='none'">
-              </div>
-              <div class="mockup-lbl" style="color: #fff; background: rgba(0,0,0,0.15); border-color: rgba(255,255,255,0.2); z-index: 10;">Product Showcase</div>
+            <!-- Methodology -->
+            <div>
+              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Methodology
+              </h4>
+              <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                A quantitative, cross-sectional design using convenience sampling. Data from 59 college students was
+                analyzed using independent t-tests and chi-square tests.
+              </p>
             </div>
+
+            <!-- Key Findings -->
+            <div>
+              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Key Findings
+              </h4>
+              <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                Contrary to initial hypotheses, students living at home use Q-commerce more frequently than those in
+                hostels/PGs (p=0.024), likely due to financial factors and budget constraints.
+              </p>
+            </div>
+
+            <!-- Preferences -->
+            <div>
+              <h4 style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text);">Product
+                Preferences</h4>
+              <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+                Hostel/PG students heavily favor Food & Snacks (64.7%), often ordering late at night, while students at
+                home lean towards Groceries & Household Staples (40%). UPI is the dominant payment mode.
+              </p>
+            </div>
+
           </div>
-          <div style="margin-top: 2rem; text-align: right;">
-            <a href="carry_cool_branding.html" target="_blank" style="color: var(--lime); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">View Full Case Study &rarr;</a>
+
+          <div style="margin-top: 1.5rem; text-align: right;">
+            <a href="https://drive.google.com/file/d/1o0z6NHl1MtG4wmdGmRitPloDjFj2D-Bn/view?usp=sharing" target="_blank"
+              rel="noopener noreferrer"
+              style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--lime); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; border: 1px solid rgba(239,77,35,0.3); border-radius: 100px; padding: 0.6rem 1.4rem; transition: all 0.3s;"
+              onmouseover="this.style.background='var(--lime)'; this.style.color='#fff';"
+              onmouseout="this.style.background='transparent'; this.style.color='var(--lime)';">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+              View Full Research
+            </a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- UI/UX -->
-    <section id="uiux">
-      <div class="container">
-        <div class="reveal">
-          <div class="sec-label">UI / UX Design</div>
-          <div class="uiux-ttl">UI UX</div>
-          <p
-            style="
+  <!-- BRANDING -->
+  <section id="branding">
+    <div class="container">
+      <div class="reveal">
+        <div class="sec-label">Case Study</div>
+        <h2 class="sec-title">Branding</h2>
+        <p style="color: var(--muted); margin-top: 0.8rem; max-width: 480px; line-height: 1.7; font-size: 0.93rem;">
+          Brand identity projects creating impactful visual marks aligned with mission and goals.
+        </p>
+      </div>
+      <!-- Carry Cool Branding Case Study -->
+      <div class="brand-card reveal d1" style="background: var(--s1); border-color: var(--border);">
+        <span class="brand-tag">✦ Featured Project</span>
+        <div class="brand-title">Carry Cool</div>
+        <div class="brand-ind">Industry: Tech-Integrated Smart Backpacks</div>
+        <p class="brand-desc">
+          CARRY COOL is a fusion of intelligent technology and ergonomic design.
+          Addressing modern challenges of health and security with an AI-driven, tech-integrated carry solution.
+        </p>
+        <div class="mockup-grid">
+          <div class="mockup-box"
+            style="grid-column: 1 / -1; background: linear-gradient(135deg, var(--lime) 0%, #ff8c42 100%); border: 1px solid var(--border); overflow: hidden;">
+            <div class="mockup-inner"
+              style="aspect-ratio: auto; min-height: 300px; height: 45vw; max-height: 500px; justify-content: center; align-items: center; position: relative; padding: 2rem;">
+              <div
+                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(200px, 50vw, 400px); height: clamp(200px, 50vw, 400px); border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%); pointer-events: none;">
+              </div>
+              <img src="carry_cool_realistic_bag.png" alt="Carry Cool Backpack"
+                style="max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 25px 40px rgba(0,0,0,0.5)); transition: transform 0.4s ease; position: relative; z-index: 2;"
+                onmouseover="this.style.transform='scale(1.05) translateY(-10px)'"
+                onmouseout="this.style.transform='none'">
+            </div>
+            <div class="mockup-lbl"
+              style="color: #fff; background: rgba(0,0,0,0.15); border-color: rgba(255,255,255,0.2); z-index: 10;">
+              Product Showcase</div>
+          </div>
+        </div>
+        <div style="margin-top: 2rem; text-align: right;">
+          <a href="carry_cool_branding.html" target="_blank"
+            style="color: var(--lime); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">View
+            Full Case Study &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UI/UX -->
+  <section id="uiux">
+    <div class="container">
+      <div class="reveal">
+        <div class="sec-label">UI / UX Design</div>
+        <div class="uiux-ttl">UI UX</div>
+        <p style="
               color: var(--muted);
               margin-top: 1rem;
               max-width: 480px;
               line-height: 1.7;
               font-size: 0.93rem;
-            "
-          >
-            Seamless interfaces for apps and websites combining clarity,
-            usability, and visual appeal.
-          </p>
-        </div>
-        <div class="uiux-card reveal d1">
+            ">
+          Seamless interfaces for apps and websites combining clarity,
+          usability, and visual appeal.
+        </p>
+      </div>
+      <div class="uiux-card reveal d1">
 
-          <div style="margin-top: 2.5rem">
-            <div
-              style="
+        <div style="margin-top: 2.5rem">
+          <div style="
                 font-size: 0.75rem;
                 letter-spacing: 0.1em;
                 color: var(--lime);
                 text-transform: uppercase;
                 margin-bottom: 1rem;
-              "
-            >
-              Additional Prototype
-            </div>
-            <div
-              style="
+              ">
+            Additional Prototype
+          </div>
+          <div style="
                 font-size: 1.2rem;
                 color: var(--text);
                 margin-bottom: 0.5rem;
-              "
-            >
-              Startup App Mockup
-            </div>
-            <p
-              style="
+              ">
+            Startup App Mockup
+          </div>
+          <p style="
                 color: var(--muted);
                 font-size: 0.85rem;
                 margin-bottom: 1.5rem;
-              "
-            >
-              Interactive prototype designed for mobile-first experience.
-            </p>
+              ">
+            Interactive prototype designed for mobile-first experience.
+          </p>
 
-            <div class="phone-mockup-wrapper">
-              <div class="phone-mockup">
-                <div class="phone-notch"></div>
-                <div class="phone-screen">
-                  <iframe src="greenmark_business_sustainability.html"></iframe>
-                </div>
-                <div class="phone-home-btn"></div>
+          <div class="phone-mockup-wrapper">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <iframe src="greenmark_business_sustainability.html"></iframe>
               </div>
+              <div class="phone-home-btn"></div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    <div style="padding: 3rem 0; text-align: center" class="reveal">
-      <div class="div-acc"></div>
     </div>
+  </section>
+  <div style="padding: 3rem 0; text-align: center" class="reveal">
+    <div class="div-acc"></div>
+  </div>
 
-    <!-- FOOTER -->
-    <footer id="contact">
-      <div class="container">
-        <div class="reveal">
-          <div class="foot-big">Let's Work</div>
-          <p class="foot-sub">Thanks For Scrolling!</p>
-          <p class="foot-desc">
-            Don't forget to reach out if you love my work. Let's create
-            something beautiful together.
-          </p>
-          <button class="cta-btn">&#10022; Get In Touch</button>
-          <div class="foot-socials">
-            <a class="soc" href="#">Be</a>
-            <a class="soc" href="#">Dbl</a>
-            <a class="soc" href="#">In</a>
-            <a class="soc" href="#">Ig</a>
-          </div>
-          <div class="foot-copy">
-            &copy; 2024 Ritika Kumari &middot; All Rights Reserved
-          </div>
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="container">
+      <div class="reveal">
+        <div class="foot-big">Let's Work</div>
+        <p class="foot-sub">Thanks For Scrolling!</p>
+        <p class="foot-desc">
+          Don't forget to reach out if you love my work. Let's create
+          something beautiful together.
+        </p>
+        <button class="cta-btn">&#10022; Get In Touch</button>
+        <div class="foot-socials">
+          <a class="soc" href="#">Be</a>
+          <a class="soc" href="#">Dbl</a>
+          <a class="soc" href="https://www.linkedin.com/in/ritika-kumari-nift/" target="_blank"
+            rel="noopener noreferrer">In</a>
+          <a class="soc" href="#">Ig</a>
+        </div>
+        <div class="foot-copy">
+          &copy; 2024 Ritika Kumari &middot; All Rights Reserved
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
 
-    <div id="butterfly-3d-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></div>
+  <div id="butterfly-3d-container"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@r128/examples/js/loaders/GLTFLoader.js"></script>
-    <script>
-      // 3D Butterfly Animation
-      const butterflyContainer = document.getElementById('butterfly-3d-container');
-      let scene, camera, renderer, butterfly, butterflyTrail = [];
-      let butterflyX = 0, butterflyY = 0, targetX = 0, targetY = 0;
-      let time = 0;
-      const sparkleGeo = new THREE.SphereGeometry(0.06, 4, 4);
-      const sparkleMat = new THREE.MeshBasicMaterial({ color: 0x00d0ff });
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@r128/examples/js/loaders/GLTFLoader.js"></script>
+  <script>
+    // 3D Butterfly Animation
+    const butterflyContainer = document.getElementById('butterfly-3d-container');
+    let scene, camera, renderer, butterfly, butterflyTrail = [];
+    let butterflyX = 0, butterflyY = 0, targetX = 0, targetY = 0;
+    let time = 0;
+    const sparkleGeo = new THREE.SphereGeometry(0.06, 4, 4);
+    const sparkleMat = new THREE.MeshBasicMaterial({ color: 0x00d0ff });
 
-      function initButterfly3D() {
-        // Scene setup
-        scene = new THREE.Scene();
-        scene.background = null;
+    function initButterfly3D() {
+      // Scene setup
+      scene = new THREE.Scene();
+      scene.background = null;
 
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
 
-        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        butterflyContainer.appendChild(renderer.domElement);
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      butterflyContainer.appendChild(renderer.domElement);
 
-        // Load butterfly model
-        const loader = new THREE.GLTFLoader();
-        loader.load("butterfly.glb", (gltf) => {
-          butterfly = gltf.scene;
-          butterfly.scale.set(0.15, 0.15, 0.15);
-          butterfly.position.z = 0;
-          scene.add(butterfly);
+      // Load butterfly model
+      const loader = new THREE.GLTFLoader();
+      loader.load("butterfly.glb", (gltf) => {
+        butterfly = gltf.scene;
+        butterfly.scale.set(0.15, 0.15, 0.15);
+        butterfly.position.z = 0;
+        scene.add(butterfly);
 
-          // Add initial animation
-          animateButterfly();
-        }, undefined, (error) => {
-          console.error('Error loading butterfly:', error);
-        });
-
-        // Lighting
-        const light1 = new THREE.DirectionalLight(0xffffff, 1);
-        light1.position.set(5, 5, 5);
-        scene.add(light1);
-
-        const light2 = new THREE.DirectionalLight(0xff8800, 0.8);
-        light2.position.set(-5, -5, 5);
-        scene.add(light2);
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Autonomous flying to sections
-        const targetSelectors = ['.profile-frame', '.lc2', '.mockup-box:nth-child(2)', '.patta-card', '.uiux-card', '.cta-btn'];
-        let baseTargetX = 0;
-        let baseTargetY = 0;
-
-        function updateButterflyTarget() {
-          let minD = Infinity;
-          let best = null;
-          const wh = window.innerHeight / 2;
-          targetSelectors.forEach((sel, i) => {
-            const el = document.querySelector(sel);
-            if (el) {
-              const r = el.getBoundingClientRect();
-              // Alternate sides based on index
-              const cx = (i % 2 === 0) ? r.left + r.width - 20 : r.left + 20;
-              const cy = r.top + 20;
-              const d = Math.abs((r.top + r.height / 2) - wh);
-              if (d < minD) {
-                minD = d;
-                best = { x: cx, y: cy };
-              }
-            }
-          });
-          if (best) {
-            const ndcX = (best.x / window.innerWidth) * 2 - 1;
-            const ndcY = -(best.y / window.innerHeight) * 2 + 1;
-            
-            const frustumHeight = Math.tan((75 / 2) * Math.PI / 180) * 5 * 2;
-            const frustumWidth = frustumHeight * (window.innerWidth / window.innerHeight);
-            
-            baseTargetX = ndcX * (frustumWidth / 2);
-            baseTargetY = ndcY * (frustumHeight / 2);
-          }
-        }
-        setInterval(updateButterflyTarget, 200);
-        updateButterflyTarget();
-
-        // Start animation loop immediately
+        // Add initial animation
         animateButterfly();
+      }, undefined, (error) => {
+        console.error('Error loading butterfly:', error);
+      });
+
+      // Lighting
+      const light1 = new THREE.DirectionalLight(0xffffff, 1);
+      light1.position.set(5, 5, 5);
+      scene.add(light1);
+
+      const light2 = new THREE.DirectionalLight(0xff8800, 0.8);
+      light2.position.set(-5, -5, 5);
+      scene.add(light2);
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // Autonomous flying to sections
+      const targetSelectors = ['.profile-frame', '.lc2', '.mockup-box:nth-child(2)', '.patta-card', '.uiux-card', '.cta-btn'];
+      let baseTargetX = 0;
+      let baseTargetY = 0;
+
+      function updateButterflyTarget() {
+        let minD = Infinity;
+        let best = null;
+        const wh = window.innerHeight / 2;
+        targetSelectors.forEach((sel, i) => {
+          const el = document.querySelector(sel);
+          if (el) {
+            const r = el.getBoundingClientRect();
+            // Alternate sides based on index
+            const cx = (i % 2 === 0) ? r.left + r.width - 20 : r.left + 20;
+            const cy = r.top + 20;
+            const d = Math.abs((r.top + r.height / 2) - wh);
+            if (d < minD) {
+              minD = d;
+              best = { x: cx, y: cy };
+            }
+          }
+        });
+        if (best) {
+          const ndcX = (best.x / window.innerWidth) * 2 - 1;
+          const ndcY = -(best.y / window.innerHeight) * 2 + 1;
+
+          const frustumHeight = Math.tan((75 / 2) * Math.PI / 180) * 5 * 2;
+          const frustumWidth = frustumHeight * (window.innerWidth / window.innerHeight);
+
+          baseTargetX = ndcX * (frustumWidth / 2);
+          baseTargetY = ndcY * (frustumHeight / 2);
+        }
       }
+      setInterval(updateButterflyTarget, 200);
+      updateButterflyTarget();
 
-      function animateButterfly() {
-        requestAnimationFrame(animateButterfly);
+      // Start animation loop immediately
+      animateButterfly();
+    }
 
-        if (butterfly) {
+    function animateButterfly() {
+      requestAnimationFrame(animateButterfly);
+
+      if (butterfly) {
 
         time += 0.02;
 
@@ -2254,8 +2551,8 @@
       } else {
         initButterfly3D();
       }
-    </script>
-    <script>
+  </script>
+  <script>
       const canvas = document.getElementById("sc");
       const ctx = canvas.getContext("2d");
       let W = window.innerWidth,
@@ -2310,7 +2607,7 @@
         ctx.beginPath();
         ctx.arc(x, y, sz, 0, Math.PI * 2);
         ctx.stroke();
-        
+
         ctx.fillStyle = "rgba(255, 255, 255, " + (a * 0.8) + ")";
         ctx.beginPath();
         ctx.arc(x - sz * 0.3, y - sz * 0.3, sz * 0.25, 0, Math.PI * 2);
@@ -2435,6 +2732,7 @@
           card.style.transform = "";
         });
       });
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
