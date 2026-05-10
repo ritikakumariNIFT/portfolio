@@ -57,41 +57,6 @@
       z-index: 1;
     }
 
-    #cur,
-    #cur-ring {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9999;
-      border-radius: 50%;
-    }
-
-    #cur {
-      width: 10px;
-      height: 10px;
-      background: var(--lime);
-      mix-blend-mode: difference;
-      transition: transform 0.12s;
-    }
-
-    #cur-ring {
-      width: 32px;
-      height: 32px;
-      border: 1.5px solid rgba(239, 77, 35, 0.45);
-      transition:
-        transform 0.35s var(--ease),
-        width 0.25s,
-        height 0.25s;
-    }
-
-    @media (pointer: coarse) {
-
-      #cur,
-      #cur-ring {
-        display: none;
-      }
-    }
 
     nav {
       position: fixed;
@@ -1783,8 +1748,6 @@
         z-index: 15;
         pointer-events: none;
       "></div>
-  <div id="cur"></div>
-  <div id="cur-ring"></div>
 
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu" id="mm">
@@ -1805,7 +1768,7 @@
         x5-playsinline="true" poster="https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=60"
         style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
         <source
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260403_050628_c4e32401-fab4-4a27-b7a8-6e9291cd5959.mp4"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260406_094145_4a271a6c-3869-4f1c-8aa7-aeb0cb227994.mp4"
           type="video/mp4">
       </video>
       <div style="position: absolute; inset: 0; background: rgba(255,255,255,0.1);"></div>
@@ -1889,8 +1852,9 @@
             tomorrow
           </h1>
 
-          <p style="margin-top: 1.5rem; color: rgba(255, 255, 255, 0.9); font-size: clamp(13px, 3.5vw, 16px); max-width: 32rem;">
-            The all-in-one portfolio spanning Graphic Design, Brand Identity, and UI/UX.
+          <p
+            style="margin-top: 1.5rem; color: rgba(255, 255, 255, 0.9); font-size: clamp(13px, 3.5vw, 16px); max-width: 32rem;">
+            The all-in-one portfolio spanning Design Research, Brand Strategy, and UI/UX.
           </p>
 
           <a href="#about"
@@ -1919,10 +1883,10 @@
           <h2 class="about-heading">Hello!</h2>
           <div class="about-name">I am Ritika Kumari.</div>
           <p class="about-bio">
-            Creative graphic designer with a passion for visual storytelling
-            and brand design. I thrive on new challenges that push the
-            boundaries of creativity — exploring trends and techniques to
-            deliver impactful work.
+            Design researcher and creative strategist focused on uncovering user insights
+            and translating complex data into impactful visual narratives. I specialize in
+            bridging the gap between traditional craft and modern consumer behavior through
+            rigorous analytical study and human-centered design.
           </p>
           <div class="skills-row" id="skills-row">
             <div class="skill-item">
@@ -1932,36 +1896,16 @@
               </div>
             </div>
             <div class="skill-item">
-              <span class="skill-name">Logo Design</span>
-              <div class="skill-track">
-                <div class="skill-fill" data-w="88"></div>
-              </div>
-            </div>
-            <div class="skill-item">
               <span class="skill-name">UI / UX</span>
               <div class="skill-track">
                 <div class="skill-fill" data-w="80"></div>
               </div>
             </div>
             <div class="skill-item">
-              <span class="skill-name">Typography</span>
+              <span class="skill-name">Design Research</span>
               <div class="skill-track">
-                <div class="skill-fill" data-w="95"></div>
+                <div class="skill-fill" data-w="90"></div>
               </div>
-            </div>
-          </div>
-          <div class="about-stats">
-            <div>
-              <div class="stat-num">50+</div>
-              <div class="stat-lbl">Projects</div>
-            </div>
-            <div>
-              <div class="stat-num">30+</div>
-              <div class="stat-lbl">Clients</div>
-            </div>
-            <div>
-              <div class="stat-num">3+</div>
-              <div class="stat-lbl">Years</div>
             </div>
           </div>
         </div>
@@ -1995,7 +1939,6 @@
                 font-weight="600" letter-spacing="4" style="text-transform: uppercase; opacity: 0.6;">Creative
                 Designer</text>
 
-              <line x1="120" y1="265" x2="180" y2="265" stroke="rgba(239,77,35,0.2)" stroke-width="1.5" />
             </svg>
           </div>
           <div class="pcorner tl"></div>
@@ -2373,13 +2316,18 @@
   <footer id="contact">
     <div class="container">
       <div class="reveal">
-        <div class="foot-big">Let's Work</div>
+        <a href="mailto:ritikaprasad2002@gmail.com" style="text-decoration: none; color: inherit;">
+          <div class="foot-big">Let's Work</div>
+        </a>
         <p class="foot-sub">Thanks For Scrolling!</p>
         <p class="foot-desc">
           Don't forget to reach out if you love my work. Let's create
           something beautiful together.
         </p>
-        <button class="cta-btn">&#10022; Get In Touch</button>
+        <a href="mailto:ritikaprasad2002@gmail.com" class="cta-btn"
+          style="text-decoration: none; display: inline-block;">
+          &#10022; Get In Touch
+        </a>
         <div class="foot-socials">
           <a class="soc" href="#">Be</a>
           <a class="soc" href="#">Dbl</a>
@@ -2586,17 +2534,6 @@
       document.addEventListener("mousemove", (e) => {
         mx = e.clientX;
         my = e.clientY;
-        for (let i = 0; i < 2; i++) {
-          trail.push({
-            x: mx + (Math.random() - 0.5) * 12,
-            y: my + (Math.random() - 0.5) * 12,
-            sz: Math.random() * 6 + 2,
-            a: 0.85,
-            vx: (Math.random() - 0.5) * 1.8,
-            vy: -(Math.random() * 2 + 0.5),
-          });
-        }
-        if (trail.length > 60) trail.splice(0, trail.length - 60);
       });
 
       function star(x, y, sz, a) {
@@ -2635,52 +2572,9 @@
           }
           star(s.x, s.y, s.sz, s.a * 0.45);
         }
-        for (let i = trail.length - 1; i >= 0; i--) {
-          const t = trail[i];
-          t.x += t.vx;
-          t.y += t.vy;
-          t.a -= 0.038;
-          if (t.a <= 0) {
-            trail.splice(i, 1);
-            continue;
-          }
-          star(t.x, t.y, t.sz, t.a);
-        }
         requestAnimationFrame(tick);
       })();
 
-      // Custom cursor (desktop only)
-      const cur = document.getElementById("cur");
-      const ring = document.getElementById("cur-ring");
-      let cx = 0,
-        cy = 0,
-        rx = 0,
-        ry = 0;
-      document.addEventListener("mousemove", (e) => {
-        cx = e.clientX;
-        cy = e.clientY;
-      });
-      (function animC() {
-        rx += (cx - rx) * 0.11;
-        ry += (cy - ry) * 0.11;
-        cur.style.transform = `translate(${cx - 5}px,${cy - 5}px)`;
-        ring.style.transform = `translate(${rx - 16}px,${ry - 16}px)`;
-        requestAnimationFrame(animC);
-      })();
-      document
-        .querySelectorAll(
-          "a,button,.logo-card,.mockup-box,.profile-frame,.mini-card",
-        )
-        .forEach((el) => {
-          el.addEventListener("mouseenter", () => {
-            ring.style.width = "56px";
-            ring.style.height = "56px";
-          });
-          el.addEventListener("mouseleave", () => {
-            ring.style.width = "32px";
-            ring.style.height = "32px";
-          });
-        });
 
       // Hamburger menu
       const ham = document.getElementById("ham");
